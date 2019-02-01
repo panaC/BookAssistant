@@ -1,0 +1,28 @@
+{
+    "psi-header.variables": [
+        ["company", "EDRLab.org"],
+        ["projectCreationYear", "2019"]
+    ],
+    "psi-header.templates": [
+        {
+            "language": "*",
+            "template": [
+                "File: <<filename>>",
+                "Project: <<projectname>>",
+                "File Created: <<filecreated('dddd, Do MMMM YYYY h:mm:ss a')>>",
+                "Author: <<author>> (<<authoremail>>)",
+                "-----",
+                "Last Modified: <<dateformat('dddd, Do MMMM YYYY h:mm:ss a')>>",
+                "Modified By: <<author>> (<<authoremail>>>)",
+                "-----",
+                "Copyright <<projectCreationYear>> - <<year>> <<company>>",
+                "Use of this source code is governed by a BSD-style license",
+            ]
+        }
+    ],
+    "editor.tabSize": 2,
+    "window.zoomLevel": 1,
+    "terminal.integrated.rendererType": "dom",
+    "git.postCommitCommand": "push",
+    "typescript.updateImportsOnFileMove.enabled": "always"
+}
