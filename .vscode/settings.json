@@ -1,7 +1,8 @@
 {
     "psi-header.variables": [
         ["company", "EDRLab.org"],
-        ["projectCreationYear", "2019"]
+        ["projectCreationYear", "2019"],
+        ["projectname", "VoiceAssistant"]
     ],
     "psi-header.templates": [
         {
