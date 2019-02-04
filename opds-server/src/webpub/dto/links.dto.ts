@@ -1,5 +1,5 @@
 /*
- * File: links.dto.ts
+ * File: LinksDto.dto.ts
  * Project: VoiceAssistant
  * File Created: Monday, 4th February 2019 11:41:04 am
  * Author: pierre (p.leroux@gmx.com)
@@ -26,7 +26,7 @@ import { IsNotEmpty
   , IsNumber } from 'class-validator';
 
 @JsonObject()
-export class Links {
+export class LinksDto {
 
   @ApiModelProperty({
     description: 'URI or URI template of the linked resource',
@@ -146,9 +146,9 @@ export class Links {
     format: 'One or more Link Objects',
   })
   @JsonProperty('children')
-  @JsonType(Links)
+  @JsonType(LinksDto)
   @IsNotEmpty()
   @IsJSON()
   @ValidateNested()
-  readonly children: Links[];
+  readonly children: LinksDto[];
 }

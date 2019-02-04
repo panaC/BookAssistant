@@ -16,7 +16,7 @@ import { JsonProperty, JsonType, JsonObject } from 'ta-json-x';
 import { IsNotEmpty, IsUrl, IsJSON, IsOptional } from 'class-validator';
 
 @JsonObject()
-export class Metadata {
+export class MetadataDto {
 
   @ApiModelProperty({
     description: '@type key to describe the nature of the publication',

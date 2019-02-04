@@ -14,8 +14,8 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { JsonProperty, JsonType, JsonObject } from 'ta-json-x';
 import { IsNotEmpty, IsUrl, IsJSON, ValidateNested, IsOptional, validateSync } from 'class-validator';
-import { Metadata } from './metdata.dto';
-import { Links } from './links.dto';
+import { MetadataDto } from './metdata.dto';
+import { LinksDto } from './links.dto';
 
 // todo add jsonConverter to string
 // https://github.com/readium/r2-opds-js/blob/develop/src/opds/opds2/opds2.ts#L32
@@ -34,30 +34,30 @@ export class WebpubDto {
   readonly context: string;
 
   @ApiModelProperty({
-    description: 'Readium Web Publication Manifest metadata',
+    description: 'Readium Web Publication Manifest MetadataDto',
     required: true,
-    format: 'JSON Object, see Metadata Object Dto',
+    format: 'JSON Object, see MetadataDto Object Dto',
   })
-  @JsonProperty('metadata')
-  @JsonType(Metadata)
+  @JsonProperty('MetadataDto')
+  @JsonType(MetadataDto)
   @IsNotEmpty()
   @IsJSON()
   @ValidateNested()
-  readonly metadata: Metadata;
+  readonly MetadataDto: MetadataDto;
 
   @ApiModelProperty({
-    description: 'Links are expressed using the links key that contains one or more Link Objects',
+    description: 'LinksDto are expressed using the LinksDto key that contains one or more Link Objects',
     required: true,
     format: `A manifest must contain at least one link
      using the self relationship where href
      is an absolute URI to the canonical location of the manifest.`,
   })
-  @JsonProperty('links')
-  @JsonType(Links)
+  @JsonProperty('LinksDto')
+  @JsonType(LinksDto)
   @IsNotEmpty()
   @IsJSON()
   @ValidateNested()
-  readonly links: Links[];
+  readonly LinksDto: LinksDto[];
 
   @ApiModelProperty({
     description: 'Identifies a list of resources in reading order for the publication.',
@@ -65,11 +65,11 @@ export class WebpubDto {
     format: 'JSON Object',
   })
   @JsonProperty('readingOrder')
-  @JsonType(Links)
+  @JsonType(LinksDto)
   @IsNotEmpty()
   @IsJSON()
   @ValidateNested()
-  readonly readingOrder: Links[];
+  readonly readingOrder: LinksDto[];
 
   @ApiModelProperty({
     description: 'Identifies resources that are necessary for rendering the publication.',
@@ -77,11 +77,11 @@ export class WebpubDto {
     format: 'JSON Object',
   })
   @JsonProperty('ressources')
-  @JsonType(Links)
+  @JsonType(LinksDto)
   @IsOptional()
   @IsJSON()
   @ValidateNested()
-  readonly ressources: Links[];
+  readonly ressources: LinksDto[];
 
   @ApiModelProperty({
     description: 'Identifies the collection that contains a table of contents.',
@@ -89,9 +89,9 @@ export class WebpubDto {
     format: 'JSON Object',
   })
   @JsonProperty('toc')
-  @JsonType(Links)
+  @JsonType(LinksDto)
   @IsOptional()
   @IsJSON()
   @ValidateNested()
-  readonly toc: Links[];
+  readonly toc: LinksDto[];
 }
