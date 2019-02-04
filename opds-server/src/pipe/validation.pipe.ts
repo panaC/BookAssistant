@@ -1,6 +1,7 @@
 import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
+import { JSON } from 'ta-json-x';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -8,7 +9,8 @@ export class ValidationPipe implements PipeTransform<any> {
         if (!metatype || !this.toValidate(metatype)) {
             return value;
         }
-        const object = plainToClass(metatype, value);
+        const parsed = JSON.deserialize(value, metatype);
+        const object = plainToClass(metatype, parsed);
         const errors = await validate(object);
 
         const errorsDescription = errors.map((error: any) => {
