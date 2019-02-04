@@ -4,8 +4,8 @@ import { ILinks } from './links.interface';
 
 export interface IWebpub extends Document {
   readonly context: string;
-  readonly MetadataDto: IMetadata[];
-  readonly LinksDto: ILinks[];
+  readonly metadata: IMetadata[];
+  readonly links: ILinks[];
   readonly readingOrder: ILinks[];
   readonly ressources: ILinks[];
   readonly toc: ILinks[];

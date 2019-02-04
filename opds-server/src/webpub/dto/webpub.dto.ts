@@ -38,12 +38,12 @@ export class WebpubDto {
     required: true,
     format: 'JSON Object, see MetadataDto Object Dto',
   })
-  @JsonProperty('MetadataDto')
+  @JsonProperty('metadata')
   @JsonType(MetadataDto)
   @IsNotEmpty()
   @IsJSON()
   @ValidateNested()
-  readonly MetadataDto: MetadataDto;
+  readonly metadata: MetadataDto;
 
   @ApiModelProperty({
     description: 'LinksDto are expressed using the LinksDto key that contains one or more Link Objects',
@@ -52,12 +52,12 @@ export class WebpubDto {
      using the self relationship where href
      is an absolute URI to the canonical location of the manifest.`,
   })
-  @JsonProperty('LinksDto')
+  @JsonProperty('links')
   @JsonType(LinksDto)
   @IsNotEmpty()
   @IsJSON()
   @ValidateNested()
-  readonly LinksDto: LinksDto[];
+  readonly links: LinksDto[];
 
   @ApiModelProperty({
     description: 'Identifies a list of resources in reading order for the publication.',
