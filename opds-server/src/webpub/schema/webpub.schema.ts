@@ -2,7 +2,7 @@ import { LinksSchema } from './links.schema';
 import { MetadataSchema } from './metadata.schema';
 import * as mongoose from 'mongoose';
 
-export const TicketSchema = new mongoose.Schema({
+export const WebpubSchema = new mongoose.Schema({
   context: {
     type: String,
     required: true,
