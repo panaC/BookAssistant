@@ -18,20 +18,30 @@ import { IsNotEmpty, IsUrl, IsJSON, IsOptional } from 'class-validator';
 @JsonObject()
 export class Metadata {
 
-  @ApiModelProperty()
+  @ApiModelProperty({
+    description: '@type key to describe the nature of the publication',
+    required: true,
+    format: 'URL',
+  })
   @JsonProperty('@type')
   @JsonType(String)
   @IsNotEmpty()
   @IsUrl()
   readonly type: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({
+    description: 'title of publication',
+    required: true,
+  })
   @JsonProperty('title')
   @JsonType(String)
   @IsNotEmpty()
   readonly title: string;
 
-  @ApiModelProperty()
+  @ApiModelProperty({
+    description: 'unique identifier of publication',
+    required: false,
+  })
   @JsonProperty('identifier')
   @JsonType(String)
   @IsOptional()
