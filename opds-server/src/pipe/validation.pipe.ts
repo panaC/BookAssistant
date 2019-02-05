@@ -1,4 +1,19 @@
-import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
+/*
+ * File: validation.pipe.ts
+ * Project: opds-server
+ * File Created: Monday, 4th February 2019 8:17:02 pm
+ * Author: pierre (p.leroux@gmx.com)
+ * -----
+ * Last Modified: Tuesday, 5th February 2019 8:34:53 am
+ * Modified By: pierre (p.leroux@gmx.com>)
+ * -----
+ * Copyright 2018 - 2019 tennai.com
+ */
+
+import { PipeTransform
+    , Injectable
+    , ArgumentMetadata
+    , BadRequestException } from '@nestjs/common';
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
