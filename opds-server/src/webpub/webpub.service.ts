@@ -19,7 +19,7 @@ import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
-import { OpdsDto } from './dto/opds.dto';
+import { OpdsDto } from './opds/dto/opds.dto';
 
 @Injectable()
 export class WebpubService {

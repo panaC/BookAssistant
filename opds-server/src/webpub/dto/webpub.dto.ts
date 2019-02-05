@@ -12,9 +12,9 @@
  */
 
 import { ApiModelProperty } from '@nestjs/swagger';
-import { JsonProperty, JsonType, JsonObject, JsonElementType, JsonConverter } from 'ta-json-x';
-import { IsNotEmpty, IsUrl, IsJSON, ValidateNested, IsOptional, validateSync } from 'class-validator';
-import { MetadataDto } from './metdata.dto';
+import { JsonProperty, JsonType, JsonObject, JsonElementType } from 'ta-json-x';
+import { IsNotEmpty, IsUrl, ValidateNested, IsOptional } from 'class-validator';
+import { MetadataDto } from './metadata.dto';
 import { LinksDto } from './links.dto';
 
 // todo add jsonConverter to string

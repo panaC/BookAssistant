@@ -14,7 +14,17 @@ import { read } from 'fs';
 
 import { ApiModelProperty } from '@nestjs/swagger';
 import { JsonProperty, JsonType, JsonObject, BeforeDeserialized } from 'ta-json-x';
-import { IsNotEmpty, IsUrl, IsOptional, IsDate, IsISBN, IsNumber, Min, Max, IsString, IsDateString, IsISO8601 } from 'class-validator';
+import { IsNotEmpty
+  , IsUrl
+  , IsOptional
+  , IsDate
+  , IsISBN
+  , IsNumber
+  , Min
+  , Max
+  , IsString
+  , IsDateString
+  , IsISO8601 } from 'class-validator';
 
 @JsonObject()
 export class MetadataDto {

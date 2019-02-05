@@ -1,4 +1,3 @@
-import { MetadataOpdsDto } from './metadataOpds.dto';
 /*
  * File: opds.dto.ts
  * Project: opds-server
@@ -14,10 +13,11 @@ import { MetadataOpdsDto } from './metadataOpds.dto';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { JsonProperty, JsonType, JsonObject, JsonElementType, JsonConverter } from 'ta-json-x';
 import { IsNotEmpty, IsUrl, IsJSON, ValidateNested, IsOptional, validateSync } from 'class-validator';
-import { LinksDto } from './links.dto';
-import { WebpubDto } from './webpub.dto';
+import { LinksDto } from '../../dto/links.dto';
+import { WebpubDto } from '../../dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
+import { MetadataOpdsDto } from './metadataOpds.dto';
 
 @JsonObject()
 export class OpdsDto {
