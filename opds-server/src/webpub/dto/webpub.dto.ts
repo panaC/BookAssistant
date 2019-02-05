@@ -12,7 +12,7 @@
  */
 
 import { ApiModelProperty } from '@nestjs/swagger';
-import { JsonProperty, JsonType, JsonObject } from 'ta-json-x';
+import { JsonProperty, JsonType, JsonObject, JsonElementType, JsonConverter } from 'ta-json-x';
 import { IsNotEmpty, IsUrl, IsJSON, ValidateNested, IsOptional, validateSync } from 'class-validator';
 import { MetadataDto } from './metdata.dto';
 import { LinksDto } from './links.dto';
@@ -41,7 +41,7 @@ export class WebpubDto {
   @JsonProperty('metadata')
   @JsonType(MetadataDto)
   @IsNotEmpty()
-  @IsJSON()
+  // @IsJSON()
   @ValidateNested()
   readonly metadata: MetadataDto;
 
@@ -51,11 +51,14 @@ export class WebpubDto {
     format: `A manifest must contain at least one link
      using the self relationship where href
      is an absolute URI to the canonical location of the manifest.`,
+    type: LinksDto,
+    isArray: true,
   })
   @JsonProperty('links')
+  @JsonElementType(LinksDto)
   @JsonType(LinksDto)
   @IsNotEmpty()
-  @IsJSON()
+  // @IsJSON()
   @ValidateNested()
   readonly links: LinksDto[];
 
@@ -63,11 +66,13 @@ export class WebpubDto {
     description: 'Identifies a list of resources in reading order for the publication.',
     required: true,
     format: 'JSON Object',
+    type: LinksDto,
+    isArray: true,
   })
   @JsonProperty('readingOrder')
-  @JsonType(LinksDto)
+  @JsonElementType(LinksDto)
   @IsNotEmpty()
-  @IsJSON()
+  // @IsJSON()
   @ValidateNested()
   readonly readingOrder: LinksDto[];
 
@@ -75,23 +80,27 @@ export class WebpubDto {
     description: 'Identifies resources that are necessary for rendering the publication.',
     required: true,
     format: 'JSON Object',
+    type: LinksDto,
+    isArray: true,
   })
-  @JsonProperty('ressources')
-  @JsonType(LinksDto)
+  @JsonProperty('resources')
+  @JsonElementType(LinksDto)
   @IsOptional()
-  @IsJSON()
+  // @IsJSON()
   @ValidateNested()
-  readonly ressources: LinksDto[];
+  readonly resources: LinksDto[];
 
   @ApiModelProperty({
     description: 'Identifies the collection that contains a table of contents.',
     required: false,
     format: 'JSON Object',
+    type: LinksDto,
+    isArray: true,
   })
   @JsonProperty('toc')
-  @JsonType(LinksDto)
+  @JsonElementType(LinksDto)
   @IsOptional()
-  @IsJSON()
+  // @IsJSON()
   @ValidateNested()
-  readonly toc: LinksDto[];
+  readonly toc!: LinksDto[];
 }

@@ -16,6 +16,8 @@ import { Injectable, Inject } from '@nestjs/common';
 import { WEBPUB_MODEL_PROVIDER } from 'src/constants';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
+import { plainToClass } from 'class-transformer';
+import { JSON } from 'ta-json-x';
 
 @Injectable()
 export class WebpubService {
@@ -35,12 +37,13 @@ export class WebpubService {
     return await created.save();
   }
 
-  async find(Title: string): Promise<IWebpub> {
-    return await this.webpubModel.findOne({
-      metadata: {
-        title: Title,
-      },
-    }).exec();
+  async find(Title: string): Promise<WebpubDto> {
+    const manifest = await this.webpubModel.findOne({'metadata.title': Title}).lean().exec();
+    if (manifest) {
+      const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
+      return JSON.serialize(object);
+    }
+    return {} as WebpubDto;
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {

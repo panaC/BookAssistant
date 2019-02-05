@@ -83,7 +83,7 @@ export class WebpubController {
       description: 'return webpub Manifest with title identification',
   })
   @Get()
-  async read(@Query('q') title: string): Promise<IWebpub> {
+  async read(@Query('q') title: string): Promise<WebpubDto> {
     try {
       return await this.webpubService.find(title);
     } catch (err) {

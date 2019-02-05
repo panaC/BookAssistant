@@ -7,7 +7,7 @@ export interface IWebpub extends Document {
   readonly metadata: IMetadata;
   readonly links: ILinks[];
   readonly readingOrder: ILinks[];
-  readonly ressources: ILinks[];
+  readonly resources: ILinks[];
   readonly toc: ILinks[];
 
 }

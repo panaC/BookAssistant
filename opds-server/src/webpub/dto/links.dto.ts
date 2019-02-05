@@ -12,7 +12,7 @@
  */
 
 import { ApiModelProperty } from '@nestjs/swagger';
-import { JsonProperty, JsonType, JsonObject } from 'ta-json-x';
+import { JsonProperty, JsonType, JsonObject, JsonElementType } from 'ta-json-x';
 import { IsNotEmpty
   , IsUrl
   , IsJSON
@@ -144,11 +144,12 @@ export class LinksDto {
     description: 'Resources that are children of the linked resource, in the context of a given collection role',
     required: false,
     format: 'One or more Link Objects',
+    // cannot type here because infinite loop in swagger
   })
   @JsonProperty('children')
-  @JsonType(LinksDto)
-  @IsNotEmpty()
-  @IsJSON()
+  @JsonElementType(LinksDto)
+  @IsOptional()
+  // @IsJSON()
   @ValidateNested()
   readonly children: LinksDto[];
 }

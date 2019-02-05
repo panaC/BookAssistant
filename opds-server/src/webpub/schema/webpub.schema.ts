@@ -10,6 +10,6 @@ export const WebpubSchema = new mongoose.Schema({
   metadata: MetadataSchema,
   links: [LinksSchema],
   readingOrder: [LinksSchema],
-  ressources: [LinksSchema],
+  resources: [LinksSchema],
   toc: [LinksSchema],
 });
