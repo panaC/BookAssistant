@@ -25,7 +25,7 @@ import { WebpubService } from './webpub.service';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { WebpubDto } from './dto/webpub.dto';
-import { OpdsDto } from './dto/opds.dto';
+import { OpdsDto } from './opds/dto/opds.dto';
 
 @Controller('webpub')
 @ApiUseTags('webpub')
