@@ -15,3 +15,5 @@ export const MetadataSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+MetadataSchema.index({ title: 'text'});
