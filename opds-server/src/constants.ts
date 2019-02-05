@@ -16,3 +16,7 @@ export const DB_PROVIDER = 'DbConnectionToken';
 export const DB_URI = 'mongodb://127.0.0.1:27017/webpub';
 
 export const WEBPUB_MODEL_PROVIDER = 'WebpubModelToken';
+
+export const NAME_SERVER = 'OPDS2-server';
+
+export const LINK_SELF = '{"rel": "self", "href": "http://localhost:3000/webpub", "type": "application/opds+json"}';

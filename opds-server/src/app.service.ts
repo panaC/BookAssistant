@@ -12,10 +12,11 @@
  */
 
 import { Injectable } from '@nestjs/common';
+import { NAME_SERVER } from './constants';
 
 @Injectable()
 export class AppService {
   getHello(): string {
-    return 'Hello World!';
+    return NAME_SERVER;
   }
 }
