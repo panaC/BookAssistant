@@ -11,7 +11,43 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
+import { Injectable, Inject } from '@nestjs/common';
+import { WEBPUB_MODEL_PROVIDER } from 'src/constants';
+import { IWebpub } from './interfaces/webpub.inteface';
+import { WebpubDto } from './dto/webpub.dto';
 
 @Injectable()
-export class WebpubService {}
+export class WebpubService {
+  constructor(
+    @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>) {}
+
+  async delete(Title: string): Promise<void> {
+    await this.webpubModel.deleteOne({
+      metadata: {
+        title: Title,
+      },
+    }).exec();
+  }
+
+  async create(webpubDto: WebpubDto): Promise<IWebpub> {
+    const created = new this.webpubModel(webpubDto);
+    return await created.save();
+  }
+
+  async find(Title: string): Promise<IWebpub> {
+    return await this.webpubModel.findOne({
+      metadata: {
+        title: Title,
+      },
+    }).exec();
+  }
+
+  async update(webpubDto: WebpubDto): Promise<void> {
+    await this.webpubModel.updateOne({
+      metadata: {
+        title: webpubDto.metadata.title,
+      },
+    }, webpubDto).exec();
+  }
+}
