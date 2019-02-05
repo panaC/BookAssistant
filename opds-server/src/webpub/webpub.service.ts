@@ -14,7 +14,7 @@ import { LINK_SELF } from './../constants';
 
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { WEBPUB_MODEL_PROVIDER, NAME_SERVER } from 'src/constants';
+import { WEBPUB_MODEL_PROVIDER, NAME_SERVER } from '../constants';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
@@ -27,11 +27,7 @@ export class WebpubService {
     @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>) {}
 
   async delete(Title: string): Promise<void> {
-    await this.webpubModel.deleteOne({
-      metadata: {
-        title: Title,
-      },
-    }).exec();
+    await this.webpubModel.deleteOne({ 'metadata.title': Title }).exec();
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
@@ -50,20 +46,15 @@ export class WebpubService {
 
   async findAll(): Promise<OpdsDto> {
     const manifest = await this.webpubModel.find({}).lean().exec();
-    if (manifest) {
-      const opds = new OpdsDto(NAME_SERVER, LINK_SELF);
+    const opds = new OpdsDto(NAME_SERVER, LINK_SELF);
+    if (manifest && manifest.length) {
       opds.publication = new Array();
       manifest.forEach(el => opds.publication.push(JSON.parse(JSON.stringify(el))));
-      return JSON.serialize(opds);
     }
-    return {} as OpdsDto;
+    return JSON.serialize(opds);
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {
-    await this.webpubModel.updateOne({
-      metadata: {
-        title: webpubDto.metadata.title,
-      },
-    }, webpubDto).exec();
+    await this.webpubModel.updateOne({ 'metadata.title': webpubDto.metadata.title }, webpubDto).exec();
   }
 }
