@@ -1,3 +1,4 @@
+import { webpubProviders } from './webpub.providers';
 /*
  * File: webpub.module.ts
  * Project: VoiceAssistant
@@ -21,6 +22,7 @@ import { WebpubService } from './webpub.service';
   controllers: [WebpubController],
   providers: [
     WebpubService,
+    ...webpubProviders,
   ],
 })
 export class WebpubModule {}
