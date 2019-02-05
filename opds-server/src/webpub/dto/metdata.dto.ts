@@ -32,6 +32,7 @@ export class MetadataDto {
   @ApiModelProperty({
     description: 'title of publication',
     required: true,
+    format: 'Unique String',
   })
   @JsonProperty('title')
   @JsonType(String)
