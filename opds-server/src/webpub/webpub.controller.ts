@@ -25,6 +25,7 @@ import { WebpubService } from './webpub.service';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { WebpubDto } from './dto/webpub.dto';
+import { OpdsDto } from './dto/opds.dto';
 
 @Controller('webpub')
 @ApiUseTags('webpub')
@@ -83,8 +84,11 @@ export class WebpubController {
       description: 'return webpub Manifest with title identification',
   })
   @Get()
-  async read(@Query('q') title: string): Promise<WebpubDto> {
+  async read(@Query('q') title: string): Promise<OpdsDto | WebpubDto> {
     try {
+      if (!title) {
+        return await this.webpubService.findAll();
+      }
       return await this.webpubService.find(title);
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);

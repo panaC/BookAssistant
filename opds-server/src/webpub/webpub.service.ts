@@ -1,3 +1,4 @@
+import { LINK_SELF } from './../constants';
 /*
  * File: webpub.service.ts
  * Project: VoiceAssistant
@@ -13,11 +14,12 @@
 
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { WEBPUB_MODEL_PROVIDER } from 'src/constants';
+import { WEBPUB_MODEL_PROVIDER, NAME_SERVER } from 'src/constants';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
+import { OpdsDto } from './dto/opds.dto';
 
 @Injectable()
 export class WebpubService {
@@ -38,12 +40,23 @@ export class WebpubService {
   }
 
   async find(Title: string): Promise<WebpubDto> {
-    const manifest = await this.webpubModel.findOne({'metadata.title': Title}).lean().exec();
+    const manifest = await this.webpubModel.findOne({$text: {$search: Title}}).lean().exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
     }
     return {} as WebpubDto;
+  }
+
+  async findAll(): Promise<OpdsDto> {
+    const manifest = await this.webpubModel.find({}).lean().exec();
+    if (manifest) {
+      const opds = new OpdsDto(NAME_SERVER, LINK_SELF);
+      opds.publication = new Array();
+      manifest.forEach(el => opds.publication.push(JSON.parse(JSON.stringify(el))));
+      return JSON.serialize(opds);
+    }
+    return {} as OpdsDto;
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {
