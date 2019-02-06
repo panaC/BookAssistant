@@ -1,4 +1,6 @@
 **/dist
+**/*.cert
+**/*.key
 
 # Logs
 logs
