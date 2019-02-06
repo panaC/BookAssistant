@@ -19,5 +19,10 @@ import { app } from './app';
 export const server = express();
 
 server.set('port', PORT);
+server.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 server.use(bodyParser.json());
 server.post(ENTRY_POINT, app);
