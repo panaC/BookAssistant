@@ -17,6 +17,7 @@ import { server } from './server';
 
 if (typeof require !== 'undefined' && require.main === module) {
   server.listen(server.get('port'), () => {
+    // tslint:disable-next-line:no-console
     console.log(`${SERVER_NAME} is running at http://localhost:${server.get('port')}${ENTRY_POINT}`);
   });
 }
