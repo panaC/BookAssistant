@@ -1,4 +1,3 @@
-import { ENTRY_POINT } from './constants';
 /*
  * File: main.ts
  * Project: VoiceAssistant
@@ -12,11 +11,14 @@ import { ENTRY_POINT } from './constants';
  * Use of this source code is governed by a BSD-style license
  */
 
-import { SERVER_NAME } from './constants';
+import { SERVER_NAME, ENTRY_POINT } from './constants';
 import { server } from './server';
+import https from 'https';
+import { readFileSync } from 'fs';
 
 if (typeof require !== 'undefined' && require.main === module) {
-  server.listen(server.get('port'), () => {
+  const httpsServer = https.createServer({key: readFileSync('dist/server.key'), cert: readFileSync('dist/server.cert')}, server);
+  httpsServer.listen(server.get('port'), () => {
     // tslint:disable-next-line:no-console
     console.log(`${SERVER_NAME} is running at http://localhost:${server.get('port')}${ENTRY_POINT}`);
   });
