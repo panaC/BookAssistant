@@ -1,0 +1,22 @@
+{
+  "name": "actions-server",
+  "version": "1.0.0",
+  "description": "diagflow - actions server that purpose the app intent",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panaC/VoiceAssistant.git"
+  },
+  "author": "pleroux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panaC/VoiceAssistant/issues"
+  },
+  "homepage": "https://github.com/panaC/VoiceAssistant#readme",
+  "dependencies": {
+    "actions-on-google": "^2.5.0"
+  }
+}
