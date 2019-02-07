@@ -1,7 +1,12 @@
+import { JSON_CREDENTIAL_PATH } from './constants';
 import dialogflow from 'dialogflow';
 import { readFileSync, writeFileSync } from 'fs';
+import debug from 'debug';
 
-const authProject = JSON.parse(readFileSync('voiceassistant-f9612-8f199ed749ed.json').toString());
+const log = debug('diagflow:log');
+const err = debug('diagflow:err');
+
+const authProject = JSON.parse(readFileSync(JSON_CREDENTIAL_PATH).toString());
 
 const client = new dialogflow.v2.AgentsClient({
   credentials: authProject,
@@ -9,16 +14,17 @@ const client = new dialogflow.v2.AgentsClient({
 });
 
 client.getProjectId().then((data) => {
-  console.log(client.projectPath(data));
+  log(client.projectPath(data));
   client.exportAgent({
     parent: client.projectPath(data),
   }).then((data) => {
     return data[0].promise();
   }).then((rep) => {
     writeFileSync('backup.zip', Buffer.from(rep[0].agentContent, 'base64'));
+    log('write backup.zip success');
   }).catch((err) => {
-    console.error(err);
+    err(err);
   });
 }).catch((err) => {
-  console.error(err);
+  err(err);
 });
