@@ -1,6 +1,8 @@
 **/dist
 **/*.cert
 **/*.key
+# Credential json file DNT
+**/voiceassistant-f9612-8f199ed749ed.json
 
 # Logs
 logs
