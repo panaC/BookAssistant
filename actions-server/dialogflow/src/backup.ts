@@ -54,4 +54,6 @@ export class DiagflowAgent {
   }
 }
 
-new DiagflowAgent(JSON_CREDENTIAL_PATH).backup();
+if (typeof require !== 'undefined' && require.main === module) {
+  new DiagflowAgent(JSON_CREDENTIAL_PATH).backup();
+}
