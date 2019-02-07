@@ -11,26 +11,39 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { dialogflow, Image } from 'actions-on-google';
+import { dialogflow, Image, MediaObject, Suggestions } from 'actions-on-google';
 
 // Create an app instance
 export const app = dialogflow();
 
 // Register handlers for Dialogflow intents
 app.intent('Default Welcome Intent', conv => {
-  conv.ask('Hi, how is it going?');
-  conv.ask(`Here's a picture of a cat`);
-  conv.ask(new Image({
+  conv.ask(`Une musique Jazz :`);
+  /*conv.ask(new Image({
     url: 'https://developers.google.com/web/fundamentals/accessibility/semantics-builtin/imgs/160204193356-01-cat-500.jpg',
-    alt: 'A cat',
+    alt: 'Un chat',
+  }));*/
+  if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
+    conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
+    return;
+  }
+  conv.ask(new MediaObject({
+    name: 'Jazz à Paris',
+    url: 'https://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3#t=20',
+    description: 'Un morceau de Jazz',
+    icon: new Image({
+      url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
+      alt: 'Jazz musique',
+    }),
   }));
+  conv.ask(new Suggestions('fermée'));
 });
 
 // Intent in Dialogflow called `Goodbye`
 app.intent('Goodbye', conv => {
-  conv.close('See you later!');
+  conv.close('Reviens vite !');
 });
 
 app.intent('Default Fallback Intent', conv => {
-  conv.ask(`I didn't understand. Can you tell me something else?`);
+  conv.ask(`Je n'ai pas compris peux tu me demandé autre chose ?`);
 });
