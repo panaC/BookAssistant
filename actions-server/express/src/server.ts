@@ -20,10 +20,10 @@ export const server = express();
 
 server.set('port', PORT);
 server.set('trust proxy', () => true);
-/*server.use((req, res, next) => {
+server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
-});*/
+});
 server.use(bodyParser.json());
 server.post(ENTRY_POINT, app);
