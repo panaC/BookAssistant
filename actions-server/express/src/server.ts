@@ -19,7 +19,7 @@ import { app } from './app/app';
 export const server = express();
 
 server.set('port', PORT);
-server.set('trust proxy', () => true);
+server.set('trust proxy', '127.0.0.1');
 /*server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
