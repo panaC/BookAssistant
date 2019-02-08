@@ -13,8 +13,8 @@
 
 import { SERVER_NAME, ENTRY_POINT } from './constants';
 import { server } from './server';
-import https from 'https';
-import { readFileSync } from 'fs';
+// import https from 'https';
+// import { readFileSync } from 'fs';
 
 if (typeof require !== 'undefined' && require.main === module) {
   // const httpsServer = https.createServer({key: readFileSync('dist/server.key'), cert: readFileSync('dist/server.cert')}, server);
