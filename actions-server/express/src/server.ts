@@ -14,7 +14,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { ENTRY_POINT, PORT } from './constants';
-import { app } from './app';
+import { app } from './app/app';
 
 export const server = express();
 
