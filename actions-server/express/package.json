@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "launch": "node dist/main.js",
-    "start": "npm run build && npm run launch"
+    "start": "ts-node src/main.ts",
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,8 @@
     "@types/debug": "0.0.31",
     "@types/express": "^4.16.1",
     "@types/node": "^10.12.21",
+    "nodemon": "^1.18.9",
+    "ts-node": "^8.0.2",
     "typescript": "^3.3.1"
   }
 }
