@@ -26,4 +26,7 @@ server.use((req, res, next) => {
   next();
 });
 server.use(bodyParser.json());
-server.post(ENTRY_POINT, app);
+//server.post(ENTRY_POINT, app);
+server.get('/', (req, res) => {
+  res.send('Hello World!');
+});
