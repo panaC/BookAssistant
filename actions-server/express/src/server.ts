@@ -25,4 +25,5 @@ server.use((req, res, next) => {
   next();
 });
 server.use(bodyParser.json());
+server.set('trust proxy', 'loopback');
 server.post(ENTRY_POINT, app);
