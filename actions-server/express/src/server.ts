@@ -25,5 +25,5 @@ server.use((req, res, next) => {
   next();
 });
 server.use(bodyParser.json());
-server.set('trust proxy', true);
+server.set('trust proxy', () => true);
 server.post(ENTRY_POINT, app);
