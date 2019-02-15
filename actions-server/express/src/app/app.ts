@@ -25,7 +25,7 @@ app.intent('Default Welcome Intent', conv => {
 });
 
 app.intent('play audiobook', async (conv, { audiobook }) => {
-  conv.ask(`Voici l'audiobook ${audiobook}`);
+  // conv.ask(`Voici l'audiobook ${audiobook}`);
   if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
     conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
     return;
