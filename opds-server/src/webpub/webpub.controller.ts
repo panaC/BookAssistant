@@ -87,7 +87,7 @@ export class WebpubController {
   async read(@Query('q') title: string): Promise<OpdsDto | WebpubDto> {
     try {
       if (!title) {
-        return await this.webpubService.findAll();
+        return await this.webpubService.feed();
       }
       return await this.webpubService.find(title);
     } catch (err) {

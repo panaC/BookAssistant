@@ -44,7 +44,7 @@ export class WebpubService {
     return {} as WebpubDto;
   }
 
-  async findAll(): Promise<OpdsDto> {
+  async feed(): Promise<OpdsDto> {
     const manifest = await this.webpubModel.find({}).lean().exec();
     const opds = new OpdsDto(NAME_SERVER, LINK_SELF_SERVER(''));
     if (manifest && manifest.length) {
