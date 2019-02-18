@@ -1,3 +1,4 @@
+import { Opds2Feed } from './opds/feed';
 /*
  * File: webpub.service.ts
  * Project: VoiceAssistant
@@ -45,12 +46,13 @@ export class WebpubService {
   }
 
   async feed(): Promise<OpdsDto> {
-    const manifest = await this.webpubModel.find({}).lean().exec();
-    const opds = new OpdsDto(NAME_SERVER, LINK_SELF_SERVER(''));
+    /*const manifest = await this.webpubModel.find({}).lean().exec();
     if (manifest && manifest.length) {
       opds.publication = new Array();
       manifest.forEach(el => opds.publication.push(JSON.parse(JSON.stringify(el))));
-    }
+    }*/
+    const opds = new Opds2Feed();
+    await opds.init();
     return JSON.serialize(opds);
   }
 

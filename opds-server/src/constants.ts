@@ -32,5 +32,7 @@ export const GROUP_URI = 'groups';
 export const NUMBER_OF_ITEM_URI = 'numberofitem';
 export const SORT_URI = 'sort';
 
-export const LINK_SELF_SERVER = (query) =>
-`{"rel": "self", "href": "${PROTOCOL_SERVER}://${DOMAIN_SERVER}/${ROOT_SERVER}${query}", "type": "application/opds+json"}`;
+export const LINK_SELF_SERVER = (query = '', rel = '') =>
+`{"rel": "${rel}", "href": "${PROTOCOL_SERVER}://${DOMAIN_SERVER}/${ROOT_SERVER}${encodeURI(query)}", "type": "application/opds+json"}`;
+
+export const MORE_POPULAR_GROUP_NAME = 'plus écoutés';
