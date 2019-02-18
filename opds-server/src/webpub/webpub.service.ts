@@ -1,4 +1,3 @@
-import { LINK_SELF_SERVER } from './../constants';
 /*
  * File: webpub.service.ts
  * Project: VoiceAssistant
@@ -20,6 +19,7 @@ import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
 import { OpdsDto } from './opds/dto/opds.dto';
+import { LINK_SELF_SERVER } from './../constants';
 
 @Injectable()
 export class WebpubService {
@@ -46,7 +46,7 @@ export class WebpubService {
 
   async findAll(): Promise<OpdsDto> {
     const manifest = await this.webpubModel.find({}).lean().exec();
-    const opds = new OpdsDto(NAME_SERVER, LINK_SELF_SERVER);
+    const opds = new OpdsDto(NAME_SERVER, LINK_SELF_SERVER(''));
     if (manifest && manifest.length) {
       opds.publication = new Array();
       manifest.forEach(el => opds.publication.push(JSON.parse(JSON.stringify(el))));

@@ -12,10 +12,11 @@
  */
 
 import { ApiModelProperty } from '@nestjs/swagger';
-import { JsonProperty, JsonType, JsonObject, JsonElementType } from 'ta-json-x';
+import { JsonProperty, JsonType, JsonObject, JsonElementType, BeforeDeserialized, JSON } from 'ta-json-x';
 import { IsNotEmpty, IsUrl, ValidateNested, IsOptional } from 'class-validator';
 import { MetadataDto } from './metadata.dto';
 import { LinksDto } from './links.dto';
+import { plainToClass } from 'class-transformer';
 
 // todo add jsonConverter to string
 // https://github.com/readium/r2-opds-js/blob/develop/src/opds/opds2/opds2.ts#L32
@@ -60,7 +61,7 @@ export class WebpubDto {
   @IsNotEmpty()
   // @IsJSON()
   @ValidateNested()
-  readonly links: LinksDto[];
+  links: LinksDto[];
 
   @ApiModelProperty({
     description: 'Identifies a list of resources in reading order for the publication.',

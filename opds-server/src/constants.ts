@@ -32,4 +32,5 @@ export const GROUP_URI = 'groups';
 export const NUMBER_OF_ITEM_URI = 'numberofitem';
 export const SORT_URI = 'sort';
 
-export const LINK_SELF_SERVER = `{"rel": "self", "href": "${PROTOCOL_SERVER}://${DOMAIN_SERVER}/${ROOT_SERVER}", "type": "application/opds+json"}`;
+export const LINK_SELF_SERVER = (query) =>
+`{"rel": "self", "href": "${PROTOCOL_SERVER}://${DOMAIN_SERVER}/${ROOT_SERVER}${query}", "type": "application/opds+json"}`;
