@@ -37,7 +37,7 @@ export class LinksDto {
   @JsonType(String)
   @IsNotEmpty()
   @IsUrl()
-  readonly href: string;
+  href: string;
 
   @ApiModelProperty({
     description: 'Indicates that href is a URI template. Required Only when href is a URI template',
@@ -48,7 +48,7 @@ export class LinksDto {
   @JsonType(Boolean)
   @IsOptional()
   @IsBoolean()
-  readonly templated: boolean;
+  templated: boolean;
 
   // MIME Media type format
   @ApiModelProperty({
@@ -60,7 +60,7 @@ export class LinksDto {
   @JsonType(String)
   @IsOptional()
   @IsString()
-  readonly type: string;
+  type: string;
 
   @ApiModelProperty({
     description: 'Title of the linked resource',
@@ -70,7 +70,7 @@ export class LinksDto {
   @JsonType(String)
   @IsOptional()
   @IsString()
-  readonly title: string;
+  title: string;
 
   @ApiModelProperty({
     description: 'Relation between the resource and its containing collection',
@@ -80,7 +80,7 @@ export class LinksDto {
   @JsonType(String)
   @IsOptional()
   @IsString()
-  readonly rel: string;
+  rel: string;
 
   /*
   // Not implemented yet

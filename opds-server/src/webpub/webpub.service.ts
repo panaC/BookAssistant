@@ -1,4 +1,3 @@
-import { Opds2Feed } from './opds/feed';
 /*
  * File: webpub.service.ts
  * Project: VoiceAssistant
@@ -19,8 +18,6 @@ import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
-import { OpdsDto } from './opds/dto/opds.dto';
-import { LINK_SELF_SERVER } from './../constants';
 
 @Injectable()
 export class WebpubService {
@@ -43,17 +40,6 @@ export class WebpubService {
       return JSON.serialize(object);
     }
     return {} as WebpubDto;
-  }
-
-  async feed(): Promise<OpdsDto> {
-    /*const manifest = await this.webpubModel.find({}).lean().exec();
-    if (manifest && manifest.length) {
-      opds.publication = new Array();
-      manifest.forEach(el => opds.publication.push(JSON.parse(JSON.stringify(el))));
-    }*/
-    const opds = new Opds2Feed();
-    await opds.init();
-    return JSON.serialize(opds);
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {

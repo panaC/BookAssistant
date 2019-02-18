@@ -1,4 +1,4 @@
-import { webpubProviders } from './webpub.providers';
+import { FeedService } from './opds/feed.service';
 /*
  * File: webpub.module.ts
  * Project: VoiceAssistant
@@ -16,11 +16,13 @@ import { DatabaseModule } from './../database/database.module';
 import { Module } from '@nestjs/common';
 import { WebpubController } from './webpub.controller';
 import { WebpubService } from './webpub.service';
+import { webpubProviders } from './webpub.providers';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [WebpubController],
   providers: [
+    FeedService,
     WebpubService,
     ...webpubProviders,
   ],

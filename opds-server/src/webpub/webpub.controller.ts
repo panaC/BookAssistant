@@ -1,3 +1,4 @@
+import { FeedService } from './opds/feed.service';
 /*
  * File: webpub.controller.ts
  * Project: VoiceAssistant
@@ -31,7 +32,8 @@ import { OpdsDto } from './opds/dto/opds.dto';
 @ApiUseTags('webpub')
 export class WebpubController {
   constructor(
-    private readonly webpubService: WebpubService) {}
+    private readonly webpubService: WebpubService,
+    private readonly feedService: FeedService) {}
 
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
@@ -87,7 +89,7 @@ export class WebpubController {
   async read(@Query('q') title: string): Promise<OpdsDto | WebpubDto> {
     try {
       if (!title) {
-        return await this.webpubService.feed();
+        return await this.feedService.feed();
       }
       return await this.webpubService.find(title);
     } catch (err) {

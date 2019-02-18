@@ -66,8 +66,9 @@ export class OpdsDto {
     type: OpdsDto,
     isArray: true,
   })
-  @JsonElementType(LinksDto)
-  @JsonType(LinksDto)
+  @JsonProperty('facets')
+  @JsonElementType(OpdsDto)
+  @JsonType(OpdsDto)
   @IsNotEmpty()
   @ValidateNested()
   facets: OpdsDto[];
@@ -79,7 +80,7 @@ export class OpdsDto {
     isArray: true,
   })
   @JsonProperty('groups')
-  @JsonElementType(LinksDto)
+  @JsonElementType(OpdsDto)
   @JsonType(OpdsDto)
   @IsNotEmpty()
   // @IsJSON()
