@@ -1,4 +1,4 @@
-import { LINK_SELF } from './../constants';
+import { LINK_SELF_SERVER } from './../constants';
 /*
  * File: webpub.service.ts
  * Project: VoiceAssistant
@@ -46,7 +46,7 @@ export class WebpubService {
 
   async findAll(): Promise<OpdsDto> {
     const manifest = await this.webpubModel.find({}).lean().exec();
-    const opds = new OpdsDto(NAME_SERVER, LINK_SELF);
+    const opds = new OpdsDto(NAME_SERVER, LINK_SELF_SERVER);
     if (manifest && manifest.length) {
       opds.publication = new Array();
       manifest.forEach(el => opds.publication.push(JSON.parse(JSON.stringify(el))));
