@@ -1,4 +1,4 @@
-import { LINK_SELF_SERVER } from './../../constants';
+import { LINK_SELF_SERVER, SEARCH_URI } from './../../constants';
 import { JSON } from 'ta-json-x';
 import { LinksDto } from './../dto/links.dto';
 import { LinksSchema } from './links.schema';
@@ -25,5 +25,5 @@ WebpubSchema.pre('save', async function() {
     webpub.links = new Array();
   }
   webpub.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
-    JSON.parse<LinksDto>(LINK_SELF_SERVER(`?q=${encodeURI(webpub.metadata.title)}`), LinksDto)));
+    JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${SEARCH_URI}=${encodeURI(webpub.metadata.title)}`), LinksDto)));
 });
