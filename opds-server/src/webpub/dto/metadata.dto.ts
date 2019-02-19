@@ -1,4 +1,4 @@
-import { read } from 'fs';
+import { Collection } from 'mongoose';
 /*
  * File: metdata.dto.ts
  * Project: VoiceAssistant
@@ -84,6 +84,17 @@ export class MetadataDto {
   public setDateModified() {
     this.dateModified = new Date(Date.now());
   }
+
+  @ApiModelProperty({
+    description: 'The language of the item',
+    required: false,
+    format: 'ISO 3166 coutry alpha-2-code format',
+  })
+  @JsonProperty('language')
+  @JsonType(String)
+  @IsOptional()
+  @IsString()
+  readonly language: string;
 
   @ApiModelProperty({
     description: 'The duration of the item',
@@ -230,17 +241,6 @@ export class MetadataDto {
   readonly description: string;
 
   @ApiModelProperty({
-    description: 'The language of this content',
-    required: false,
-    format: 'Country 2 digits code ISO A2 (ex: "en")',
-  })
-  @JsonProperty('language')
-  @JsonType(String)
-  @IsOptional()
-  @IsString()
-  readonly language: string;
-
-  @ApiModelProperty({
     description: 'An award won by or for this item',
     required: false,
   })
@@ -261,7 +261,7 @@ export class MetadataDto {
   readonly comment: string;
 
   @ApiModelProperty({
-    description: 'Genre of the document, used in Groups',
+    description: 'Genre of the document, used in facets',
     required: false,
   })
   @JsonProperty('genre')
@@ -299,4 +299,14 @@ export class MetadataDto {
   @IsOptional()
   @IsUrl()
   readonly url: string;
+
+  @ApiModelProperty({
+    description: 'Collection name of a book corpus',
+    required: false,
+  })
+  @JsonProperty('url')
+  @JsonType(String)
+  @IsOptional()
+  @IsUrl()
+  readonly collection: string;
 }

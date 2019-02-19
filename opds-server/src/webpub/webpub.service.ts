@@ -24,8 +24,8 @@ export class WebpubService {
   constructor(
     @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>) {}
 
-  async delete(Title: string): Promise<void> {
-    await this.webpubModel.deleteOne({ 'metadata.title': Title }).exec();
+  async delete(title: string): Promise<void> {
+    await this.webpubModel.deleteOne({ 'metadata.title': title }).exec();
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
@@ -33,13 +33,71 @@ export class WebpubService {
     return await created.save();
   }
 
-  async find(Title: string): Promise<WebpubDto> {
-    const manifest = await this.webpubModel.findOne({$text: {$search: Title}}).lean().exec();
+  async find(title: string): Promise<WebpubDto> {
+    const manifest = await this.webpubModel.find({$text: {$search: title}}).lean().exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
     }
     return {} as WebpubDto;
+  }
+
+  async findLang(lang: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
+    console.log(lang);
+    
+    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.language': lang })
+    .sort({'metadata.dateModified': sort})
+    .limit(numberOfItem)
+    .skip(page * numberOfItem)
+    .lean()
+    .exec();
+    if (manifest) {
+      const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
+      return JSON.serialize(object);
+    }
+    return [] as WebpubDto[];
+  }
+
+  async findCollection(collection: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
+    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.collection': collection})
+    .sort({'metadata.dateModified': sort})
+    .limit(numberOfItem)
+    .skip(page * numberOfItem)
+    .lean()
+    .exec();
+    if (manifest) {
+      const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
+      return JSON.serialize(object);
+    }
+    return [] as WebpubDto[];
+  }
+
+  async findGenre(genre: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
+    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.genre': genre})
+    .sort({'metadata.dateModified': sort})
+    .limit(numberOfItem)
+    .skip(page * numberOfItem)
+    .lean()
+    .exec();
+    if (manifest) {
+      const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
+      return JSON.serialize(object);
+    }
+    return [] as WebpubDto[];
+  }
+
+  async findGroup(group: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
+    const manifest: IWebpub[] = await this.webpubModel.find({})
+    .sort({'metadata.dateModified': sort})
+    .limit(numberOfItem)
+    .skip(page * numberOfItem)
+    .lean()
+    .exec();
+    if (manifest) {
+      const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
+      return JSON.serialize(object);
+    }
+    return [] as WebpubDto[];
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {

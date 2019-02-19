@@ -31,6 +31,7 @@ export const GENRE_URI = 'genre';
 export const GROUP_URI = 'groups';
 export const NUMBER_OF_ITEM_URI = 'numberofitem';
 export const SORT_URI = 'sort';
+export const PAGE_URI = 'page';
 
 export const LINK_HREF = (query = '') => `${PROTOCOL_SERVER}://${DOMAIN_SERVER}/${ROOT_SERVER}${query}`;
 export const LINK_TYPE = 'application/opds+json';

@@ -15,7 +15,6 @@ import { ApiModelProperty } from '@nestjs/swagger';
 import { JsonProperty, JsonType, JsonObject, JsonElementType } from 'ta-json-x';
 import { IsNotEmpty
   , IsUrl
-  , IsJSON
   , IsOptional
   , IsBoolean
   , IsString
