@@ -1,4 +1,3 @@
-import { PAGE_URI } from './../constants';
 /*
  * File: webpub.controller.ts
  * Project: VoiceAssistant
@@ -26,7 +25,14 @@ import { WebpubService } from './webpub.service';
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { WebpubDto } from './dto/webpub.dto';
 import { OpdsDto } from './opds/dto/opds.dto';
-import { SEARCH_URI, LANG_URI, COLLECTION_URI, GENRE_URI, GROUP_URI, NUMBER_OF_ITEM_URI, SORT_URI } from './../constants';
+import { SEARCH_URI
+  , LANG_URI
+  , COLLECTION_URI
+  , GENRE_URI
+  , GROUP_URI
+  , NUMBER_OF_ITEM_URI
+  , SORT_URI
+  , PAGE_URI } from './../constants';
 import { FeedService } from './opds/feed.service';
 
 @Controller('webpub')
@@ -84,7 +90,7 @@ export class WebpubController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
       status: 200,
-      description: 'return webpub Manifest with title identification',
+      description: 'return webpub Manifest or an OPDS Feed',
   })
   @Get()
   async read(@Query(SEARCH_URI) search: string,
@@ -111,17 +117,13 @@ export class WebpubController {
       if (search) {
         return await this.webpubService.find(search);
       } else if (lang) {
-        return await this.webpubService.findLang(lang, lNumberOfItem, lSort, lPage,
-          /*parseInt(numberOfItem, 10), parseInt(sort, 10), parseInt(page, 10)*/);
+        return await this.webpubService.findLang(lang, lNumberOfItem, lSort, lPage);
       } else if (collection) {
-        return await this.webpubService.findCollection(collection, lNumberOfItem, lSort, lPage,
-          /*parseInt(numberOfItem, 10), parseInt(sort, 10), parseInt(page, 10)*/);
+        return await this.webpubService.findCollection(collection, lNumberOfItem, lSort, lPage);
       } else if (genre) {
-        return await this.webpubService.findGenre(genre, lNumberOfItem, lSort, lPage,
-          /*parseInt(numberOfItem, 10), parseInt(sort, 10), parseInt(page, 10)*/);
+        return await this.webpubService.findGenre(genre, lNumberOfItem, lSort, lPage);
       } else if (group) {
-        return await this.webpubService.findGroup(group, lNumberOfItem, lSort, lPage,
-          /*parseInt(numberOfItem, 10), parseInt(sort, 10), parseInt(page, 10)*/);
+        return await this.webpubService.findGroup(group, lNumberOfItem, lSort, lPage);
       }
       return await this.feedService.feed();
     } catch (err) {
