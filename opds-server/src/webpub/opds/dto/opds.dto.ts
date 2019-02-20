@@ -15,19 +15,10 @@ import { JsonProperty, JsonType, JsonObject, JsonElementType, JsonConverter } fr
 import { IsNotEmpty, IsUrl, IsJSON, ValidateNested, IsOptional, validateSync } from 'class-validator';
 import { LinksDto } from '../../dto/links.dto';
 import { WebpubDto } from '../../dto/webpub.dto';
-import { plainToClass } from 'class-transformer';
-import { JSON } from 'ta-json-x';
 import { MetadataOpdsDto } from './metadataOpds.dto';
 
 @JsonObject()
 export class OpdsDto {
-
-  constructor(title: string, selfLinkJson: string) {
-    this.metadata = new MetadataOpdsDto();
-    this.metadata.title = title;
-    this.links = new Array();
-    this.links.push(plainToClass<LinksDto, LinksDto>(LinksDto, JSON.parse<LinksDto>(selfLinkJson, LinksDto)));
-  }
 
   @ApiModelProperty({
     description: 'OPDS2 Metadata',
@@ -70,14 +61,27 @@ export class OpdsDto {
   navigation: LinksDto[];
 
   @ApiModelProperty({
+    description: 'Facets OPDS2',
+    required: false,
+    type: OpdsDto,
+    isArray: true,
+  })
+  @JsonProperty('facets')
+  @JsonElementType(OpdsDto)
+  @JsonType(OpdsDto)
+  @IsNotEmpty()
+  @ValidateNested()
+  facets: OpdsDto[];
+
+  @ApiModelProperty({
     description: 'Groups OPDS2',
     required: false,
     type: OpdsDto,
     isArray: true,
   })
   @JsonProperty('groups')
-  @JsonElementType(LinksDto)
-  @JsonType(LinksDto)
+  @JsonElementType(OpdsDto)
+  @JsonType(OpdsDto)
   @IsNotEmpty()
   // @IsJSON()
   @ValidateNested()

@@ -27,5 +27,6 @@ export interface IMetadata extends Document {
   readonly editor: string;
   readonly version: string;
   readonly url: string;
+  readonly corpus: string;
 
 }
