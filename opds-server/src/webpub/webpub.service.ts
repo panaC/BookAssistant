@@ -43,8 +43,6 @@ export class WebpubService {
   }
 
   async findLang(lang: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
-    console.log(lang);
-    
     const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.language': lang })
     .sort({'metadata.dateModified': sort})
     .limit(numberOfItem)
