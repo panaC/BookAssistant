@@ -304,9 +304,9 @@ export class MetadataDto {
     description: 'Collection name of a book corpus',
     required: false,
   })
-  @JsonProperty('url')
+  @JsonProperty('collection')
   @JsonType(String)
   @IsOptional()
-  @IsUrl()
-  readonly collection: string;
+  @IsString()
+  readonly corpus: string;
 }

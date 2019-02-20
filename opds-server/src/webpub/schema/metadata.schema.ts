@@ -106,6 +106,10 @@ export const MetadataSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  corpus: {
+    type: String,
+    required: false,
+  },
 });
 
 MetadataSchema.index({ title: 'text' });

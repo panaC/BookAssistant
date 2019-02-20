@@ -57,7 +57,7 @@ export class WebpubService {
   }
 
   async findCollection(collection: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
-    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.collection': collection})
+    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.corpus': collection})
     .sort({'metadata.dateModified': sort})
     .limit(numberOfItem)
     .skip(page * numberOfItem)
