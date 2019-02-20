@@ -1,0 +1,39 @@
+{
+  "name": "actions-server",
+  "version": "1.0.0",
+  "description": "diagflow - actions server that purpose the app intent",
+  "main": "main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "launch": "node dist/main.js",
+    "start": "ts-node src/main.ts",
+    "dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panaC/VoiceAssistant.git"
+  },
+  "author": "pleroux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panaC/VoiceAssistant/issues"
+  },
+  "homepage": "https://github.com/panaC/VoiceAssistant#readme",
+  "dependencies": {
+    "actions-on-google": "^2.5.0",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "debug": "^4.1.1",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.17.0",
+    "@types/debug": "0.0.31",
+    "@types/express": "^4.16.1",
+    "@types/node": "^10.12.21",
+    "nodemon": "^1.18.9",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.1"
+  }
+}
