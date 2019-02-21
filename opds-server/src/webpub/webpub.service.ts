@@ -25,7 +25,7 @@ export class WebpubService {
     @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>) {}
 
   async delete(title: string): Promise<void> {
-    await this.webpubModel.deleteOne({ 'metadata.title': title }).exec();
+    await this.webpubModel.deleteOne({ 'metadata.identifier': title }).exec();
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
@@ -99,6 +99,6 @@ export class WebpubService {
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {
-    await this.webpubModel.updateOne({ 'metadata.title': webpubDto.metadata.title }, webpubDto).exec();
+    await this.webpubModel.updateOne({ 'metadata.identifier': webpubDto.metadata.identifier }, webpubDto).exec();
   }
 }

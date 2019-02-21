@@ -48,6 +48,7 @@ export class MetadataDto {
   @JsonProperty('title')
   @JsonType(String)
   @IsNotEmpty()
+  @IsString()
   readonly title: string;
 
   @ApiModelProperty({
@@ -56,7 +57,8 @@ export class MetadataDto {
   })
   @JsonProperty('identifier')
   @JsonType(String)
-  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
   identifier: string;
 
   @ApiModelProperty({
@@ -66,7 +68,7 @@ export class MetadataDto {
   })
   @JsonProperty('dateCreated')
   @JsonType(Date)
-  @IsOptional()
+  @IsNotEmpty()
   @IsDate()
   readonly dateCreated: Date;
 
