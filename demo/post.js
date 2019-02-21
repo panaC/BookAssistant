@@ -7,7 +7,7 @@ const SERVER_API = `${SERVER}/api`;
 
 fs.readdirSync(HOME).forEach(async (json) => {
   try {
-    await axios.delete(`${SERVER_API}?q=${json.split}`)
+    await axios.delete(`${SERVER_API}?q=${json.split('.json')[0]}`);
     await axios.post(SERVER_API, JSON.parse(fs.readFileSync(`${HOME}/${json}`).toString()));
   } catch (err) {
     console.log(`${json} : ${err}`);
