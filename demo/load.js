@@ -70,6 +70,7 @@ fs.readdirSync(HOME).forEach((dir) => {
       json.metadata.identifier = dir,
       json.metadata.dateCreated = new Date(Date.now()).toISOString();
       json.metadata.language = 'FR';
+      delete json.metadata.collection;
       json.metadata.genre = 'classique';
       json.resources[0].href = 'https://www.livredepoche.com/sites/default/files/styles/manual_crop_269_435/public/images/livres/couv/9782253057215-001-T.jpeg';
       break;
@@ -79,6 +80,7 @@ fs.readdirSync(HOME).forEach((dir) => {
       json.metadata.identifier = dir,
       json.metadata.dateCreated = new Date(Date.now()).toISOString();
       json.metadata.language = 'EN';
+      delete json.metadata.collection;
       json.metadata.genre = 'classique';
       json.resources[0].href = 'https://images-na.ssl-images-amazon.com/images/I/41fK2D8MUjL._SX331_BO1,204,203,200_.jpg';
       break;
@@ -88,6 +90,7 @@ fs.readdirSync(HOME).forEach((dir) => {
       json.metadata.identifier = dir,
       json.metadata.dateCreated = new Date(Date.now()).toISOString();
       json.metadata.language = 'EN';
+      delete json.metadata.collection;
       json.metadata.genre = 'classique';
       json.resources[0].href = 'https://images-na.ssl-images-amazon.com/images/I/717VrgS6G7L.jpg'
       break;
@@ -97,6 +100,7 @@ fs.readdirSync(HOME).forEach((dir) => {
       json.metadata.identifier = dir,
       json.metadata.dateCreated = new Date(Date.now()).toISOString();
       json.metadata.language = 'FR';
+      delete json.metadata.collection;
       json.metadata.genre = 'Policier';
       json.resources[0].href = 'https://images-na.ssl-images-amazon.com/images/I/51qkVap2s0L._SX303_BO1,204,203,200_.jpg'
       break;
