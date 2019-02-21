@@ -33,13 +33,13 @@ export class WebpubService {
     return await created.save();
   }
 
-  async find(title: string): Promise<WebpubDto> {
+  async find(title: string): Promise<WebpubDto[]> {
     const manifest = await this.webpubModel.find({$text: {$search: title}}).lean().exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
     }
-    return {} as WebpubDto;
+    return [] as WebpubDto[];
   }
 
   async findLang(lang: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
