@@ -34,9 +34,9 @@ app.intent('play audiobook', async (conv, { audiobook }) => {
     const res = await Axios.get(`https://edrlab.ml/api?q=${encodeURI(audiobook as string)}`);
     if (res.data[0].links[0].href) {
       conv.ask(new MediaObject({
-        name: res.data.metadata.title,
+        name: res.data[0].metadata.title,
         url: res.data[0].links[0].href,
-        description: res.data.metadata.identifier,
+        description: res.data[0].metadata.identifier,
         icon: new Image({
           url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
           alt: 'Jazz musique',
