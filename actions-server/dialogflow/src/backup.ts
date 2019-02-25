@@ -11,6 +11,14 @@
  * Use of this source code is governed by a BSD-style license
  */
 
+ /*
+  * Ressources :
+  *
+  * DialogFlow API v2 : https://cloud.google.com/dialogflow-enterprise/docs/reference/rest/v2-overview
+  * Node js ressources example : https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/resource.js
+  * Dialogflow documentation entities : https://dialogflow.com/docs/entities
+  */
+
 import dialogflow from 'dialogflow';
 import { readFileSync, writeFileSync } from 'fs';
 import { log, err } from './debug';
