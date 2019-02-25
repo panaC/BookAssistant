@@ -32,11 +32,10 @@ app.intent('play audiobook', async (conv, { audiobook }) => {
   }
   try {
     const res = await Axios.get(`https://edrlab.ml/api?q=${encodeURI(audiobook as string)}`);
-    throw JSON.stringify(res.data);
-    if (res.data.links[0].href) {
+    if (res.data[0].links[0].href) {
       conv.ask(new MediaObject({
         name: res.data.metadata.title,
-        url: res.data.links[0].href,
+        url: res.data[0].links[0].href,
         description: res.data.metadata.identifier,
         icon: new Image({
           url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
