@@ -10,6 +10,7 @@
   "devDependencies": {
     "@types/debug": "^4.1.2",
     "@types/node": "^11.9.5",
+    "cross-env": "^5.2.0",
     "nodemon": "^1.18.10",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.3333"
@@ -17,8 +18,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "launch": "node dist/backup.js",
-    "start": "ts-node src/backup.ts",
+    "credential": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"/home/pierre/Documents/edrlab/VoiceAssistant/actions-server/dialogflow/voiceassistant.json\\\"",
+    "launch": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"/home/pierre/Documents/edrlab/VoiceAssistant/actions-server/dialogflow/voiceassistant.json\\\" node dist/backup.js",
+    "start": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"/home/pierre/Documents/edrlab/VoiceAssistant/actions-server/dialogflow/voiceassistant.json\\\" ts-node src/backup.ts",
     "dev": "nodemon"
   },
   "keywords": [],
