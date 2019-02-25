@@ -46,7 +46,7 @@ app.intent('play audiobook', async (conv, { audiobook }) => {
       conv.ask(new Suggestions('Ma suggestion'));
     }
   } catch (e) {
-    conv.ask(`Une érreur est survenue : ${e}`);
+    conv.ask(`Une érreur est survenue : ${JSON.stringify(e)}`);
   }
 });
 
