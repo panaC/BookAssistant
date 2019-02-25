@@ -32,7 +32,7 @@ app.intent('play audiobook', async (conv, { audiobook }) => {
   }
   try {
     const res = await Axios.get(`https://edrlab.ml/api?q=${encodeURI(audiobook as string)}`);
-    throw res;
+    throw JSON.stringify(res);
     if (res.data.links[0].href) {
       conv.ask(new MediaObject({
         name: res.data.metadata.title,
@@ -46,7 +46,7 @@ app.intent('play audiobook', async (conv, { audiobook }) => {
       conv.ask(new Suggestions('Ma suggestion'));
     }
   } catch (e) {
-    conv.ask(`Une érreur est survenue : ${JSON.stringify(e)}`);
+    conv.ask(`Une érreur est survenue : ${e}`);
   }
 });
 
