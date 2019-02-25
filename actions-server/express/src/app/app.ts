@@ -11,6 +11,12 @@
  * Use of this source code is governed by a BSD-style license
  */
 
+ /*
+  * Ressources :
+  *
+  * app.intent doc : https://github.com/actions-on-google/actions-on-google-nodejs/blob/master/src/service/dialogflow/conv.ts
+  */
+
 import { dialogflow, Image, MediaObject, Suggestions } from 'actions-on-google';
 import Axios from 'axios';
 
@@ -47,6 +53,10 @@ app.intent('play audiobook', async (conv, { audiobook }) => {
   } catch (e) {
     conv.ask(`Une érreur est survenue : ${e}`);
   }
+});
+
+app.intent('media status', (conv) => {
+  conv.ask(`Media status : ${conv.parameters}`);
 });
 
 // Intent in Dialogflow called `Goodbye`
