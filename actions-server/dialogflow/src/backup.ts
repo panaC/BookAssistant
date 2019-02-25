@@ -93,7 +93,7 @@ if (typeof require !== 'undefined' && require.main === module) {
   (async () => {
     try {
       await l.backup();
-      await l.restore();
+      // await l.restore();
     } catch (e) {
       err(e);
     }
