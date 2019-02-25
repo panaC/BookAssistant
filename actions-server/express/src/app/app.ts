@@ -26,7 +26,7 @@ export const app = dialogflow({
 });
 
 // Register handlers for Dialogflow intents
-app.intent('actions.intent.MAIN', conv => {
+app.intent('Default Welcome Intent', conv => {
   conv.ask(`Que voulez-vous écouter ?`);
 });
 
