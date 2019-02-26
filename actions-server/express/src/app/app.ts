@@ -42,6 +42,8 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
   try {
     const res = await Axios.get(SERVER_URL);
     if (res.data) {
+      // the payload feed is to heavy for a local storage
+      // In this case : the simulator crash and quit l'app silently without seeing it
       // conv.data.feed = res.data;
     }
   } catch (e) {
@@ -53,7 +55,6 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
   conv.ask(`Voici l'audiobook ${audiobook}`);
 
-  /*
   if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
     conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
     return;
@@ -93,7 +94,7 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
   } catch (e) {
     conv.ask(e);
   }
-  */
+  /*
   try {
     const res = await Axios.get(`http://127.0.0.1:3000/webpub?q=${encodeURI(audiobook as string)}`);
     if (res.data[0].links[0].href) {
@@ -110,7 +111,7 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
     }
   } catch (e) {
     conv.ask(`Une érreur est survenue : ${e}`);
-  }
+  }*/
 });
 
 app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
