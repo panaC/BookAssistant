@@ -66,8 +66,8 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
 
     const res = await Axios.get(SEARCH(conv.data.currentName));
     if (res.data) {
-      conv.data.currentWebpub = res.data;
-      a = res.data;
+      conv.data.currentWebpub = res.data[0];
+      a = res.data[0];
     } else {
       throw new Error('Opds Webpub Manifest Not Found');
     }
@@ -117,7 +117,7 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
 app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
 
   const a = conv.data.currentWebpub;
-  if (a && a.readingOrder.length && conv.data.currentChapter < a.readingOrder.length) {
+  if (a && a.readingOrder && a.readingOrder.length && conv.data.currentChapter < a.readingOrder.length) {
     try {
       const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
       const link = a.readingOrder[conv.data.currentChapter++];
