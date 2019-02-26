@@ -16,3 +16,7 @@ export const PORT = 4000;
 export const SERVER_NAME = 'Actions-Server';
 
 export const ENTRY_POINT = '/fulfillment';
+
+export const SERVER_URL = 'http://127.0.0.1:3000/webpub';
+
+export const SEARCH = (audiobook: string) => `${SERVER_URL}?q=${encodeURI(audiobook)}`;
