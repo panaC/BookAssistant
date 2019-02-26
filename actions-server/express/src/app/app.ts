@@ -42,7 +42,7 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
   try {
     const res = await Axios.get(SERVER_URL);
     if (res.data) {
-      conv.data.feed = res.data;
+      // conv.data.feed = res.data;
     }
   } catch (e) {
     //
