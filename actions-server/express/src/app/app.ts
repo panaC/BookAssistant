@@ -108,7 +108,7 @@ app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
       conv.ask(new MediaObject({
         name: a.metadata.title,
         url: link.href,
-        description: a.metadata.identifier,
+        description: link.title,
         icon: (img) ? new Image({
           url: img.href,
           alt: img.title,
