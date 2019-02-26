@@ -80,6 +80,8 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
 
     const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
 
+    console.log(a.metadata.title, link, img);
+
     conv.ask(new MediaObject({
       name: a.metadata.title,
       url: link.href,
