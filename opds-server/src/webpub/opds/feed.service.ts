@@ -12,9 +12,19 @@
  */
 
 import { MetadataDto } from '../dto/metadata.dto';
-import { SORT_URI, MORE_POPULAR_GROUP_NAME, GROUP_URI, WEBPUB_MODEL_PROVIDER, MORE_RECENT_GROUP_NAME } from '../../constants';
-import { NAME_SERVER, LINK_SELF_SERVER, SEARCH_URI, NUMBER_OF_ITEM_URI } from '../../constants';
-import { LINK_HREF, LINK_TYPE } from './../../constants';
+import { SORT_URI
+  , MORE_POPULAR_GROUP_NAME
+  , GROUP_URI, WEBPUB_MODEL_PROVIDER
+  , MORE_RECENT_GROUP_NAME
+  , COLLECTION_URI
+  , GENRE_URI, LANG_URI
+  , PAGE_URI
+  , NAME_SERVER
+  , LINK_SELF_SERVER
+  , SEARCH_URI
+  , NUMBER_OF_ITEM_URI
+  , LINK_HREF
+  , LINK_TYPE } from './../../constants';
 import { OpdsDto } from './dto/opds.dto';
 import { MetadataOpdsDto } from './dto/metadataOpds.dto';
 import { plainToClass } from 'class-transformer';
@@ -41,13 +51,21 @@ export class FeedService extends OpdsDto {
       self.links = new Array();
       self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto, JSON.parse<LinksDto>(LINK_SELF_SERVER(''), LinksDto)));
       self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
-        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${SEARCH_URI}=\${search}`, 'search'), LinksDto)));
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${SEARCH_URI}=\${${SEARCH_URI}}`, `search`), LinksDto)));
       self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
-        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${NUMBER_OF_ITEM_URI}=\${number_of_item}`, 'number_of_item'), LinksDto)));
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${GROUP_URI}=\${${GROUP_URI}}`, `${GROUP_URI}`), LinksDto)));
       self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
-        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${SORT_URI}=\${sort}`, 'sort'), LinksDto)));
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${LANG_URI}=\${${LANG_URI}}`, `${LANG_URI}`), LinksDto)));
       self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
-        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${GROUP_URI}=\${group}`, 'groups'), LinksDto)));
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${COLLECTION_URI}=\${${COLLECTION_URI}}`, `${COLLECTION_URI}`), LinksDto)));
+      self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${GENRE_URI}=\${${GENRE_URI}}`, `${GENRE_URI}`), LinksDto)));
+      self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${NUMBER_OF_ITEM_URI}=\${${NUMBER_OF_ITEM_URI}}`, `${NUMBER_OF_ITEM_URI}`), LinksDto)));
+      self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${SORT_URI}=\${${SORT_URI}}`, `${SORT_URI}`), LinksDto)));
+      self.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
+        JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${PAGE_URI}=\${${PAGE_URI}}`, `${PAGE_URI}`), LinksDto)));
     }
 
     // facets
@@ -55,16 +73,64 @@ export class FeedService extends OpdsDto {
     {
       //  - lang
       // find the mongoose filter to extract lang only available
+      const lang = new OpdsDto();
+      lang.metadata = new MetadataDto();
+      lang.metadata.title = LANG_URI;
+      this.webpubModel.find({}).distinct('metadata.language', (err, res) => {
+        if (!err) {
+          lang.links = new Array();
+          res.forEach((val) => {
+            const links = new LinksDto();
+            links.href = LINK_HREF(`?${LANG_URI}=${encodeURI(val)}`);
+            links.type = LINK_TYPE;
+            links.title = val;
+            lang.links.push(links);
+          });
+        }
+      });
+      self.facets.push(lang);
     }
 
     {
       //  - collection
       // find the mongoose filter to extract collection name
+      const coll = new OpdsDto();
+      coll.metadata = new MetadataDto();
+      coll.metadata.title = COLLECTION_URI;
+      this.webpubModel.find({}).distinct('metadata.corpus', (err, res) => {
+        if (!err) {
+          coll.links = new Array();
+          res.forEach((val) => {
+            const links = new LinksDto();
+            links.href = LINK_HREF(`?${COLLECTION_URI}=${encodeURI(val)}`);
+            links.type = LINK_TYPE;
+            links.title = val;
+            coll.links.push(links);
+          });
+        }
+      });
+      self.facets.push(coll);
     }
 
     {
       //  - genre
       // find the mongoose filter to extract collection name
+      const genre = new OpdsDto();
+      genre.metadata = new MetadataDto();
+      genre.metadata.title = GENRE_URI;
+      this.webpubModel.find({}).distinct('metadata.genre', (err, res) => {
+        if (!err) {
+          genre.links = new Array();
+          res.forEach((val) => {
+            const links = new LinksDto();
+            links.href = LINK_HREF(`?${GENRE_URI}=${encodeURI(val)}`);
+            links.type = LINK_TYPE;
+            links.title = val;
+            genre.links.push(links);
+          });
+        }
+      });
+      self.facets.push(genre);
     }
     {
       //  - groups
@@ -85,8 +151,8 @@ export class FeedService extends OpdsDto {
         links.type = LINK_TYPE;
         links.title = MORE_RECENT_GROUP_NAME;
         groups.links.push(links);
-        self.facets.push(groups);
       }
+      self.facets.push(groups);
     }
 
     // groups
