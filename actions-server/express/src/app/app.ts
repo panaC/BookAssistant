@@ -38,8 +38,6 @@ export const app = dialogflow({
 
 // Register handlers for Dialogflow intents
 app.intent('Default Welcome Intent', async (conv: DialogflowConversation<IsessionStorage>) => {
-
-  /*
   conv.data.currentChapter = 0;
   try {
     const res = await Axios.get(SERVER_URL);
@@ -48,7 +46,7 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
     }
   } catch (e) {
     //
-  }*/
+  }
   conv.ask(`Que voulez-vous écouter ?`);
 });
 
