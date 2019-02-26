@@ -23,6 +23,8 @@ import { OpdsDto } from './../../../../opds-server/src/webpub/opds/dto/opds.dto'
 import { IWebpub } from './../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 import { SEARCH, SERVER_URL } from './../constants';
 import { ILinks } from '../../../../opds-server/src/webpub/interfaces/links.interface';
+import i18n from 'i18n';
+import { join } from 'path';
 
 interface IsessionStorage {
   feed: OpdsDto;
@@ -47,6 +49,18 @@ export const app = dialogflow({
   /*debug: true,*/
 });
 
+app.middleware((conv: DialogflowConversation<IsessionStorage>) => {
+  i18n.configure({
+    directory: join(__dirname, '/locales'),
+    objectNotation: true,
+    fallbacks: {
+      'fr-FR': 'fr',
+      'fr-CA': 'fr',
+    },
+  });
+  i18n.setLocale(conv.user.locale);
+});
+
 // Register handlers for Dialogflow intents
 app.intent('Default Welcome Intent', async (conv: DialogflowConversation<IsessionStorage, IuserStorage>) => {
   conv.data.currentChapter = 0;
@@ -62,7 +76,7 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
   } catch (e) {
     //
   }
-  conv.ask(`Que voulez-vous écouter ?`);
+  conv.ask(i18n.__('welcome'));
 });
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
