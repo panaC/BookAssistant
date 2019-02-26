@@ -64,7 +64,7 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
     conv.data.currentName = audiobook as string;
 
     const res = await Axios.get(SEARCH(conv.data.currentName));
-    if (res.data) {
+    if (res.data[0]) {
       conv.data.currentWebpub = res.data[0];
       a = res.data[0];
     } else {
