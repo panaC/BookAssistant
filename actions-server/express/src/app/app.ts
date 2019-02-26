@@ -31,14 +31,27 @@ interface IsessionStorage {
   currentName: string;
 }
 
+interface Iaudiobook {
+  name: string;
+  webpub: IWebpub;
+  chapter: number;
+}
+
+interface IuserStorage {
+  audiobook: Iaudiobook[];
+  lastSeen: Date;
+}
+
 // Create an app instance
 export const app = dialogflow({
   /*debug: true,*/
 });
 
 // Register handlers for Dialogflow intents
-app.intent('Default Welcome Intent', async (conv: DialogflowConversation<IsessionStorage>) => {
+app.intent('Default Welcome Intent', async (conv: DialogflowConversation<IsessionStorage, IuserStorage>) => {
   conv.data.currentChapter = 0;
+  // conv.user.storage
+
   try {
     const res = await Axios.get(SERVER_URL);
     if (res.data) {
