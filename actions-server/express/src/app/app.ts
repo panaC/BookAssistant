@@ -104,7 +104,7 @@ app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
       const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
       const link = a.readingOrder[conv.data.currentChapter++];
 
-      conv.ask(`Voici l'audiobook ${conv.data.currentName}`);
+      conv.ask(` `);
       conv.ask(new MediaObject({
         name: a.metadata.title,
         url: link.href,
@@ -119,8 +119,9 @@ app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
     } catch (e) {
       conv.ask(e);
     }
+  } else {
+    conv.ask(`l'audiobook ${conv.data.currentName} est fini`);
   }
-  conv.ask(`l'audiobook ${conv.data.currentName} est finis`);
 });
 
 // Intent in Dialogflow called `Goodbye`
