@@ -33,7 +33,7 @@ interface IsessionStorage {
 
 // Create an app instance
 export const app = dialogflow({
-  debug: true,
+  /*debug: true,*/
 });
 
 // Register handlers for Dialogflow intents
