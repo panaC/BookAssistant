@@ -68,7 +68,7 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
       conv.data.currentWebpub = res.data[0];
       a = res.data[0];
     } else {
-      throw new Error('Opds Webpub Manifest Not Found');
+      throw 'aucun livre correspondant';
     }
 
     if (a.readingOrder && a.readingOrder.length && conv.data.currentChapter < a.readingOrder.length) {
