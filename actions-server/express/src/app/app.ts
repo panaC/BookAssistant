@@ -39,6 +39,7 @@ export const app = dialogflow({
 // Register handlers for Dialogflow intents
 app.intent('Default Welcome Intent', async (conv: DialogflowConversation<IsessionStorage>) => {
 
+  /*
   conv.data.currentChapter = 0;
   try {
     const res = await Axios.get(SERVER_URL);
@@ -47,13 +48,14 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
     }
   } catch (e) {
     //
-  }
+  }*/
   conv.ask(`Que voulez-vous écouter ?`);
 });
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
   conv.ask(`Voici l'audiobook ${audiobook}`);
 
+  /*
   if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
     conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
     return;
@@ -92,6 +94,24 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
 
   } catch (e) {
     conv.ask(e);
+  }
+  */
+  try {
+    const res = await Axios.get(`http://127.0.0.1:3000/webpub?q=${encodeURI(audiobook as string)}`);
+    if (res.data[0].links[0].href) {
+      conv.ask(new MediaObject({
+        name: res.data[0].metadata.title,
+        url: res.data[0].links[0].href,
+        description: res.data[0].metadata.identifier,
+        icon: new Image({
+          url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
+          alt: 'Jazz musique',
+        }),
+      }));
+      conv.ask(new Suggestions('Ma suggestion'));
+    }
+  } catch (e) {
+    conv.ask(`Une érreur est survenue : ${e}`);
   }
 });
 
