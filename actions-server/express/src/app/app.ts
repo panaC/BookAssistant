@@ -52,6 +52,7 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
 });
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
+  conv.ask(`Voici l'audiobook ${audiobook}`);
 
   if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
     conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
@@ -78,7 +79,6 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
 
     const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
 
-    conv.ask(`Voici l'audiobook ${audiobook}`);
     conv.ask(new MediaObject({
       name: a.metadata.title,
       url: link.href,
