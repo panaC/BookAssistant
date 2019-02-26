@@ -22,7 +22,7 @@
         }
     ],
     "editor.tabSize": 2,
-    "window.zoomLevel": -1,
+    "window.zoomLevel": 0,
     "terminal.integrated.rendererType": "dom",
     "git.postCommitCommand": "push",
     "typescript.updateImportsOnFileMove.enabled": "always"
