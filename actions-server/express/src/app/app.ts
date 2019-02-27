@@ -80,7 +80,9 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
 });
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
-
+  if (!audiobook || audiobook === '') {
+    return;
+  }
   if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
     conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
     return;
