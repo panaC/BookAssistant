@@ -163,5 +163,5 @@ app.intent('Goodbye', conv => {
 
 app.intent('Default Fallback Intent', conv => {
   conv.ask(`Je n'ai pas compris peux tu me demander autre chose ?`);
-  conv.ask('Pour écouter un livre, dites, je veux écouter suivis du titre du livre');
+  conv.ask('Pour écouter un livre, dites : "je veux écouter" suivis du titre du livre');
 });
