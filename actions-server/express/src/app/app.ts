@@ -15,6 +15,34 @@
   * Ressources :
   *
   * app.intent doc : https://github.com/actions-on-google/actions-on-google-nodejs/blob/master/src/service/dialogflow/conv.ts
+  *
+  *
+  * Todo :
+  *
+  * - Add an interface for sessionStorage
+  * - Add an interface for userStorage
+  * - Add all the code into a class App (app.ts)
+  *   - Add each class method to the right intent in init phase (constructor)
+  *   - Add a service class file (app.service.ts)
+  *   - Manage the global app architecture for spliting app.ts in playing_control and ask_feed/webpub and global_intent
+  * - Add i18n for each ask sentence
+  * - Add a context enum
+  * - Change Default welcome Intent by 'start' and set in dialogflow like starting point (like numberGenie)
+  * - Set the global context play_audiobook
+  * - When the userStorage has already the same audiobook that the user want
+  *   - Ask to user if he want starting at last chapter listen it (set the context startingLastChapterListen_YES_NO)
+  *     - if yes : play the last chapter by set the sessionStorage and return the fct playing
+  *     - if no : set the current chapter to 0 and return the playing fct
+  * - Add a fallbackCount in sessionStorage for counting the number of fallback
+  *   - when it's equal to 2 -> conv.close and return
+  *   - see ln 233 in index.js numberGenie
+  * - Add intent (context: 'playing audiobook')
+  *   - next_chapter
+  *   - previous_chapter
+  *   - ask_author
+  *   - ask_resume
+  *   - ask_numberOfChapter
+  *   - ...
   */
 
 import { dialogflow, Image, MediaObject, Suggestions, DialogflowConversation } from 'actions-on-google';
