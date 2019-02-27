@@ -152,6 +152,10 @@ app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
   }
 });
 
+app.intent('no input', (conv: DialogflowConversation<IsessionStorage>) => {
+  conv.ask(`Vous ne dite rien !`);
+});
+
 // Intent in Dialogflow called `Goodbye`
 app.intent('Goodbye', conv => {
   conv.close('Reviens vite !');
