@@ -118,9 +118,38 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
       }) : null,
     }));
     conv.ask(new Suggestions('Ma suggestion'));
+    conv.contexts.set('playing_audiobook', 999);
 
   } catch (e) {
     conv.ask(`Une erreur est survenue ${e}`);
+  }
+});
+
+app.intent('chapter_next', async (conv: DialogflowConversation<IsessionStorage>) => {
+
+  const a = conv.data.currentWebpub;
+  if (a && a.readingOrder && a.readingOrder.length && conv.data.currentChapter < a.readingOrder.length) {
+    try {
+      const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
+      const link = a.readingOrder[conv.data.currentChapter++];
+
+      conv.ask(` `);
+      conv.ask(new MediaObject({
+        name: a.metadata.title,
+        url: link.href,
+        description: link.title,
+        icon: (img) ? new Image({
+          url: img.href,
+          alt: img.title,
+        }) : null,
+      }));
+      conv.ask(new Suggestions('Ma suggestion'));
+
+    } catch (e) {
+      conv.ask(e);
+    }
+  } else {
+    conv.ask(`l'audiobook ${conv.data.currentName} est fini`);
   }
 });
 
