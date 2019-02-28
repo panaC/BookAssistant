@@ -1,25 +1,13 @@
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
 import { DialogflowConversation, Suggestions } from 'actions-on-google';
-import { join } from 'path';
 import { Iprompt } from './prompt';
 import { sprintf } from 'sprintf-js';
+import { setLocale } from './prompt';
 
 export class Utils {
   constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {
     this.conv = conv;
-
-    i18n.configure({
-      directory: join(__dirname, '/locales'),
-      objectNotation: true,
-      fallbacks: {
-        'fr-FR': 'fr',
-        'fr-CA': 'fr',
-        'en-US': 'en',
-        'en-GB': 'en',
-      },
-      defaultLocale: 'fr',
-    });
-    i18n.setLocale(conv.user.locale);
+    setLocale(conv.user.locale);
   }
 
   ask(prompt: Iprompt, ...args: Array<string | number>) {
