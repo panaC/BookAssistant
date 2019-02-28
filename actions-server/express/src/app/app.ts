@@ -22,7 +22,7 @@
   * - Add an interface for sessionStorage
   * - Add an interface for userStorage
   * - Add all the code into a class App (app.ts)
-  *   - Add each class method to the right intent in init phase (constructor)
+  *   - Add each class method to the right intent in init phase
   *   - Add a service class file (app.service.ts)
   *   - Manage the global app architecture for spliting app.ts in playing_control and ask_feed/webpub and global_intent
   * - Add i18n for each ask sentence
@@ -77,15 +77,19 @@ export const app = dialogflow({
   /*debug: true,*/
 });
 
+i18n.configure({
+  directory: join(__dirname, '/locales'),
+  objectNotation: true,
+  fallbacks: {
+    'fr-FR': 'fr',
+    'fr-CA': 'fr',
+    'en-US': 'en',
+    'en-GB': 'en',
+  },
+  defaultLocale: 'fr',
+});
+
 app.middleware((conv: DialogflowConversation<IsessionStorage>) => {
-  i18n.configure({
-    directory: join(__dirname, '/locales'),
-    objectNotation: true,
-    fallbacks: {
-      'fr-FR': 'fr',
-      'fr-CA': 'fr',
-    },
-  });
   i18n.setLocale(conv.user.locale);
 });
 
