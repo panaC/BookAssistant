@@ -124,7 +124,7 @@ app.intent('Default Welcome Intent', async (conv: DFConv) => {
   } catch (e) {
     //
   }
-  conv.utils.ask(i18n.__('welcome'));
+  conv.utils.ask(i18n.__('welcome'), i18n.__('play_book'));
 });
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
