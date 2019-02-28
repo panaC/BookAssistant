@@ -30,7 +30,7 @@ export const prompts: Iprompts = {
       i18n.__('welcome.home'),
     ],
     suggestions: [
-      i18n.__('instruction.play_book'),
+      i18n.__('instruction.want_listen'),
     ],
   },
 };

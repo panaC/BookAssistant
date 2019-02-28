@@ -3,6 +3,7 @@
     "home": "Que voulez-vous écouter ?"
   },
   "instruction": {
-    "play_book": "Dites: \"je veux écouter\" suivi du titre du livres"
+    "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
+    "want_listen": "Je veux écouter"
   }
 }
