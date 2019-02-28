@@ -22,6 +22,8 @@
   * - Add an interface for sessionStorage
   * - Add an interface for userStorage
   * - Add all the code into a class App (app.ts)
+  *           -> Ok create class DFconv that herit from DialogflowConversation and contain utils (all tools handle conversation (ask))
+  *             -> set the new file with utils.ts and add a class service for http request
   *   - Add each class method to the right intent in init phase
   *   - Add a service class file (app.service.ts)
   *   - Manage the global app architecture for spliting app.ts in playing_control and ask_feed/webpub and global_intent
