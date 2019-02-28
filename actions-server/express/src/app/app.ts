@@ -53,6 +53,7 @@ import { SEARCH, SERVER_URL } from './../constants';
 import { ILinks } from '../../../../opds-server/src/webpub/interfaces/links.interface';
 import i18n from 'i18n';
 import { join } from 'path';
+import { Response } from 'actions-on-google/src/service/actionssdk/conversation/conversation';
 
 interface IsessionStorage {
   feed: OpdsDto;
@@ -89,12 +90,27 @@ i18n.configure({
   defaultLocale: 'fr',
 });
 
-app.middleware((conv: DialogflowConversation<IsessionStorage>) => {
+class Utils {
+  constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {
+    this.conv = conv;
+  }
+
+  ask(...responses: Response[]) {
+    this.conv.ask(...responses);
+  }
+}
+
+class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
+  utils: Utils;
+}
+
+app.middleware((conv: DFConv) => {
   i18n.setLocale(conv.user.locale);
+  conv.utils = new Utils(conv);
 });
 
 // Register handlers for Dialogflow intents
-app.intent('Default Welcome Intent', async (conv: DialogflowConversation<IsessionStorage, IuserStorage>) => {
+app.intent('Default Welcome Intent', async (conv: DFConv) => {
   conv.data.currentChapter = 0;
   // conv.user.storage
 
@@ -108,7 +124,7 @@ app.intent('Default Welcome Intent', async (conv: DialogflowConversation<Isessio
   } catch (e) {
     //
   }
-  conv.ask(i18n.__('welcome'));
+  conv.utils.ask(i18n.__('welcome'));
 });
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
