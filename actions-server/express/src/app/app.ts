@@ -54,6 +54,7 @@ import { ILinks } from '../../../../opds-server/src/webpub/interfaces/links.inte
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
 import { Utils } from './utils';
 import { intent } from './intent/intent';
+import { IWebpub } from './../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   utils: Utils;
