@@ -49,30 +49,14 @@
 
 import { dialogflow, Image, MediaObject, Suggestions, DialogflowConversation } from 'actions-on-google';
 import Axios from 'axios';
-import { OpdsDto } from './../../../../opds-server/src/webpub/opds/dto/opds.dto';
-import { IWebpub } from './../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 import { SEARCH, SERVER_URL } from './../constants';
 import { ILinks } from '../../../../opds-server/src/webpub/interfaces/links.interface';
-import i18n from 'i18n';
-import { join } from 'path';
-import { Response } from 'actions-on-google/src/service/actionssdk/conversation/conversation';
+import { IsessionStorage, IuserStorage } from './interface/storage.interface';
+import { Utils } from './utils';
+import { intent } from './intent/intent';
 
-interface IsessionStorage {
-  feed: OpdsDto;
-  currentWebpub: IWebpub;
-  currentChapter: number;
-  currentName: string;
-}
-
-interface Iaudiobook {
-  name: string;
-  webpub: IWebpub;
-  chapter: number;
-}
-
-interface IuserStorage {
-  audiobook: Iaudiobook[];
-  lastSeen: Date;
+export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
+  utils: Utils;
 }
 
 // Create an app instance
@@ -80,54 +64,12 @@ export const app = dialogflow({
   /*debug: true,*/
 });
 
-i18n.configure({
-  directory: join(__dirname, '/locales'),
-  objectNotation: true,
-  fallbacks: {
-    'fr-FR': 'fr',
-    'fr-CA': 'fr',
-    'en-US': 'en',
-    'en-GB': 'en',
-  },
-  defaultLocale: 'fr',
-});
-
-class Utils {
-  constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {
-    this.conv = conv;
-  }
-
-  ask(...responses: Response[]) {
-    this.conv.ask(...responses);
-  }
-}
-
-class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
-  utils: Utils;
-}
-
 app.middleware((conv: DFConv) => {
-  i18n.setLocale(conv.user.locale);
   conv.utils = new Utils(conv);
 });
 
 // Register handlers for Dialogflow intents
-app.intent('Default Welcome Intent', async (conv: DFConv) => {
-  conv.data.currentChapter = 0;
-  // conv.user.storage
-
-  try {
-    const res = await Axios.get(SERVER_URL);
-    if (res.data) {
-      // the payload feed is to heavy for a local storage
-      // In this case : the simulator crash and quit l'app silently without seeing it
-      // conv.data.feed = res.data;
-    }
-  } catch (e) {
-    //
-  }
-  conv.utils.ask(i18n.__('welcome'), i18n.__('play_book'));
-});
+app.intent('Default Welcome Intent', intent.welcome);
 
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
   if (audiobook && audiobook !== '') {

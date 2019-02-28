@@ -1,4 +1,8 @@
 {
-  "welcome": "Que voulez-vous écouter ?",
-  "play_book": "Dites: \"je veux écouter\" suivi du titre du livres"
+  "welcome": {
+    "home": "Que voulez-vous écouter ?"
+  },
+  "instruction": {
+    "play_book": "Dites: \"je veux écouter\" suivi du titre du livres"
+  }
 }
