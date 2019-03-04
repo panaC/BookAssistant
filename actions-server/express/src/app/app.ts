@@ -11,7 +11,7 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { dialogflow, Image, MediaObject, Suggestions } from 'actions-on-google';
+import { dialogflow, Image, MediaObject, Suggestions, SignIn } from 'actions-on-google';
 import Axios from 'axios';
 
 // Create an app instance
@@ -21,8 +21,23 @@ export const app = dialogflow({
 
 // Register handlers for Dialogflow intents
 app.intent('Default Welcome Intent', conv => {
-  conv.ask(`Que voulez-vous écouter ?`);
+  const token = conv.user.access.token;
+  if (!token) {
+    conv.ask(new SignIn('Connectez-vous avec vos identifiants'));
+  } else {
+    conv.ask(`Que voulez-vous écouter ?`);
+  }
 });
+
+app.intent('actions_intent_SIGN_IN', (conv, params, permission) => {
+  console.log(permission);
+  console.log(conv.user.access.token);
+  if (permission || conv.user.access.token) {
+    conv.ask(`Que voulez-vous écouter ?`);
+  } else {
+    conv.close(`Vous n'etes pas connecté`);
+  }
+})
 
 app.intent('play audiobook', async (conv, { audiobook }) => {
   conv.ask(`Voici l'audiobook ${audiobook}`);
