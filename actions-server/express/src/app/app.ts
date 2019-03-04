@@ -47,14 +47,10 @@
   *   - ...
   */
 
-import { dialogflow, Image, MediaObject, Suggestions, DialogflowConversation } from 'actions-on-google';
-import Axios from 'axios';
-import { SEARCH, SERVER_URL } from './../constants';
-import { ILinks } from '../../../../opds-server/src/webpub/interfaces/links.interface';
+import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
 import { Utils } from './utils';
 import { intent } from './intent/intent';
-import { IWebpub } from './../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   utils: Utils;
@@ -69,20 +65,17 @@ app.middleware((conv: DFConv) => {
   conv.utils = new Utils(conv);
 });
 
-// Register handlers for Dialogflow intents
+// start intents
 app.intent('Default Welcome Intent', intent.welcome);
 
+// play intents
 app.intent('play audiobook', intent.play);
-
 app.intent('media status', intent.play);
-
 app.intent('chapter_next', intent.play);
-
 app.intent('chapter_prev', intent.playPrev);
 
 // default intents
 app.intent('no input', intent.noInput);
-
 app.intent('goodbye', intent.goodbye);
 
 /*

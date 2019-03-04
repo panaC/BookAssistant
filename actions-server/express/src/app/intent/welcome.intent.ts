@@ -4,6 +4,8 @@ import { prompts } from '../prompt';
 export const welcome = (conv: DFConv) => {
 
   conv.data.currentChapter = 0;
+  conv.data.currentName = '';
+  conv.data.media = null;
   // conv.user.storage
 
   try {

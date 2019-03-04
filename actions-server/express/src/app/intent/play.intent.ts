@@ -20,7 +20,7 @@ export const play = async (conv: DFConv) => {
   try {
     const media = await getAudiobook(conv.data.currentName, chapter);
     conv.data.media = media;
-    if (media.state === Eaudiobook.OK || media.state === Eaudiobook.END_CHAPTER) {
+    if (media.state === Eaudiobook.OK) {
       conv.contexts.set('playing_audiobook', 999);
       conv.utils.media(media,
         (conv.data.currentChapter === 0 ?
