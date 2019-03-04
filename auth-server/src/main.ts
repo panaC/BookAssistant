@@ -22,7 +22,7 @@ app.get('/auth', (req, res) => {
       query += `${key.toString()}=${req.query[key]}&`;
     }
   }
-  res.render('pages/login', { urlToSubmit: `${PROTOCOL_SERVER}://${DOMAIN_SERVER}:${PORT_SERVER}/auth?${query}`});
+  res.render('pages/login', { urlToSubmit: `${PROTOCOL_SERVER}://${DOMAIN_SERVER}/auth?${query}`});
 });
 
 app.post('/auth', (req, res) => {
