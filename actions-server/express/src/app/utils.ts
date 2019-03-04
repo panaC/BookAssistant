@@ -1,13 +1,43 @@
-import { IsessionStorage, IuserStorage } from './interface/storage.interface';
-import { DialogflowConversation, Suggestions } from 'actions-on-google';
+import i18n from 'i18n';
+import { IsessionStorage, IuserStorage, Iaudiobook } from './interface/storage.interface';
+import { DialogflowConversation, Suggestions, MediaObject, Image } from 'actions-on-google';
 import { Iprompt } from './prompt';
 import { sprintf } from 'sprintf-js';
 import { setLocale } from './prompt';
+import { Eaudiobook } from './service/audiobook.service';
 
 export class Utils {
   constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {
     this.conv = conv;
     setLocale(conv.user.locale);
+  }
+
+  isCompatible() {
+    if (!this.conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
+      this.conv.close(i18n.__('utils.playing_is_compatible'));
+      return false;
+    }
+    return true;
+  }
+
+  media(media: Iaudiobook, prompt: Iprompt, ...args: Array<string | number>) {
+    if (media.state === Eaudiobook.OK || media.state === Eaudiobook.END_CHAPTER) {
+      prompt.elements.forEach(element => {
+        this.conv.ask(sprintf(element, ...args));
+      });
+      this.conv.ask(new MediaObject({
+        name: media.name,
+        description: media.description,
+        url: media.url,
+        icon: (media.img) ? new Image({
+          url: media.img.url,
+          alt: media.img.alt,
+        }) : null,
+      }));
+      prompt.suggestions.forEach(sugg => {
+        this.conv.ask(new Suggestions(sugg));
+      });
+    }
   }
 
   ask(prompt: Iprompt, ...args: Array<string | number>) {

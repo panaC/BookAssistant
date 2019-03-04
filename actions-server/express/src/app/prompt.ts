@@ -33,4 +33,13 @@ export const prompts: Iprompts = {
       i18n.__('instruction.want_listen'),
     ],
   },
+  play_first: {
+    elements: [
+      i18n.__('play.first'),
+    ],
+    suggestions: [
+      i18n.__('play.suggestion.mext'),
+      i18n.__('play.suggestion.prev'),
+    ],
+  },
 };

@@ -5,5 +5,21 @@
   "instruction": {
     "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
     "want_listen": "Je veux écouter"
+  },
+  "service": {
+    "get_audiobook": {
+      "error": "aucun livre ne correspond"
+    }
+  },
+  "play": {
+    "first": "Voici l'audiobook %s",
+    "suggestion": {
+      "next": "Chapitre suivant",
+      "prev": "Chapitre précédent"
+    },
+    "follow": ""
+  },
+  "utils": {
+    "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   }
 }
