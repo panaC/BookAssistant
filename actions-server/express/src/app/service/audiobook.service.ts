@@ -52,7 +52,7 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iaudi
       } : null,
       webpub: a,
       chapter,
-      numberOfChapter: a.readingOrder.length, /* here change for toc */
+      numberOfChapter: (a.readingOrder.length || 1), /* here change for toc */
     };
   } else {
     return {

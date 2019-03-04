@@ -72,6 +72,20 @@ app.middleware((conv: DFConv) => {
 // Register handlers for Dialogflow intents
 app.intent('Default Welcome Intent', intent.welcome);
 
+app.intent('play audiobook', intent.play);
+
+app.intent('media status', intent.play);
+
+app.intent('chapter_next', intent.play);
+
+app.intent('chapter_prev', intent.playPrev);
+
+// default intents
+app.intent('no input', intent.noInput);
+
+app.intent('goodbye', intent.goodbye);
+
+/*
 app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage>, { audiobook }) => {
   if (audiobook && audiobook !== '') {
     conv.data.currentName = audiobook as string;
@@ -117,7 +131,9 @@ app.intent('play audiobook', async (conv: DialogflowConversation<IsessionStorage
     conv.ask(`Une erreur est survenue ${e}`);
   }
 });
+*/
 
+/*
 app.intent('chapter_next', async (conv: DialogflowConversation<IsessionStorage>) => {
 
   const a = conv.data.currentWebpub;
@@ -145,7 +161,9 @@ app.intent('chapter_next', async (conv: DialogflowConversation<IsessionStorage>)
     conv.ask(`l'audiobook ${conv.data.currentName} est fini`);
   }
 });
+*/
 
+/*
 app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
 
   const a = conv.data.currentWebpub;
@@ -173,7 +191,9 @@ app.intent('media status', (conv: DialogflowConversation<IsessionStorage>) => {
     conv.ask(`l'audiobook ${conv.data.currentName} est fini`);
   }
 });
+*/
 
+/*
 app.intent('no input', (conv: DialogflowConversation<IsessionStorage>) => {
   conv.ask(`Vous ne dite rien !`);
 });
@@ -182,6 +202,7 @@ app.intent('no input', (conv: DialogflowConversation<IsessionStorage>) => {
 app.intent('Goodbye', conv => {
   conv.close('Reviens vite !');
 });
+*/
 
 app.intent('Default Fallback Intent', conv => {
   conv.ask(`Je n'ai pas compris peux tu me demander autre chose ?`);

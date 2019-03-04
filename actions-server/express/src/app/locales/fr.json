@@ -22,6 +22,10 @@
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },
+  "default": {
+    "no_input": "Vous ne dites rien !",
+    "goodbye": "Reviens vite !"
+  },
   "error": {
     "global": "Une érreur est survenue"
   }

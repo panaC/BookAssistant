@@ -1,5 +1,6 @@
-import { DFConv } from './../app';
-import { welcomeIntent} from './welcome.intent';
+import { noInput, goodbye } from './default.intent';
+import { welcome } from './welcome.intent';
+import { play, playPrev } from './play.intent';
 
 /*
 interface Iintent {
@@ -8,5 +9,9 @@ interface Iintent {
 */
 
 export const intent = {
-  welcome: welcomeIntent,
+  welcome,
+  play,
+  playPrev,
+  noInput,
+  goodbye,
 };

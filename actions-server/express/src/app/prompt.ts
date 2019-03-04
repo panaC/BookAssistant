@@ -3,7 +3,7 @@ import { join } from 'path';
 
 export interface Iprompt {
   elements: string[];
-  suggestions?: string[];
+  suggestions: string[];
 }
 
 interface Iprompts {
@@ -29,6 +29,7 @@ export const prompts: Iprompts = {
     elements: [
       i18n.__('error.global'),
     ],
+    suggestions: [],
   },
   welcome: {
     elements: [
@@ -46,5 +47,26 @@ export const prompts: Iprompts = {
       i18n.__('play.suggestion.next'),
       i18n.__('play.suggestion.prev'),
     ],
+  },
+  play_follow: {
+    elements: [
+      i18n.__('play.follow'),
+    ],
+    suggestions: [
+      i18n.__('play.suggestion.next'),
+      i18n.__('play.suggestion.prev'),
+    ],
+  },
+  default_noInput: {
+    elements: [
+      i18n.__('default.no_input'),
+    ],
+    suggestions: [],
+  },
+  default_goodbye: {
+    elements: [
+      i18n.__('default.goodbye'),
+    ],
+    suggestions: [],
   },
 };

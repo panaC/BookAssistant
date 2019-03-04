@@ -3,10 +3,10 @@ import { IWebpub } from './../../../../../opds-server/src/webpub/interfaces/webp
 import { Eaudiobook } from '../service/audiobook.service';
 
 export interface IsessionStorage {
-  feed: OpdsDto;
-  currentWebpub: IWebpub;
-  currentChapter: number;
+  /*feed: OpdsDto;*/
   currentName: string;
+  currentChapter: number;
+  media: Iaudiobook;
 }
 
 export interface Iaudiobook {

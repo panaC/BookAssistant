@@ -1,7 +1,7 @@
 import { DFConv } from './../app';
 import { prompts } from '../prompt';
 
-export const welcomeIntent = (conv: DFConv) => {
+export const welcome = (conv: DFConv) => {
 
   conv.data.currentChapter = 0;
   // conv.user.storage
