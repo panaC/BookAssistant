@@ -3,7 +3,7 @@ import { join } from 'path';
 
 export interface Iprompt {
   elements: string[];
-  suggestions: string[];
+  suggestions?: string[];
 }
 
 interface Iprompts {
@@ -25,6 +25,11 @@ i18n.configure({
 export const setLocale = (local: string) => { i18n.setLocale(local); };
 
 export const prompts: Iprompts = {
+  error: {
+    elements: [
+      i18n.__('error.global'),
+    ],
+  },
   welcome: {
     elements: [
       i18n.__('welcome.home'),
@@ -38,7 +43,7 @@ export const prompts: Iprompts = {
       i18n.__('play.first'),
     ],
     suggestions: [
-      i18n.__('play.suggestion.mext'),
+      i18n.__('play.suggestion.next'),
       i18n.__('play.suggestion.prev'),
     ],
   },

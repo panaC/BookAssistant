@@ -5,11 +5,11 @@ import { IWebpub } from './../../../../../opds-server/src/webpub/interfaces/webp
 import { Iaudiobook } from '../interface/storage.interface';
 
 export enum Eaudiobook {
-  ERROR_AXIOS,
-  END_CHAPTER,
-  ERROR_CHAPTER,
-  NOT_FOUND,
-  OK,
+  ERROR_AXIOS = 'Network error',
+  END_CHAPTER = 'End of chapter',
+  ERROR_CHAPTER = 'Unknown chapter',
+  NOT_FOUND = 'Audiobook not found',
+  OK = 'ok',
 }
 
 export const getAudiobook = async (name: string, chapter: number): Promise<Iaudiobook> => {

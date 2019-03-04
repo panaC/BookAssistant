@@ -15,10 +15,12 @@ export const playIntent = async (conv: DFConv) => {
   try {
     const media = await getAudiobook(conv.data.currentName, chapter);
     if (media.state === Eaudiobook.OK || media.state === Eaudiobook.END_CHAPTER) {
+      conv.contexts.set('playing_audiobook', 999);
       conv.utils.media(media, prompts.play_first, conv.data.currentName);
+    } else {
+      throw media.state.toString();
     }
-    conv.contexts.set('playing_audiobook', 999);
   } catch (e) {
-    // here a prompt error standard with arg
+    conv.utils.ask(prompts.error, e);
   }
 };
