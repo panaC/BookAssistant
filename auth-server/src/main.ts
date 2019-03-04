@@ -26,8 +26,6 @@ app.get('/auth', (req, res) => {
 });
 
 app.post('/auth', (req, res) => {
-  console.log(req.body);
-  console.log(req.query);
   const token = randomBytes(64).toString('hex');
   if (req.query.redirect_uri && req.query.state) {
     res.redirect(`${req.query.redirect_uri}#access_token=${token}&token_type=bearer&state=${req.query.state}`);
