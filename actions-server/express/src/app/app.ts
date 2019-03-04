@@ -37,7 +37,7 @@ app.intent('actions_intent_SIGN_IN', (conv, params, permission) => {
   } else {
     conv.close(`Vous n'etes pas connecté`);
   }
-})
+});
 
 app.intent('play audiobook', async (conv, { audiobook }) => {
   conv.ask(`Voici l'audiobook ${audiobook}`);
