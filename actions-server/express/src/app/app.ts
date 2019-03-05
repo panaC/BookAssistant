@@ -69,13 +69,13 @@ app.middleware((conv: DFConv) => {
 app.intent('Default Welcome Intent', intent.welcome);
 
 // play intents
-app.intent('play audiobook', intent.play);
-app.intent('media status', intent.playNext);
+app.intent('play_audiobook', intent.play);
+app.intent('media_status', intent.playNext);
 app.intent('chapter_next', intent.playNext);
 app.intent('chapter_prev', intent.playPrev);
 
 // default intents
-app.intent('no input', intent.noInput);
+app.intent('no_input', intent.noInput);
 app.intent('goodbye', intent.goodbye);
 
 /*
