@@ -27,6 +27,6 @@
     "goodbye": "Reviens vite !"
   },
   "error": {
-    "global": "Une erreur est survenue"
+    "global": "Une erreur est survenue %s"
   }
 }
