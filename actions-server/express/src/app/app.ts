@@ -71,6 +71,7 @@ app.intent('Default Welcome Intent', intent.welcome);
 // play intents
 app.intent('play_audiobook', intent.play);
 app.intent('media_status', intent.playNext);
+app.intent('chapter_replay', intent.play);
 app.intent('chapter_next', intent.playNext);
 app.intent('chapter_prev', intent.playPrev);
 
