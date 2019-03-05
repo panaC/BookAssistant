@@ -7,8 +7,9 @@ export const welcome = (conv: DFConv) => {
   conv.data.currentName = '';
   conv.data.media = null;
   conv.user.storage.lastSeen = new Date(Date.now());
-  console.log(typeof conv.user.storage.mediaIdentifier);
   if (!conv.user.storage.mediaIdentifier) {
+    console.log("here");
+    
     conv.user.storage.mediaIdentifier = new Map<string, number>();
   }
 
