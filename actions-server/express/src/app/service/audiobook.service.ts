@@ -51,6 +51,7 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iaudi
       name: a.metadata.title,
       url: link.href,
       description: a.metadata.identifier,
+      identifier: a.metadata.identifier,
       img: (img) ? {
         url: img.href,
         alt: img.title,

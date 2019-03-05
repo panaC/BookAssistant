@@ -19,6 +19,13 @@
     },
     "follow": " "
   },
+  "already_listen": {
+    "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
+  },
+  "yes_no": {
+    "yes": "oui",
+    "no": "non"
+  },
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },

@@ -57,6 +57,15 @@ export const prompts: Iprompts = {
       i18n.__('play.suggestion.prev'),
     ],
   },
+  play_already_listen: {
+    elements: [
+      i18n.__('already_listen.answer'),
+    ],
+    suggestions: [
+      i18n.__('yes_no.yes'),
+      i18n.__('yes_no.no'),
+    ],
+  },
   default_noInput: {
     elements: [
       i18n.__('default.no_input'),
@@ -66,6 +75,12 @@ export const prompts: Iprompts = {
   default_goodbye: {
     elements: [
       i18n.__('default.goodbye'),
+    ],
+    suggestions: [],
+  },
+  not_compatible: {
+    elements: [
+      i18n.__('utils.playing_is_compatible'),
     ],
     suggestions: [],
   },

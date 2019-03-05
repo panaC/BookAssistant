@@ -12,12 +12,12 @@ export class Utils {
     setLocale(conv.user.locale);
   }
 
-  isCompatible() {
+  isNotCompatible() {
     if (!this.conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
       this.conv.close(i18n.__('utils.playing_is_compatible'));
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   media(media: Iaudiobook, prompt: Iprompt, ...args: Array<string | number>) {

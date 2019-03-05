@@ -6,7 +6,10 @@ export const welcome = (conv: DFConv) => {
   conv.data.currentChapter = 0;
   conv.data.currentName = '';
   conv.data.media = null;
-  // conv.user.storage
+  conv.user.storage.lastSeen = new Date(Date.now());
+  if (!conv.user.storage.mediaIdentifier) {
+    conv.user.storage.mediaIdentifier = new Map<string, number>();
+  }
 
   try {
     // const res = await Axios.get(SERVER_URL);

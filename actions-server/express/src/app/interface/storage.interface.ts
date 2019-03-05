@@ -14,6 +14,7 @@ export interface Iaudiobook {
   name?: string;
   url?: string;
   description?: string;
+  identifier?: string;
   img?: {
     url: string,
     alt: string,
@@ -24,6 +25,6 @@ export interface Iaudiobook {
 }
 
 export interface IuserStorage {
-  audiobook: Iaudiobook[];
+  mediaIdentifier: Map<string, number>;
   lastSeen: Date;
 }
