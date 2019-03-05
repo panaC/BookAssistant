@@ -70,8 +70,8 @@ app.intent('Default Welcome Intent', intent.welcome);
 
 // play intents
 app.intent('play audiobook', intent.play);
-app.intent('media status', intent.play);
-app.intent('chapter_next', intent.play);
+app.intent('media status', intent.playNext);
+app.intent('chapter_next', intent.playNext);
 app.intent('chapter_prev', intent.playPrev);
 
 // default intents

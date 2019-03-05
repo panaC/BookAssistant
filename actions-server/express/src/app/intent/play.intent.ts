@@ -12,13 +12,12 @@ export const play = async (conv: DFConv) => {
     conv.data.currentChapter < 0) {
     conv.data.currentChapter = 0;
   }
-  const chapter = conv.data.currentChapter++;
   const { audiobook } = conv.parameters;
   if (audiobook && audiobook !== '') {
     conv.data.currentName = audiobook as string;
   }
   try {
-    const media = await getAudiobook(conv.data.currentName, chapter);
+    const media = await getAudiobook(conv.data.currentName, conv.data.currentChapter);
     conv.data.media = media;
     if (media.state === Eaudiobook.OK) {
       conv.contexts.set('playing_audiobook', 999);
@@ -36,6 +35,11 @@ export const play = async (conv: DFConv) => {
 };
 
 export const playPrev = async (conv: DFConv) => {
-  --conv.data.currentChapter;
+  conv.data.currentChapter -= 2;
+  play(conv);
+};
+
+export const playNext = async (conv: DFConv) => {
+  ++conv.data.currentChapter;
   play(conv);
 };
