@@ -3,9 +3,9 @@ import { prompts } from '../prompt';
 
 export const welcome = (conv: DFConv) => {
 
-  conv.data.currentChapter = 0;
-  conv.data.currentName = '';
-  conv.data.media = null;
+  conv.data.chapterToPlay = 0;
+  conv.data.titleTellByUser = '';
+  conv.data.currentPlayingMedia = null;
   conv.user.storage.lastSeen = new Date(Date.now());
   if (!conv.user.storage.mediaIdentifier) {
     conv.user.storage.mediaIdentifier = {};

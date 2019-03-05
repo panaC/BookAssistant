@@ -1,5 +1,5 @@
 import i18n from 'i18n';
-import { IsessionStorage, IuserStorage, Iaudiobook } from './interface/storage.interface';
+import { IsessionStorage, IuserStorage, IplayingMedia } from './interface/storage.interface';
 import { DialogflowConversation, Suggestions, MediaObject, Image } from 'actions-on-google';
 import { Iprompt } from './prompt';
 import { sprintf } from 'sprintf-js';
@@ -20,7 +20,7 @@ export class Utils {
     return false;
   }
 
-  media(media: Iaudiobook, prompt: Iprompt, ...args: Array<string | number>) {
+  media(media: IplayingMedia, prompt: Iprompt, ...args: Array<string | number>) {
     if (media.state === Eaudiobook.OK || media.state === Eaudiobook.END_CHAPTER) {
       prompt.elements.forEach(element => {
         this.conv.ask(sprintf(element, ...args));

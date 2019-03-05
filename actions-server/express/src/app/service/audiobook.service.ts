@@ -2,7 +2,7 @@ import { SEARCH } from './../../constants';
 import Axios from 'axios';
 import { ILinks } from './../../../../../opds-server/src/webpub/interfaces/links.interface';
 import { IWebpub } from './../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
-import { Iaudiobook } from '../interface/storage.interface';
+import { IplayingMedia } from '../interface/storage.interface';
 
 export enum Eaudiobook {
   ERROR_AXIOS = 'Network error',
@@ -12,7 +12,7 @@ export enum Eaudiobook {
   OK = 'ok',
 }
 
-export const getAudiobook = async (name: string, chapter: number): Promise<Iaudiobook> => {
+export const getAudiobook = async (name: string, chapter: number): Promise<IplayingMedia> => {
   let a: IWebpub;
   let link: ILinks;
 
@@ -56,7 +56,6 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iaudi
         url: img.href,
         alt: img.title,
       } : null,
-      webpub: a,
       chapter,
       numberOfChapter: (a.readingOrder.length || 1), /* here change for toc */
     };
