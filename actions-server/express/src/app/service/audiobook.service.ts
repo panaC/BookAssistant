@@ -6,7 +6,7 @@ import { Iaudiobook } from '../interface/storage.interface';
 
 export enum Eaudiobook {
   ERROR_AXIOS = 'Network error',
-  END_CHAPTER = 'End of chapter',
+  END_CHAPTER = 'End of book',
   ERROR_CHAPTER = 'Unknown chapter',
   NOT_FOUND = 'Audiobook not found',
   OK = 'ok',
@@ -15,7 +15,6 @@ export enum Eaudiobook {
 export const getAudiobook = async (name: string, chapter: number): Promise<Iaudiobook> => {
   let a: IWebpub;
   let link: ILinks;
-  let state: Eaudiobook = Eaudiobook.OK;
 
   const res = await Axios.get(SEARCH(name));
   if (res && res.data && res.data[0]) {
@@ -24,16 +23,22 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iaudi
     // here test in first if the toc is set
     if (a.readingOrder && a.readingOrder.length) {
       if (chapter === a.readingOrder.length) {
-        state = Eaudiobook.END_CHAPTER;
-      } else if (chapter < a.readingOrder.length) {
-        state = Eaudiobook.ERROR_CHAPTER;
-      } else {
-        link = a.readingOrder[chapter];
+        return {
+          state: Eaudiobook.END_CHAPTER,
+        };
+      } else if (chapter > a.readingOrder.length) {
+        return {
+          state: Eaudiobook.ERROR_CHAPTER,
+        };
       }
+      link = a.readingOrder[chapter];
     } else {
       link = a.links.filter((ln) => ln.rel === 'audiobook').pop();
-      state = Eaudiobook.END_CHAPTER;
-      if (!link) {
+      if (chapter > 0) {
+        return {
+          state: Eaudiobook.END_CHAPTER,
+        };
+      } else if (!link) {
         return {
           state: Eaudiobook.NOT_FOUND,
         };
@@ -42,7 +47,7 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iaudi
     const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
 
     return {
-      state,
+      state: Eaudiobook.OK,
       name: a.metadata.title,
       url: link.href,
       description: a.metadata.identifier,
