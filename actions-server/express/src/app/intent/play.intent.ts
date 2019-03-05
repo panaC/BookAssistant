@@ -1,14 +1,14 @@
 import { getAudiobook, Eaudiobook } from './../service/audiobook.service';
 import { DFConv } from './../app';
 import { prompts } from '../prompt';
+import { plainToClass } from 'class-transformer';
+import { stringify } from 'querystring';
 
 export const play = async (conv: DFConv) => {
   if (conv.utils.isNotCompatible()) {
     return conv.utils.ask(prompts.not_compatible);
   }
-
-  console.log(conv.user.storage.mediaIdentifier, typeof conv.user.storage.mediaIdentifier);
-  
+  const mediaStorage = plainToClass(Map, conv.user.storage.mediaIdentifier);
 
   const { audiobook } = conv.parameters;
   if (audiobook && audiobook.toString() !== '') {
@@ -23,9 +23,9 @@ export const play = async (conv: DFConv) => {
   try {
     const media = await getAudiobook(conv.data.currentName, conv.data.currentChapter);
     if (media.state === Eaudiobook.OK) {
-      if (conv.user.storage.mediaIdentifier.has(media.identifier) &&
+      if (mediaStorage.has(media.identifier) &&
       (!conv.data.media || conv.data.media.identifier !== media.identifier)) {
-        const previousChapter = conv.user.storage.mediaIdentifier.get(media.identifier);
+        const previousChapter = mediaStorage.get(media.identifier) as number;
         conv.data.currentChapter = previousChapter;
         conv.data.media = media;
         conv.contexts.set('play_audiobook-yes_no', 3);
@@ -34,7 +34,8 @@ export const play = async (conv: DFConv) => {
           , previousChapter.toString());
       }
       conv.data.media = media;
-      conv.user.storage.mediaIdentifier.set(media.identifier, media.chapter);
+      mediaStorage.set(media.identifier, media.chapter);
+      conv.user.storage.mediaIdentifier = mediaStorage;
       conv.utils.media(media,
         (conv.data.currentChapter === 0 ?
           prompts.play_first :

@@ -25,6 +25,6 @@ export interface Iaudiobook {
 }
 
 export interface IuserStorage {
-  mediaIdentifier: Map<string, number>;
+  mediaIdentifier: {};
   lastSeen: Date;
 }

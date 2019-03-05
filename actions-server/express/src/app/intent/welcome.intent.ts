@@ -7,14 +7,9 @@ export const welcome = (conv: DFConv) => {
   conv.data.currentName = '';
   conv.data.media = null;
   conv.user.storage.lastSeen = new Date(Date.now());
-  try {
-    const test = conv.user.storage.mediaIdentifier.has('test');
-  } catch (e) {
-    console.log("here");
-    
-    conv.user.storage.mediaIdentifier = new Map<string, number>();
+  if (!conv.user.storage.mediaIdentifier) {
+    conv.user.storage.mediaIdentifier = {};
   }
-
   try {
     // const res = await Axios.get(SERVER_URL);
     // if (res.data) {
