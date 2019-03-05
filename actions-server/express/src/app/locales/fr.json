@@ -23,7 +23,7 @@
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },
   "default": {
-    "no_input": "Vous ne dites rien !",
+    "no_input": " ",
     "goodbye": "Reviens vite !"
   },
   "error": {
