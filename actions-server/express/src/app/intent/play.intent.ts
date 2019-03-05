@@ -7,7 +7,7 @@ export const play = async (conv: DFConv) => {
     return conv.utils.ask(prompts.not_compatible);
   }
 
-  console.log(conv.user.storage.mediaIdentifier && typeof conv.user.storage.mediaIdentifier);
+  console.log(conv.user.storage.mediaIdentifier, typeof conv.user.storage.mediaIdentifier);
   
 
   const { audiobook } = conv.parameters;
