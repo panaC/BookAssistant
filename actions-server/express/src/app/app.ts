@@ -70,10 +70,10 @@ app.intent('Default Welcome Intent', intent.welcome);
 
 // play intents
 app.intent('play_audiobook', intent.play);
-app.intent('media_status', intent.playNext);
-app.intent('chapter_replay', intent.play);
-app.intent('chapter_next', intent.playNext);
-app.intent('chapter_prev', intent.playPrev);
+app.intent('play_audiobook-media_status', intent.playNext);
+app.intent('play_audiobook-repeat', intent.play);
+app.intent('play_audiobook-next', intent.playNext);
+app.intent('play_audiobook-previous', intent.playPrev);
 
 // default intents
 app.intent('no_input', intent.noInput);
