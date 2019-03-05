@@ -7,7 +7,9 @@ export const welcome = (conv: DFConv) => {
   conv.data.currentName = '';
   conv.data.media = null;
   conv.user.storage.lastSeen = new Date(Date.now());
-  if (!conv.user.storage.mediaIdentifier) {
+  try {
+    const test = conv.user.storage.mediaIdentifier.size;
+  } catch (e) {
     console.log("here");
     
     conv.user.storage.mediaIdentifier = new Map<string, number>();
@@ -23,5 +25,6 @@ export const welcome = (conv: DFConv) => {
   } catch (e) {
     //
   }
+
   conv.utils.ask(prompts.welcome);
 };
