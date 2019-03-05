@@ -7,6 +7,9 @@ export const play = async (conv: DFConv) => {
     return conv.utils.ask(prompts.not_compatible);
   }
 
+  console.log(conv.user.storage.lastSeen);
+  
+
   const { audiobook } = conv.parameters;
   if (audiobook && audiobook.toString() !== '') {
     conv.data.currentName = audiobook as string;
