@@ -8,7 +8,7 @@ export const welcome = (conv: DFConv) => {
   conv.data.media = null;
   conv.user.storage.lastSeen = new Date(Date.now());
   try {
-    const test = conv.user.storage.mediaIdentifier.size;
+    const test = conv.user.storage.mediaIdentifier.has('test');
   } catch (e) {
     console.log("here");
     
