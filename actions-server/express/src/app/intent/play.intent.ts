@@ -36,10 +36,10 @@ export const play = async (conv: DFConv) => {
 
 export const playPrev = async (conv: DFConv) => {
   conv.data.currentChapter -= 2;
-  play(conv);
+  await play(conv);
 };
 
 export const playNext = async (conv: DFConv) => {
   ++conv.data.currentChapter;
-  play(conv);
+  await play(conv);
 };
