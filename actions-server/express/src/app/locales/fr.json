@@ -17,7 +17,7 @@
       "next": "Chapitre suivant",
       "prev": "Chapitre précédent"
     },
-    "follow": ""
+    "follow": " "
   },
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
