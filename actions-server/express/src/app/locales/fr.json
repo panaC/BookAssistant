@@ -18,7 +18,8 @@
       "prev": "Chapitre précédent"
     },
     "follow": " ",
-    "finish": "Le livre est finis. Que voulez-vous écouté de nouveau ?"
+    "finish": "Le livre est finis. Que voulez-vous écouté de nouveau ?",
+    "ref_empty": "Vous n'avez pas dit le nom de la référence"
   },
   "already_listen": {
     "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
@@ -39,7 +40,8 @@
     "audiobook": {
       "network": "Une erreur réseau est survenue",
       "chapter": "Le chapitre est incorrect",
-      "not_found": "Ce livre est inconnu"
+      "not_found": "Ce livre est inconnu",
+      "ref": "Cette référence est inconnu"
     }
   }
 }

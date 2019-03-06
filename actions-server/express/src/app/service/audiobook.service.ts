@@ -9,6 +9,7 @@ export enum Eaudiobook {
   END_CHAPTER = 'play.finish',
   ERROR_CHAPTER = 'error.audiobook.chapter',
   NOT_FOUND = 'error.audiobook.not_found',
+  ERROR_REF = 'error.audiobook.ref',
   OK = 'ok',
 }
 
@@ -39,10 +40,6 @@ export const getMedia = async (name: string, chapter: number): Promise<IplayingM
     state: Eaudiobook;
   }
 
-  /*const res = await Axios.get(SEARCH(name));
-  if (res && res.data && !res.data.length) {
-    return getState(Eaudiobook.NOT_FOUND);
-  } else if (res && res.data && res.data[0]) {*/
   [state, a] = await getAudiobook(name);
   if (state.state === Eaudiobook.OK) {
     if (a.readingOrder && a.readingOrder.length) {
@@ -76,3 +73,34 @@ export const getMedia = async (name: string, chapter: number): Promise<IplayingM
   }
   return state;
 };
+
+const getChapterWithHref = (readingOrder: ILinks[], href: string) =>
+  readingOrder.map((link) => link.href === href.split('#')[0]).findIndex((value) => value);
+
+const searchHrefWithRef = (toc: ILinks[], ref: string): string => 
+  toc.map((link) => 
+    link.title === ref ? link.href :
+      (link.children ? searchHrefWithRef(link.children, ref) : null))
+    .reduce((value) => value);
+
+export const getMediaReference = async (name: string, reference: string) => {
+  let a: IWebpub;
+  let link: string;
+  let chapter: number;
+  let state: {
+    state: Eaudiobook;
+  }
+
+  [state, a] = await getAudiobook(name);
+  if (state.state === Eaudiobook.OK) {
+    if ((link = searchHrefWithRef(a.toc, reference))) {
+      if ((chapter = getChapterWithHref(a.readingOrder, link))) {
+        const media = await getMedia(name, chapter);
+        media.url = `${media.url}#${link.split('#')[1]}`;
+        return media;
+      }
+    }
+    return getState(Eaudiobook.ERROR_REF);
+  }
+  return state;
+}

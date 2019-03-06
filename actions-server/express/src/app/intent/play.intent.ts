@@ -1,6 +1,8 @@
-import { getMedia, Eaudiobook } from './../service/audiobook.service';
+import { getMedia, Eaudiobook, getMediaReference } from './../service/audiobook.service';
 import { DFConv } from './../app';
 import { prompts, translate } from './../prompt';
+
+// play intent with output play_audiobook-follow
 
 const playMedia = (conv: DFConv) => {
   conv.utils.media(conv.data.currentPlayingMedia,
@@ -65,6 +67,8 @@ export const play = async (conv: DFConv) => {
   }
 };
 
+// play_audiobook-follow
+
 export const playPrev = async (conv: DFConv) => {
   --conv.data.chapterToPlay;
   await play(conv);
@@ -79,3 +83,34 @@ export const playNo = async (conv: DFConv) => {
   conv.data.chapterToPlay = 0;
   await play(conv);
 };
+
+// PlayReference with play_audiobook-follow
+
+const playGetMediaReference = async (conv: DFConv, reference: string) => {
+  const media = await getMediaReference(conv.data.titleTellByUser, reference);
+  if (media.state === Eaudiobook.OK) {
+    conv.data.currentPlayingMedia = media;
+  } else {
+    throw media.state.toString();
+  }
+};
+
+export const playReference = async (conv: DFConv) => {
+  if (conv.utils.isNotCompatible()) {
+    return conv.utils.ask(prompts.not_compatible);
+  }
+
+  try {
+    const { reference } = conv.parameters;
+    if (reference && reference.toString() !== '') {
+      await playGetMediaReference(conv, reference as string); 
+      conv.data.chapterToPlay = conv.data.currentPlayingMedia.chapter;
+      await playMedia(conv);
+    } else {
+      conv.utils.ask(prompts.play_refEmpty)
+    }
+  } catch (e) {
+    conv.utils.ask(prompts.error, translate(e) || e);
+    // conv.contexts.delete('play_audiobook-followup');
+  }
+}

@@ -74,6 +74,12 @@ export const prompts: Iprompts = {
       i18n.__('yes_no.no'),
     ],
   },
+  play_refEmpty: {
+    elements: [
+      i18n.__('play.ref_empty'),
+    ],
+    suggestions: [],
+  },
   default_noInput: {
     elements: [
       i18n.__('default.no_input'),
