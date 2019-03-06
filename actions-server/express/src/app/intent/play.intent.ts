@@ -24,6 +24,10 @@ const playCheckAlreadyListen = (conv: DFConv) => {
   }
 };
 
+const playSetAlreadyListen = (conv: DFConv) => {
+  return conv.user.storage.mediaIdentifier[conv.data.currentPlayingMedia.identifier] = conv.data.currentPlayingMedia.chapter;
+};
+
 const playGetMedia = async (conv: DFConv) => {
   const media = await getAudiobook(conv.data.titleTellByUser, conv.data.chapterToPlay);
   if (media.state === Eaudiobook.OK) {
@@ -49,11 +53,11 @@ export const play = async (conv: DFConv) => {
         return playAnswer(conv);
       }
       conv.data.chapterToPlay = 0;
-      playMedia(conv);
     } else {
       await playGetMedia(conv);
-      playMedia(conv);
     }
+    playSetAlreadyListen(conv);
+    playMedia(conv);
   } catch (e) {
     conv.utils.ask(prompts.error, e);
   }
