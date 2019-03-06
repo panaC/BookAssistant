@@ -64,52 +64,6 @@ export const play = async (conv: DFConv) => {
   }
 };
 
-/*
-export const play = async (conv: DFConv) => {
-  if (conv.utils.isNotCompatible()) {
-    return conv.utils.ask(prompts.not_compatible);
-  }
-  const mediaStorage = plainToClass(Map, conv.user.storage.mediaIdentifier);
-  console.log(mediaStorage);
-
-  const { audiobook } = conv.parameters;
-  if (audiobook && audiobook.toString() !== '') {
-    conv.data.currentName = audiobook as string;
-    conv.data.currentChapter = 0;
-  } else if (!conv.data.currentIdentifier ||
-    conv.data.currentChapter >= conv.data.media.numberOfChapter ||
-    conv.data.currentChapter < 0) {
-    conv.data.currentChapter = 0;
-  }
-
-  try {
-    const media = await getAudiobook(conv.data.currentName, conv.data.currentChapter);
-    if (media.state === Eaudiobook.OK) {
-      if (mediaStorage.has(media.identifier) &&
-        (conv.data.currentIdentifier !== media.identifier)) {
-        const previousChapter = mediaStorage.get(media.identifier) as number;
-        conv.data.currentChapter = previousChapter;
-        conv.contexts.set('play_audiobook-yes_no', 3);
-        return conv.utils.ask(prompts.play_already_listen
-          , conv.data.currentName
-          , previousChapter.toString());
-      }
-      mediaStorage.set(media.identifier, media.chapter);
-      conv.user.storage.mediaIdentifier = mediaStorage;
-      conv.utils.media(media,
-        (conv.data.currentChapter === 0 ?
-          prompts.play_first :
-          prompts.play_follow),
-        conv.data.currentName);
-    } else {
-      throw media.state.toString();
-    }
-  } catch (e) {
-    conv.utils.ask(prompts.error, e);
-  }
-};
-*/
-
 export const playPrev = async (conv: DFConv) => {
   --conv.data.chapterToPlay;
   await play(conv);
