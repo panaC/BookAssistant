@@ -11,6 +11,7 @@ const playMedia = (conv: DFConv) => {
 };
 
 const playAnswer = (conv: DFConv) => {
+  conv.contexts.set('play_audiobook-yes_no', 3);
   conv.utils.ask(prompts.play_already_listen
     , conv.data.currentPlayingMedia.name
     , conv.user.storage.mediaIdentifier[conv.data.currentPlayingMedia.identifier].toString());
