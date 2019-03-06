@@ -1,4 +1,4 @@
-import { getAudiobook, Eaudiobook } from './../service/audiobook.service';
+import { getMedia, Eaudiobook } from './../service/audiobook.service';
 import { DFConv } from './../app';
 import { prompts, translate } from './../prompt';
 
@@ -30,7 +30,7 @@ const playSetAlreadyListen = (conv: DFConv) => {
 };
 
 const playGetMedia = async (conv: DFConv) => {
-  const media = await getAudiobook(conv.data.titleTellByUser, conv.data.chapterToPlay);
+  const media = await getMedia(conv.data.titleTellByUser, conv.data.chapterToPlay);
   if (media.state === Eaudiobook.OK) {
     conv.data.currentPlayingMedia = media;
   } else {

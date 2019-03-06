@@ -12,44 +12,54 @@ export enum Eaudiobook {
   OK = 'ok',
 }
 
-export const getAudiobook = async (name: string, chapter: number): Promise<IplayingMedia> => {
-  let a: IWebpub;
-  let link: ILinks;
+const getState = (state: Eaudiobook) => {
+  return {
+    state,
+  };
+};
 
+const getLink = (a: IWebpub) => a.links.filter((ln) => ln.rel === 'audiobook').pop();
+
+const getImg = (a: IWebpub) => a.resources.filter((ln) => ln.rel === 'cover').pop();
+
+const getAudiobook = async (name: string) => {
   const res = await Axios.get(SEARCH(name));
   if (res && res.data && !res.data.length) {
-    return {
-      state: Eaudiobook.NOT_FOUND,
-    };
+    return [getState(Eaudiobook.NOT_FOUND)];
+  } else if (!res || !res.data) {
+    return [getState(Eaudiobook.ERROR_AXIOS)];
   }
-  if (res && res.data && res.data[0]) {
-    a = res.data[0];
+  return [getState(Eaudiobook.OK), res.data];
+}
 
+export const getMedia = async (name: string, chapter: number): Promise<IplayingMedia> => {
+  let a: IWebpub;
+  let link: ILinks;
+  let state: {
+    state: Eaudiobook;
+  }
+
+  /*const res = await Axios.get(SEARCH(name));
+  if (res && res.data && !res.data.length) {
+    return getState(Eaudiobook.NOT_FOUND);
+  } else if (res && res.data && res.data[0]) {*/
+  [state, a] = await getAudiobook(name);
+  if (state.state === Eaudiobook.OK) {
     if (a.readingOrder && a.readingOrder.length) {
       if (chapter === a.readingOrder.length) {
-        return {
-          state: Eaudiobook.END_CHAPTER,
-        };
+        return getState(Eaudiobook.END_CHAPTER);
       } else if (chapter > a.readingOrder.length) {
-        return {
-          state: Eaudiobook.ERROR_CHAPTER,
-        };
+        return getState(Eaudiobook.ERROR_CHAPTER);
       }
       link = a.readingOrder[chapter];
     } else {
-      link = a.links.filter((ln) => ln.rel === 'audiobook').pop();
       if (chapter > 0) {
-        return {
-          state: Eaudiobook.END_CHAPTER,
-        };
-      } else if (!link) {
-        return {
-          state: Eaudiobook.NOT_FOUND,
-        };
+        return getState(Eaudiobook.END_CHAPTER);
+      } else if (!(link = getLink(a))) {
+        return getState(Eaudiobook.NOT_FOUND);
       }
     }
-    const img = a.resources.filter((ln) => ln.rel === 'cover').pop();
-
+    const img = getImg(a);
     return {
       state: Eaudiobook.OK,
       name: a.metadata.title,
@@ -61,11 +71,8 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iplay
         alt: img.title,
       } : null,
       chapter,
-      numberOfChapter: (a.readingOrder.length || 1), /* here change for toc */
-    };
-  } else {
-    return {
-      state: Eaudiobook.ERROR_AXIOS,
+      numberOfChapter: (a.readingOrder.length || 1),
     };
   }
+  return state;
 };
