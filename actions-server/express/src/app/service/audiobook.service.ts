@@ -81,7 +81,7 @@ const searchHrefWithRef = (toc: ILinks[], ref: string): string =>
   toc.map((link) => 
     link.title === ref ? link.href :
       (link.children ? searchHrefWithRef(link.children, ref) : null))
-    .reduce((value) => value);
+    .reduce((a, c) => c);
 
 export const getMediaReference = async (name: string, reference: string) => {
   let a: IWebpub;

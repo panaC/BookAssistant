@@ -1,6 +1,6 @@
 import { noInput, goodbye } from './default.intent';
 import { welcome } from './welcome.intent';
-import { play, playPrev, playNext, playNo } from './play.intent';
+import { play, playPrev, playNext, playNo, playReference } from './play.intent';
 
 /*
 interface Iintent {
@@ -14,6 +14,7 @@ export const intent = {
   playPrev,
   playNext,
   playNo,
+  playReference,
   noInput,
   goodbye,
 };

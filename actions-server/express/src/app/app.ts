@@ -76,6 +76,7 @@ app.intent('play_audiobook-next', intent.playNext);
 app.intent('play_audiobook-previous', intent.playPrev);
 app.intent('play_audiobook-yes', intent.play);
 app.intent('play_audiobook-no', intent.playNo);
+app.intent('play_audiobook-reference', intent.playReference);
 
 // default intents
 app.intent('no_input', intent.noInput);
