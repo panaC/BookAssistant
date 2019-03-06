@@ -29,7 +29,7 @@ const getAudiobook = async (name: string) => {
   } else if (!res || !res.data) {
     return [getState(Eaudiobook.ERROR_AXIOS)];
   }
-  return [getState(Eaudiobook.OK), res.data];
+  return [getState(Eaudiobook.OK), res.data[0]];
 }
 
 export const getMedia = async (name: string, chapter: number): Promise<IplayingMedia> => {
