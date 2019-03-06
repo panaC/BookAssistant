@@ -17,7 +17,8 @@
       "next": "Chapitre suivant",
       "prev": "Chapitre précédent"
     },
-    "follow": " "
+    "follow": " ",
+    "finish": "Le livre est finis"
   },
   "already_listen": {
     "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"

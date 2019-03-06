@@ -57,6 +57,12 @@ export const prompts: Iprompts = {
       i18n.__('play.suggestion.prev'),
     ],
   },
+  play_finish: {
+    elements: [
+      i18n.__('play.finish'),
+    ],
+    suggestions: [],
+  },
   play_already_listen: {
     elements: [
       i18n.__('already_listen.answer'),
