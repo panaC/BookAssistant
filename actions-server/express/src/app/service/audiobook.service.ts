@@ -81,7 +81,7 @@ const searchHrefWithRef = (toc: ILinks[], ref: string): string =>
   toc.map((link) => 
     link.title === ref ? link.href :
       (link.children ? searchHrefWithRef(link.children, ref) : null))
-    .reduce((a, c) => c);
+    .reduce((a, c) => c, );
 
 export const getMediaReference = async (name: string, reference: string) => {
   let a: IWebpub;
@@ -94,7 +94,7 @@ export const getMediaReference = async (name: string, reference: string) => {
   [state, a] = await getAudiobook(name);
   if (state.state === Eaudiobook.OK) {
     if ((link = searchHrefWithRef(a.toc, reference))) {
-      if ((chapter = getChapterWithHref(a.readingOrder, link))) {
+      if ((chapter = getChapterWithHref(a.readingOrder, link)) > -1) {
         const media = await getMedia(name, chapter);
         media.url = `${media.url}#${link.split('#')[1]}`;
         return media;
