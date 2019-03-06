@@ -106,7 +106,7 @@ export const play = async (conv: DFConv) => {
 */
 
 export const playPrev = async (conv: DFConv) => {
-  conv.data.chapterToPlay -= 2;
+  --conv.data.chapterToPlay;
   await play(conv);
 };
 
