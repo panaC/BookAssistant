@@ -19,10 +19,14 @@ export const getAudiobook = async (name: string, chapter: number): Promise<Iplay
   let link: ILinks;
 
   const res = await Axios.get(SEARCH(name));
+  if (res && res.data && !res.data.length) {
+    return {
+      state: Eaudiobook.NOT_FOUND,
+    };
+  }
   if (res && res.data && res.data[0]) {
     a = res.data[0];
 
-    // here test in first if the toc is set
     if (a.readingOrder && a.readingOrder.length) {
       if (chapter === a.readingOrder.length) {
         return {
