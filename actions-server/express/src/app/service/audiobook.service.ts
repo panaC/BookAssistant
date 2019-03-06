@@ -12,8 +12,6 @@ export enum Eaudiobook {
   OK = 'ok',
 }
 
-// here handle audiobook not found
-
 export const getAudiobook = async (name: string, chapter: number): Promise<IplayingMedia> => {
   let a: IWebpub;
   let link: ILinks;
