@@ -60,11 +60,7 @@ export const play = async (conv: DFConv) => {
     playSetAlreadyListen(conv);
     playMedia(conv);
   } catch (e) {
-    if (e === Eaudiobook.END_CHAPTER) {
-      conv.utils.ask(prompts.play_finish);
-    } else {
-      conv.utils.ask(prompts.error, e);
-    }
+    conv.utils.ask(prompts.error, i18n.__(e));
     conv.contexts.delete('play_audiobook-followup');
   }
 };

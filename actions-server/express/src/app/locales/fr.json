@@ -18,7 +18,7 @@
       "prev": "Chapitre précédent"
     },
     "follow": " ",
-    "finish": "Le livre est finis"
+    "finish": "Le livre est finis. Que voulez-vous écouté de nouveau ?"
   },
   "already_listen": {
     "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
@@ -35,6 +35,11 @@
     "goodbye": "Reviens vite !"
   },
   "error": {
-    "global": "Une erreur est survenue %s"
+    "global": "Oups. %s",
+    "audiobook": {
+      "network": "Une erreur réseau est survenue",
+      "chapter": "Le chapitre est incorrect",
+      "not_found": "Ce livre est inconnu"
+    }
   }
 }

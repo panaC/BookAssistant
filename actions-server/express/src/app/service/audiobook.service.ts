@@ -5,10 +5,10 @@ import { IWebpub } from './../../../../../opds-server/src/webpub/interfaces/webp
 import { IplayingMedia } from '../interface/storage.interface';
 
 export enum Eaudiobook {
-  ERROR_AXIOS = 'Network error',
-  END_CHAPTER = 'End of book',
-  ERROR_CHAPTER = 'Unknown chapter',
-  NOT_FOUND = 'Audiobook not found',
+  ERROR_AXIOS = 'error.audiobook.network',
+  END_CHAPTER = 'play.finish',
+  ERROR_CHAPTER = 'error.audiobook.chapter',
+  NOT_FOUND = 'error.audiobook.not_found',
   OK = 'ok',
 }
 
