@@ -1,6 +1,6 @@
 import { getAudiobook, Eaudiobook } from './../service/audiobook.service';
 import { DFConv } from './../app';
-import { prompts } from '../prompt';
+import { prompts, translate } from './../prompt';
 
 const playMedia = (conv: DFConv) => {
   conv.utils.media(conv.data.currentPlayingMedia,
@@ -60,7 +60,7 @@ export const play = async (conv: DFConv) => {
     playSetAlreadyListen(conv);
     playMedia(conv);
   } catch (e) {
-    conv.utils.ask(prompts.error, i18n.__(e));
+    conv.utils.ask(prompts.error, translate(e));
     conv.contexts.delete('play_audiobook-followup');
   }
 };

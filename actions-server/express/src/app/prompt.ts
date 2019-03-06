@@ -22,6 +22,8 @@ i18n.configure({
   defaultLocale: 'fr',
 });
 
+export const translate = (str: string) => i18n.__(str);
+
 export const setLocale = (local: string) => { i18n.setLocale(local); };
 
 export const prompts: Iprompts = {
