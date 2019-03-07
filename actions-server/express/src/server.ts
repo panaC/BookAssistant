@@ -12,7 +12,6 @@
  */
 
 import express from 'express';
-import bodyParser from 'body-parser';
 import { SERVER_NAME, ENTRY_POINT, PORT } from './constants';
 import { app } from './app/app';
 
