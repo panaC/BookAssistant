@@ -58,3 +58,11 @@ Google's tools are composed of 2 services:
   - DialogFlow: Google tools for chatbot creation, based on NLP technology. This tool allows you to understand the sentences expressed by the user and translate them into "intent". For example: for the reading of the novel "red and black", we can say it in several ways: I want to listen to red and black or Put the red and black of stendhal. With this tool that we program, the captured title will only be: red and black, no matter what the turn of the sentence. It is thanks to this kind of method that chatting with chatbots becomes more and more natural.
 
 A Google account is required to install "Actions-server". This account gives access to the DialogFlow console
+
+#### Intent 
+An intent is a stimulus in the chatbot, it is a "Ping-Pong" interaction with the machine (ex: Next chapter). These interactions are programmed for the core of the application the audiobook reading. Other interactions will be added such as the discovery of the catalogue. The advantage of these "intents" is that they can be added relatively easily in standalone form, such as information about the association, opening hours, etc.
+An evolution of the prototype is the easier addition by configuring a new standalone "intent" (no call from Api).
+
+#### Application
+Audiobook playback is the core of the application, due to the limitation of the playback of audio files by the Google player present in these devices. We are obliged to use the tool such as. In this sense, accelerated reading is not available, nor is the 30s jump.
+
