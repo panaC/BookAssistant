@@ -1,0 +1,164 @@
+[
+  {
+    "id": "d799c817-8ad9-4378-a28b-1717c13935cc",
+    "data": [
+      {
+        "text": "va à ",
+        "userDefined": false
+      },
+      {
+        "text": "la citation",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "56253fc3-de59-4192-849c-b02868ed29ff",
+    "data": [
+      {
+        "text": "va au ",
+        "userDefined": false
+      },
+      {
+        "text": "chapitre 6",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "68dbb448-17e6-417f-83ee-78c12f31cbeb",
+    "data": [
+      {
+        "text": "écouter ",
+        "userDefined": false
+      },
+      {
+        "text": "ma citation dans le livre",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "4c7831bb-7437-4780-84a0-3729dd94ec33",
+    "data": [
+      {
+        "text": "écouter la référence ",
+        "userDefined": false
+      },
+      {
+        "text": "ma référence",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "56285421-af1f-41af-9b79-b4d9cf0efb04",
+    "data": [
+      {
+        "text": "je veux aller ",
+        "userDefined": false
+      },
+      {
+        "text": "dans les bras de Morphée",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "b1779a4e-a001-4feb-963f-3b7c28c64ed4",
+    "data": [
+      {
+        "text": "je veux aller ",
+        "userDefined": false
+      },
+      {
+        "text": "au portugal",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "756250de-4685-48c4-9065-73b2ddc8e0fc",
+    "data": [
+      {
+        "text": "aller à ",
+        "userDefined": false
+      },
+      {
+        "text": "la mer",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "ce7775a4-8941-4256-9158-8049f1602e0e",
+    "data": [
+      {
+        "text": "pointer vers la référence ",
+        "userDefined": false
+      },
+      {
+        "text": "un événement",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  },
+  {
+    "id": "2a26f487-f400-4fc6-829e-f4e2fdadf689",
+    "data": [
+      {
+        "text": "aller à la référence ",
+        "userDefined": false
+      },
+      {
+        "text": "chapitre 3",
+        "alias": "reference",
+        "meta": "@sys.any",
+        "userDefined": true
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551883518
+  }
+]

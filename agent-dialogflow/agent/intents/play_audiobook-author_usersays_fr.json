@@ -1,0 +1,57 @@
+[
+  {
+    "id": "0cf8dc39-525b-49f9-af50-92166033a04b",
+    "data": [
+      {
+        "text": "De qui est-ce l\u0027auteur",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "8d6d41a8-a243-4721-adb7-e4273eef64b4",
+    "data": [
+      {
+        "text": "De qui est ce livre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "ce7652eb-105c-44a7-be62-e089e9bebe90",
+    "data": [
+      {
+        "text": "Qui a écris ce livre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "80a2e1f6-b9c0-4394-91d0-d1bd48dd6bd0",
+    "data": [
+      {
+        "text": "Quel est l\u0027auteur du livre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  },
+  {
+    "id": "8035a39e-65a0-4b4b-8df4-d3111e32bf99",
+    "data": [
+      {
+        "text": "Quel est l\u0027auteur",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0
+  }
+]

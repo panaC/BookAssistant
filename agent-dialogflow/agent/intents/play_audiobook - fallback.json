@@ -1,0 +1,40 @@
+{
+  "id": "58e0469b-de28-406e-8fad-781ba9e0f1e1",
+  "parentId": "d09ab0ae-4cb0-4365-a468-26f5f8161e0f",
+  "rootParentId": "d09ab0ae-4cb0-4365-a468-26f5f8161e0f",
+  "name": "play_audiobook - fallback",
+  "auto": false,
+  "contexts": [
+    "play_audiobook-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "play_audiobook.play_audiobook-fallback",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "fr",
+          "speech": [
+            "je n\u0027ai pas compris votre demande",
+            "vous pouvez allez au chapitre suivant, précédent ou répéter la lecture",
+            "vous pouvez dire chapitre suivant",
+            "vous pouvez dire chapitre précédent"
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {
+        "google": false
+      },
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1551791876,
+  "fallbackIntent": true,
+  "events": []
+}

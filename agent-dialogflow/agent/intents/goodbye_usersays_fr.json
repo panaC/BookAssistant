@@ -1,0 +1,98 @@
+[
+  {
+    "id": "504dedaa-c315-4f3e-93b3-308a842d3be4",
+    "data": [
+      {
+        "text": "quitter",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "e90c40d0-6366-403d-abc2-c8c835b3f28a",
+    "data": [
+      {
+        "text": "ferme l\u0027application",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "d5c9c013-9e07-4337-8fca-a91914b39bc2",
+    "data": [
+      {
+        "text": "ferme",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "f942b0fc-03cb-43b7-97f7-7a2c809ded61",
+    "data": [
+      {
+        "text": "sortir",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "ab916fda-70f4-414c-84bb-1a4ffa046c5f",
+    "data": [
+      {
+        "text": "je veux partir",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "954353bc-26fd-4fbd-8d00-302baa0fb32b",
+    "data": [
+      {
+        "text": "fermé",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "43b9bebb-7d53-435c-b1f0-8a4690262698",
+    "data": [
+      {
+        "text": "cancel",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551793699
+  },
+  {
+    "id": "88c327e0-fbb3-45d1-926c-d452d219eaf3",
+    "data": [
+      {
+        "text": "arrêter",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1549464541
+  }
+]
