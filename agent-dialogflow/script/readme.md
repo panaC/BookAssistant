@@ -21,10 +21,14 @@ An API limitation exist, see https://cloud.google.com/dialogflow-enterprise/docs
 
 It used the [diagflow](https://www.npmjs.com/package/dialogflow) module
 
-## Backup in Zip file
+## Backup
 
-> todo : Create a script file that download and saved a zip backup file and then commit it
+in `agent-dialogflow/src`
+
+```
+npm run agent
+```
 
 ## Diagflow
 
-> todo : The Type ts file *.d.ts is not exhaustive: i have to complete it.
+> todo : The Type ts file *.d.ts is not exhaustive: I may complete it.
