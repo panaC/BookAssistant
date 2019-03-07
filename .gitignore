@@ -2,7 +2,7 @@
 **/*.cert
 **/*.key
 # Credential json file DNT
-**/voiceassistant.json
+**/credential.json
 
 # Logs
 logs
