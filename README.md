@@ -5,3 +5,6 @@ Based on Google Assistant with [Google Actions](https://developers.google.com/ac
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](/LICENSE)
 
+## Architecture
+
+![archi](docs/img/archi.png)
