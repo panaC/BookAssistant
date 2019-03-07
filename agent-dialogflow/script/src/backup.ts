@@ -29,7 +29,7 @@ interface ICredential {
   private_key: string;
 }
 
-const BACKUP_ZIP = 'backup.zip';
+const BACKUP_ZIP = './../agent.zip';
 
 export class DialogflowAgent {
   private client: dialogflow.AgentsClient;
