@@ -26,8 +26,9 @@ On the software side, you will need:
  
 You'll also need accounts with:
 
+- [Google account](https://myaccount.google.com/intro) (the basis)
 - [Dialogflow](https://dialogflow.com/) (for understanding user voice queries)
-- [Google Cloud](https://cloud.google.com/) (for hosting the webhook webapp/service)
+
 
 ## Getting started
 
