@@ -1,0 +1,39 @@
+{
+  "id": "b3af1153-6cc9-4380-bf32-d3a87d1e3b68",
+  "parentId": "d09ab0ae-4cb0-4365-a468-26f5f8161e0f",
+  "rootParentId": "d09ab0ae-4cb0-4365-a468-26f5f8161e0f",
+  "name": "play_audiobook-author",
+  "auto": true,
+  "contexts": [
+    "play_audiobook-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "play_audiobook.play_audiobook-custom",
+      "affectedContexts": [
+        {
+          "name": "play_audiobook-followup",
+          "parameters": {},
+          "lifespan": 999
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "fr",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1508189126655,
+  "fallbackIntent": false,
+  "events": []
+}

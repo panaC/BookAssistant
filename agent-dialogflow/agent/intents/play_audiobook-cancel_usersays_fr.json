@@ -1,0 +1,122 @@
+[
+  {
+    "id": "98f95a04-e406-4246-b14b-b671e28845ee",
+    "data": [
+      {
+        "text": "abandonne",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "a3ec0bc2-5d67-4cca-bda1-a0737eeefa74",
+    "data": [
+      {
+        "text": "passer",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "a0285a30-171f-4576-a26e-4107afe811e3",
+    "data": [
+      {
+        "text": "ignorer",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "b103fde9-1027-47fd-840f-bd7c371c449e",
+    "data": [
+      {
+        "text": "oublie ça",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1499343519
+  },
+  {
+    "id": "9ef896d1-50f7-4200-9773-b7ea69d6a5c7",
+    "data": [
+      {
+        "text": "arrête",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "69097ebc-e019-4b07-a052-08fb724033ec",
+    "data": [
+      {
+        "text": "annule ça",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "e80b477b-3d1e-4fae-b36f-b36acb9aecf2",
+    "data": [
+      {
+        "text": "arrêter",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "5be6fd79-315c-4009-9665-2e513a9d4205",
+    "data": [
+      {
+        "text": "annuler",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  },
+  {
+    "id": "deff2017-af6c-41d3-b729-62e134e43cd8",
+    "data": [
+      {
+        "text": "oublie",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1499343519
+  },
+  {
+    "id": "60ed2b5a-41d3-4632-8cae-ed3a56208127",
+    "data": [
+      {
+        "text": "ne fais rien",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1497436847
+  }
+]

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "01b45da6-2066-4c98-89be-8056f32817c3",
+    "data": [
+      {
+        "text": "rejoue le chapitre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "e7d0b017-a250-4512-95db-cf8945467cba",
+    "data": [
+      {
+        "text": "rejoue la piste",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "91b47130-9f57-43d9-8fd7-c2df5913d554",
+    "data": [
+      {
+        "text": "recommence le chapitre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "858c2d7e-a622-4624-a064-11364de03d2e",
+    "data": [
+      {
+        "text": "recommence au début du chapitre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "bb4d0b98-c443-4d83-974f-0ad9dffb1537",
+    "data": [
+      {
+        "text": "recommence au début",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "b4cf113b-27cd-47de-80bd-05d0c10202ef",
+    "data": [
+      {
+        "text": "répète le chapitre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "3337e5f9-03e2-44a7-909b-43aac2330089",
+    "data": [
+      {
+        "text": "répète le dernier chapitre",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "9acecec5-1cd0-48e8-abd8-0e9eac169935",
+    "data": [
+      {
+        "text": "retourne au début",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1551790964
+  },
+  {
+    "id": "3891d1cc-820d-4df7-b9e6-ff88417501b6",
+    "data": [
+      {
+        "text": "est-ce que tu peux répéter",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "updated": 1551790964
+  },
+  {
+    "id": "41213834-90c9-4d74-afcf-5684fb6473f7",
+    "data": [
+      {
+        "text": "recommence",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1551790964
+  },
+  {
+    "id": "de4dbe20-dc92-49e2-854e-c1eb883fbc37",
+    "data": [
+      {
+        "text": "rejoue ce que j\u0027entend",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 2,
+    "updated": 1551790964
+  },
+  {
+    "id": "5a204a16-c953-4254-879d-908929309d4d",
+    "data": [
+      {
+        "text": "rejoue la partie",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1551790964
+  },
+  {
+    "id": "f3f42082-0aac-4bd8-9bc8-9c769ff35d20",
+    "data": [
+      {
+        "text": "peux-tu répéter",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "bf9f78a2-3295-45e3-ab55-e7cbb268bdf7",
+    "data": [
+      {
+        "text": "redis-le moi",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  },
+  {
+    "id": "cb477601-a297-4876-9264-1b9c0228bcec",
+    "data": [
+      {
+        "text": "répète",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 1,
+    "updated": 1551790964
+  },
+  {
+    "id": "cc3f27e2-134c-4ecb-93ff-20944ef9fc98",
+    "data": [
+      {
+        "text": "répète la même chose",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "updated": 1551790964
+  }
+]

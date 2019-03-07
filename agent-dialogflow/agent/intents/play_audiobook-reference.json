@@ -1,0 +1,47 @@
+{
+  "id": "fd4ec23f-7b08-438f-ab1a-c71c688b822f",
+  "parentId": "d09ab0ae-4cb0-4365-a468-26f5f8161e0f",
+  "rootParentId": "d09ab0ae-4cb0-4365-a468-26f5f8161e0f",
+  "name": "play_audiobook-reference",
+  "auto": true,
+  "contexts": [
+    "play_audiobook-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "play_audiobook.play_audiobook-reference",
+      "affectedContexts": [
+        {
+          "name": "play_audiobook-followup",
+          "parameters": {},
+          "lifespan": 999
+        }
+      ],
+      "parameters": [
+        {
+          "id": "6f967ed1-7eb4-4c26-9d29-f9daecbb2b5e",
+          "required": true,
+          "dataType": "@sys.any",
+          "name": "reference",
+          "value": "$reference"
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "fr",
+          "speech": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1551883518,
+  "fallbackIntent": false,
+  "events": []
+}
