@@ -20,7 +20,7 @@ export const server = express();
 
 server.set('port', PORT);
 server.set('trust proxy', 'loopback');
-server.use(bodyParser.json({type: 'application/json'}));
+server.use(express.json({}));
 /*server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
