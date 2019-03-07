@@ -100,7 +100,7 @@ export class WebpubController {
              @Query(GROUP_URI) group: string,
              @Query(NUMBER_OF_ITEM_URI) numberOfItem: string,
              @Query(SORT_URI) sort: string,
-             @Query(PAGE_URI) page: string): Promise<OpdsDto | WebpubDto | WebpubDto[]> {
+             @Query(PAGE_URI) page: string): Promise<OpdsDto | WebpubDto[]> {
     try {
       let lNumberOfItem = 5;
       let lSort = -1;
