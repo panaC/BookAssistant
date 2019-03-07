@@ -26,7 +26,7 @@ On the software side, you will need:
  
 You'll also need accounts with:
 
-- [Google account](https://myaccount.google.com/intro) (the basis)
+- [Google](https://myaccount.google.com/intro) (the basis)
 - [Dialogflow](https://dialogflow.com/) (for understanding user voice queries)
 
 
