@@ -64,5 +64,5 @@ An intent is a stimulus in the chatbot, it is a "Ping-Pong" interaction with the
 An evolution of the prototype is the easier addition by configuring a new standalone "intent" (no call from Api).
 
 #### Application
-Audiobook playback is the core of the application, due to the limitation of the playback of audio files by the Google player present in these devices. We are obliged to use the tool such as. In this sense, accelerated reading is not available, nor is the 30s jump.
+Audiobook playback is the core of the application, due to the limitation of the playback of audio files by the Google player present in these devices. We are forced to use the tool such as. In this sense, accelerated reading is not available, nor is the 30s jump.
 
