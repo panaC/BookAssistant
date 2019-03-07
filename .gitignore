@@ -2,7 +2,7 @@
 **/*.cert
 **/*.key
 # Credential json file DNT
-agent-dialogflow/script/credential.json
+**/credential.json
 
 # Logs
 logs
