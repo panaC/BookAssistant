@@ -112,4 +112,7 @@ export const MetadataSchema = new mongoose.Schema({
   },
 });
 
-MetadataSchema.index({ title: 'text' });
+MetadataSchema.index(
+  { title: 'text' },
+  { default_language: 'french' },
+);
