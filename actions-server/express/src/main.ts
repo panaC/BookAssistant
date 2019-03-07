@@ -13,11 +13,8 @@
 
 import { SERVER_NAME, ENTRY_POINT } from './constants';
 import { server } from './server';
-// import https from 'https';
-// import { readFileSync } from 'fs';
 
 if (typeof require !== 'undefined' && require.main === module) {
-  // const httpsServer = https.createServer({key: readFileSync('dist/server.key'), cert: readFileSync('dist/server.cert')}, server);
   server.listen(server.get('port'), () => {
     // tslint:disable-next-line:no-console
     console.log(`${SERVER_NAME} is running at http://localhost:${server.get('port')}${ENTRY_POINT}`);
