@@ -19,7 +19,10 @@
     },
     "follow": " ",
     "finish": "Le livre est finis. Que voulez-vous écouté de nouveau ?",
-    "ref_empty": "Vous n'avez pas dit le nom de la référence"
+    "ref_empty": "Vous n'avez pas dit le nom de la référence",
+    "numberOfChapter": "Il y a %s chapitres dans le livres",
+    "chapter": "Vous écouter le chapitre %s",
+    "author": "L'auteur de ce livre est %s"
   },
   "already_listen": {
     "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"

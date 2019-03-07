@@ -1,3 +1,4 @@
+import { currentChapter, numberOfChapter, author } from './playInfo.intent';
 import { noInput, goodbye } from './default.intent';
 import { welcome } from './welcome.intent';
 import { play, playPrev, playNext, playNo, playReference } from './play.intent';
@@ -15,6 +16,9 @@ export const intent = {
   playNext,
   playNo,
   playReference,
+  currentChapter,
+  numberOfChapter,
+  author,
   noInput,
   goodbye,
 };

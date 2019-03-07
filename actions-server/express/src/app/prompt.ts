@@ -80,6 +80,24 @@ export const prompts: Iprompts = {
     ],
     suggestions: [],
   },
+  play_chapter: {
+    elements: [
+      i18n.__('play.chapter'),
+    ],
+    suggestions: [],
+  },
+  play_numberOfChapter: {
+    elements: [
+      i18n.__('play.numberOfChapter'),
+    ],
+    suggestions: [],
+  },
+  play_author: {
+    elements: [
+      i18n.__('play.author'),
+    ],
+    suggestions: [],
+  },
   default_noInput: {
     elements: [
       i18n.__('default.no_input'),

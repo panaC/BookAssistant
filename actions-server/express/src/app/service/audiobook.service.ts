@@ -63,6 +63,7 @@ export const getMedia = async (name: string, chapter: number): Promise<IplayingM
       url: link.href,
       description: a.metadata.identifier,
       identifier: a.metadata.identifier,
+      author: a.metadata.author,
       img: (img) ? {
         url: img.href,
         alt: img.title,

@@ -77,6 +77,9 @@ app.intent('play_audiobook-previous', intent.playPrev);
 app.intent('play_audiobook-yes', intent.play);
 app.intent('play_audiobook-no', intent.playNo);
 app.intent('play_audiobook-reference', intent.playReference);
+app.intent('play_audiobook-numberOfChapter', intent.numberOfChapter);
+app.intent('play_audiobook-chapter', intent.currentChapter);
+app.intent('play_audiobook-author', intent.author);
 
 // default intents
 app.intent('no_input', intent.noInput);
