@@ -66,3 +66,8 @@ An evolution of the prototype is the easier addition by configuring a new standa
 #### Application
 Audiobook playback is the core of the application, due to the limitation of the playback of audio files by the Google player present in these devices. We are forced to use the tool such as. In this sense, accelerated reading is not available, nor is the 30s jump.
 
+## links
+
+- [EDRLAB](https://edrlab.org)
+- [Actions](https://developers.google.com/actions/)
+- [Dialogflow](https://dialogflow.com/docs)
