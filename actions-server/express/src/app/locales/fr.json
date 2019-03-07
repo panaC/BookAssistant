@@ -1,0 +1,50 @@
+{
+  "welcome": {
+    "home": "Que voulez-vous écouter ?"
+  },
+  "instruction": {
+    "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
+    "want_listen": "Je veux écouter"
+  },
+  "service": {
+    "get_audiobook": {
+      "error": "aucun livre ne correspond"
+    }
+  },
+  "play": {
+    "first": "Voici l'audiobook %s",
+    "suggestion": {
+      "next": "Chapitre suivant",
+      "prev": "Chapitre précédent"
+    },
+    "follow": " ",
+    "finish": "Le livre est finis. Que voulez-vous écouté de nouveau ?",
+    "ref_empty": "Vous n'avez pas dit le nom de la référence",
+    "numberOfChapter": "Il y a %s chapitres dans le livres",
+    "chapter": "Vous écouter le chapitre %s",
+    "author": "L'auteur de ce livre est %s"
+  },
+  "already_listen": {
+    "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
+  },
+  "yes_no": {
+    "yes": "oui",
+    "no": "non"
+  },
+  "utils": {
+    "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
+  },
+  "default": {
+    "no_input": " ",
+    "goodbye": "Reviens vite !"
+  },
+  "error": {
+    "global": "Oups. %s",
+    "audiobook": {
+      "network": "Une erreur réseau est survenue",
+      "chapter": "Le chapitre est incorrect",
+      "not_found": "Ce livre est inconnu",
+      "ref": "Cette référence est inconnu"
+    }
+  }
+}

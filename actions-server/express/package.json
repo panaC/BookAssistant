@@ -24,13 +24,18 @@
     "actions-on-google": "^2.5.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "class-transformer": "^0.2.0",
     "debug": "^4.1.1",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "i18n": "^0.8.3",
+    "sprintf-js": "^1.1.2"
   },
   "devDependencies": {
+    "@types/sprintf-js": "^1.1.2",
     "@types/body-parser": "^1.17.0",
     "@types/debug": "0.0.31",
     "@types/express": "^4.16.1",
+    "@types/i18n": "^0.8.5",
     "@types/node": "^10.12.21",
     "nodemon": "^1.18.9",
     "ts-node": "^8.0.2",

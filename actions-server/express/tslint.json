@@ -12,7 +12,10 @@
     "member-ordering": [false],
     "interface-name": [false],
     "arrow-parens": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "no-string-throw": false,
+    "one-variable-per-declaration": false,
+    "no-conditional-assignment": false,
   },
   "linterOptions": {
     "exclude": [

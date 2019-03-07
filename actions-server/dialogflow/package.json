@@ -1,0 +1,29 @@
+{
+  "name": "dialogflow",
+  "version": "1.0.0",
+  "description": "## Creation of an agent and several intents for VoiceAssistant Actions APP with Google cloud API",
+  "main": "index.js",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "dialogflow": "^0.8.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.2",
+    "@types/node": "^11.9.5",
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3333"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "credential": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"/home/pierre/Documents/edrlab/VoiceAssistant/actions-server/dialogflow/voiceassistant.json\\\"",
+    "launch": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"/home/pierre/Documents/edrlab/VoiceAssistant/actions-server/dialogflow/voiceassistant.json\\\" node dist/backup.js",
+    "start": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"/home/pierre/Documents/edrlab/VoiceAssistant/actions-server/dialogflow/voiceassistant.json\\\" ts-node src/backup.ts",
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

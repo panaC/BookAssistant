@@ -11,7 +11,14 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { JSON_CREDENTIAL_PATH } from './constants';
+ /*
+  * Ressources :
+  *
+  * DialogFlow API v2 : https://cloud.google.com/dialogflow-enterprise/docs/reference/rest/v2-overview
+  * Node js ressources example : https://github.com/googleapis/nodejs-dialogflow/blob/master/samples/resource.js
+  * Dialogflow documentation entities : https://dialogflow.com/docs/entities
+  */
+
 import dialogflow from 'dialogflow';
 import { readFileSync, writeFileSync } from 'fs';
 import { log, err } from './debug';
@@ -27,12 +34,16 @@ const BACKUP_ZIP = 'backup.zip';
 export class DialogflowAgent {
   private client: dialogflow.AgentsClient;
 
-  constructor(keyFilename: string, private backupFilename: string = BACKUP_ZIP) {
-    const credential: ICredential = JSON.parse(readFileSync(keyFilename).toString());
-    this.client = new dialogflow.v2.AgentsClient({
-      credentials: credential,
-      projectId: credential.project_id,
-    });
+  constructor(keyFilename: string = null, private backupFilename: string = BACKUP_ZIP) {
+    if (keyFilename) {
+      const credential: ICredential = JSON.parse(readFileSync(keyFilename).toString());
+      this.client = new dialogflow.v2.AgentsClient({
+        credentials: credential,
+        projectId: credential.project_id,
+      });
+
+    }
+    this.client = new dialogflow.v2.AgentsClient();
     log('DialogflowAgent Constructor called');
   }
 
@@ -78,11 +89,11 @@ export class DialogflowAgent {
 }
 
 if (typeof require !== 'undefined' && require.main === module) {
-  const l = new DialogflowAgent(JSON_CREDENTIAL_PATH);
+  const l = new DialogflowAgent();
   (async () => {
     try {
       await l.backup();
-      await l.restore();
+      // await l.restore();
     } catch (e) {
       err(e);
     }

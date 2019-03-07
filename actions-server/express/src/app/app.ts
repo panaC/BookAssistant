@@ -11,49 +11,47 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { dialogflow, Image, MediaObject, Suggestions } from 'actions-on-google';
-import Axios from 'axios';
+ /*
+  * Ressources :
+  *
+  * app.intent doc : https://github.com/actions-on-google/actions-on-google-nodejs/blob/master/src/service/dialogflow/conv.ts
+  *
+  */
+
+import { dialogflow, DialogflowConversation } from 'actions-on-google';
+import { IsessionStorage, IuserStorage } from './interface/storage.interface';
+import { Utils } from './utils';
+import { intent } from './intent/intent';
+
+export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
+  utils: Utils;
+}
 
 // Create an app instance
 export const app = dialogflow({
-  debug: true,
+  /*debug: true,*/
 });
 
-// Register handlers for Dialogflow intents
-app.intent('Default Welcome Intent', conv => {
-  conv.ask(`Que voulez-vous écouter ?`);
+app.middleware((conv: DFConv) => {
+  conv.utils = new Utils(conv);
 });
 
-app.intent('play audiobook', async (conv, { audiobook }) => {
-  conv.ask(`Voici l'audiobook ${audiobook}`);
-  if (!conv.surface.capabilities.has('actions.capability.MEDIA_RESPONSE_AUDIO')) {
-    conv.ask('Désolé, cet appareil ne supporte pas la lecture audio');
-    return;
-  }
-  try {
-    const res = await Axios.get(`https://edrlab.ml/api?q=${encodeURI(audiobook as string)}`);
-    if (res.data.links[0].href) {
-      conv.ask(new MediaObject({
-        name: res.data.metadata.title,
-        url: res.data.links[0].href,
-        description: res.data.metadata.identifier,
-        icon: new Image({
-          url: 'https://storage.googleapis.com/automotive-media/album_art.jpg',
-          alt: 'Jazz musique',
-        }),
-      }));
-      conv.ask(new Suggestions('Ma suggestion'));
-    }
-  } catch (e) {
-    conv.ask(`Une érreur est survenue : ${e}`);
-  }
-});
+// start intents
+app.intent('Default Welcome Intent', intent.welcome);
 
-// Intent in Dialogflow called `Goodbye`
-app.intent('Goodbye', conv => {
-  conv.close('Reviens vite !');
-});
+// play intents
+app.intent('play_audiobook', intent.play);
+app.intent('play_audiobook-media_status', intent.playNext);
+app.intent('play_audiobook-repeat', intent.play);
+app.intent('play_audiobook-next', intent.playNext);
+app.intent('play_audiobook-previous', intent.playPrev);
+app.intent('play_audiobook-yes', intent.play);
+app.intent('play_audiobook-no', intent.playNo);
+app.intent('play_audiobook-reference', intent.playReference);
+app.intent('play_audiobook-numberOfChapter', intent.numberOfChapter);
+app.intent('play_audiobook-chapter', intent.currentChapter);
+app.intent('play_audiobook-author', intent.author);
 
-app.intent('Default Fallback Intent', conv => {
-  conv.ask(`Je n'ai pas compris peux tu me demander autre chose ?`);
-});
+// default intents
+app.intent('no_input', intent.noInput);
+app.intent('goodbye', intent.goodbye);
