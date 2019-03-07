@@ -55,7 +55,7 @@ It contains an Express based HTTP server, which exposes an OPDS-FEED/WEBPUB API 
 
 In concrete terms, its objective is to provide, in the form of a REST API, a document in the standard JSON format allowing navigation and/or search of webpub events. More specifically, audiobook manifests. 
 
- - The server is designed according to a CRUD architecture:
+The server is designed according to a CRUD architecture:
  - Create: Route Post to add a new audiobook to the database (information in Webpub manifest format)
  - Read : Route Get which provides an OPDS navigation flow, then the webpub manifests itself during a search
  - Update: Route Put to update a manifest Webpub
