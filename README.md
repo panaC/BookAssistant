@@ -12,6 +12,33 @@ Based on Google Assistant with [Google Actions](https://developers.google.com/ac
  - `actions-server` - an API server to parse and react to the Dialogflow agent's webhook
  - `docs` - a few documentation
  - `demo` - script for loading demo audiobook inside `webpub-server`
+ 
+## What you'll need
+
+On the hardware side, you will need:
+ - A root access server with Ubuntu LTS18
+ - a [Google Home](https://madeby.google.com/home/) (or another device running Google Assistant)
+ 
+On the software side, you will need:
+ - An database, at least MongoDB
+ - An nginx reverse-proxy server
+ - May be an elastic-search
+ 
+You'll also need accounts with:
+
+- [Dialogflow](https://dialogflow.com/) (for understanding user voice queries)
+- [Google Cloud](https://cloud.google.com/) (for hosting the webhook webapp/service)
+
+## Getting started
+
+Assuming you have all the required devices and accounts as noted above, the first thing you'll want to do is to set up apps on the corresponding services so you can get your devices talking to each other.
+
+### Local setup
+
+First, you'll need to clone this repo, and `cd` into the newly-created directory.
+
+    git clone https://github.com/panaC/BookAssistant.git
+    cd BookAssistant
 
 ## Architecture
 
@@ -70,4 +97,9 @@ Audiobook playback is the core of the application, due to the limitation of the 
 
 - [EDRLAB](https://edrlab.org)
 - [Actions](https://developers.google.com/actions/)
+- [Actions on Google Node.js Client Library](https://developers.google.com/actions/tools/nodejs-client-library)
 - [Dialogflow](https://dialogflow.com/docs)
+
+## Acknowledgements
+
+This project is created in EDRLab
