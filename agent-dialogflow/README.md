@@ -7,13 +7,11 @@ backup agent configuration from [dialogflow console](https://console.dialogflow.
 ## what's included
 
 ```
-script/src
-├── backup.ts => call to api for backup agent to `agent` folder
-├── constants.ts
-├── debug.ts
-├── types
-│   └── dialogflow.d.ts
-└── unzip.sh => unzip backup zip file to agent call by npm after backup
+.
+├── agent : Actual agent in dialogflow.com for this application, unzip it
+├── agent.zip : the same agent that upside folder, use for push configuration in dialogflow project
+├── README.md
+└── script : the code for extract agent from dialogflow
 ```
 
 ## Getting started

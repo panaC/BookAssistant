@@ -6,6 +6,18 @@ Instead used https://console.dialogflow.com, we can create an agent and intents 
 
 An API limitation exist, see https://cloud.google.com/dialogflow-enterprise/docs/editions
 
+## what's included
+
+```
+script/src
+├── backup.ts => call to api for backup agent to `agent` folder
+├── constants.ts
+├── debug.ts
+├── types
+│   └── dialogflow.d.ts
+└── unzip.sh => unzip backup zip file to agent call by npm after backup
+```
+
 ## Setup
 
 ### An JSON file credential is needed to use [AgentsClient](https://cloud.google.com/nodejs/docs/reference/dialogflow/0.8.x/v2.AgentsClient#AgentsClient) class
