@@ -1,32 +1,52 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# opds-server
+
+an API server that handle web request and provide opds standard audiobook
+
+## what's included
+
+```
+src
+├── app.controller.spec.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+├── constants.ts
+├── database :=> Mongodb initialisation
+│   ├── database.module.ts
+│   └── database.providers.ts
+├── main.ts :=> Server start
+├── pipe :=> Validation pipe for webpub format request on post
+│   └── validation.pipe.ts
+└── webpub :=> webpub main HTTP app route
+    ├── dto :=> data transfert object for webpub format
+    │   ├── links.dto.ts
+    │   ├── metadata.dto.ts
+    │   └── webpub.dto.ts
+    ├── interfaces :=> interface type for webpub format
+    │   ├── links.interface.ts
+    │   ├── metadata.interface.ts
+    │   └── webpub.inteface.ts
+    ├── opds :=> dto for opds format
+    │   ├── dto
+    │   │   ├── metadataOpds.dto.ts
+    │   │   └── opds.dto.ts
+    │   └── feed.service.ts :=> opds formating in get
+    ├── schema :=> mongodb schema to save all webpub data
+    │   ├── links.schema.ts
+    │   ├── metadata.schema.ts
+    │   └── webpub.schema.ts
+    ├── webpub.controller.spec.ts
+    ├── webpub.controller.ts :=> Model controller in MVC with CRUD operation
+    ├── webpub.module.ts :=> Nest.js Module
+    ├── webpub.providers.ts :=> Mongodb provider
+    ├── webpub.service.spec.ts
+    └── webpub.service.ts :=> call by controller for provide output data context in webpub or opds format
+```
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Built with [Nest](https://github.com/nestjs/nest) framework TypeScript
 
 ## Installation
 
