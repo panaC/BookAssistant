@@ -14,6 +14,8 @@ backup agent configuration from [dialogflow console](https://console.dialogflow.
 └── script : the code for extract agent from dialogflow
 ```
 
+see [script documentation](script/readme.md)
+
 ## Getting started
 
 ```sh
