@@ -12,6 +12,7 @@ Based on Google Assistant with [Google Actions](https://developers.google.com/ac
  - `actions-server` - an API server to parse and react to the Dialogflow agent's webhook
  - `docs` - a few documentation
  - `demo` - script for loading demo audiobook inside `webpub-server`
+ - `ops` - operation part of devops. Install on server folder
  
 ## What you'll need
 
