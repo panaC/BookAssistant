@@ -2,6 +2,9 @@
 
 I used for my App development test an [EC2 AWS server](https://aws.amazon.com/fr/ec2/) with Ubuntu LTS 18.04
 
+Then now, we used an dedicated server at [online.net](https://www.online.net/fr/serveurs-dedies/start-2-m-ssd).
+Warning, online doesn't have a firewall deny all route -> [go here](https://documentation.online.net/fr/dedicated-server/tutorials/security/configure-firewall)
+
 # Setup
 
 - git clone this repository in the home directory
