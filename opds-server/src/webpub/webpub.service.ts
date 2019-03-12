@@ -11,9 +11,16 @@
  * Use of this source code is governed by a BSD-style license
  */
 
+import { ES_MIN_SCORE
+  , ES_MEAN_SCORE
+  , ES_REF_INDEX
+  , ES_REF_TYPE
+  , ES_ENABLE
+  , ES_INDEX
+  , ES_TYPE
+  , WEBPUB_MODEL_PROVIDER } from './../constants';
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { WEBPUB_MODEL_PROVIDER, ES_TYPE, ES_INDEX, ES_ENABLE } from '../constants';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
@@ -28,66 +35,101 @@ export class WebpubService {
     private readonly elasticsearchService: ElasticsearchService) {}
 
   private static tocFlat(toc: LinksDto[]): string[] {
-    return toc.map((link) =>
+    return toc ? toc.map((link) =>
       link.children ? [link.title, ...WebpubService.tocFlat(link.children)] : [link.title])
       .reduce((a, c) => {
         a.push(...c);
         return a;
-      }, []);
-
+      }, []) : [];
   }
 
-  async delete(identifier: string): Promise<void> {
+  async delete(identifier: string): Promise<IWebpub> {
     const doc = await this.webpubModel.findOneAndDelete({
       'metadata.identifier': identifier,
     }).exec();
-    try {
-      this.elasticsearchService.delete({
+    if (doc && doc.id) {
+      await this.elasticsearchService.delete({
         index: ES_INDEX,
         type: ES_TYPE,
-        id: doc._id,
-      });
-    } catch (e) {
-      throw new Error('there are no books to delete');
+        id: doc.id,
+      }).toPromise();
     }
+    await this.elasticsearchService.deleteByQuery({
+        index: ES_REF_INDEX,
+        body: {
+          query: {
+            match: {
+              identifier,
+            },
+          },
+        },
+      });
+    return doc;
   }
 
-  async update(webpubDto: WebpubDto): Promise<void> {
+  async update(webpubDto: WebpubDto): Promise<IWebpub> {
     const doc = await this.webpubModel.findOneAndUpdate({
       'metadata.identifier': webpubDto.metadata.identifier,
     }, webpubDto).exec();
-    try {
+    if (doc && doc.id) {
       await this.elasticsearchService.update({
         index: ES_INDEX,
         type: ES_TYPE,
-        id: doc._id,
+        id: doc.id,
         body: {
           title: webpubDto.metadata.title,
           author: webpubDto.metadata.author,
-          toc_title: WebpubService.tocFlat(webpubDto.toc),
+          ref: WebpubService.tocFlat(webpubDto.toc),
+        },
+      }).toPromise();
+      await this.elasticsearchService.deleteByQuery({
+        index: ES_REF_INDEX,
+        body: {
+          query: {
+            match: {
+              identifier: webpubDto.metadata.identifier,
+            },
+          },
         },
       });
-    } catch (e) {
-      throw new Error('there are no books to update');
+      for (const ref of WebpubService.tocFlat(webpubDto.toc)) {
+        await this.elasticsearchService.create({
+          index: ES_REF_INDEX,
+          type: ES_REF_TYPE,
+          body: {
+            identifier: webpubDto.metadata.identifier,
+            ref,
+          },
+        });
+      }
     }
+    return doc;
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
     const created = new this.webpubModel(webpubDto);
     const doc = await created.save();
-    try {
+    if (doc && doc.id) {
       await this.elasticsearchService.create({
         index: ES_INDEX,
         type: ES_TYPE,
-        id: doc._id,
+        id: doc.id,
         body: {
           title: webpubDto.metadata.title,
           author: webpubDto.metadata.author,
-          toc_title: WebpubService.tocFlat(webpubDto.toc),
+          ref: WebpubService.tocFlat(webpubDto.toc),
         },
-      });
-    } catch (e) {
-      throw new Error('An error is happened to index this webpub');
+      }).toPromise();
+      for (const ref of WebpubService.tocFlat(webpubDto.toc)) {
+        await this.elasticsearchService.create({
+          index: ES_REF_INDEX,
+          type: ES_REF_TYPE,
+          body: {
+            id: webpubDto.metadata.identifier,
+            ref,
+          },
+        });
+      }
     }
     return doc;
   }
@@ -101,9 +143,14 @@ export class WebpubService {
         q: title,
         size: 5,
       }).toPromise();
-      if (es && es.hits && es.hits.hits) {
-        for (const doc of es.hits.hits) {
-          manifest.push(await this.webpubModel.find({ _id: doc._id }));
+      if (es && es[0] && es[0].hits && es[0].hits.hits) {
+        for (const doc of es[0].hits.hits) {
+          if (doc._score > ES_MEAN_SCORE) {
+            manifest = [await this.webpubModel.findOne({ _id: doc._id })];
+            break;
+          } else if (doc._score > ES_MIN_SCORE || es[0].hits.total === 1) {
+            manifest.push(await this.webpubModel.findOne({ _id: doc._id }));
+          }
         }
       }
     } else {
