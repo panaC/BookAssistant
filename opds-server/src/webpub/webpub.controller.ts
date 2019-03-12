@@ -63,9 +63,9 @@ export class WebpubController {
       description: 'delete webpub Manifest with title identification',
   })
   @Delete()
-  async delete(@Query('q') title: string) {
+  async delete(@Query('q') identifier: string) {
     try {
-      await this.webpubService.delete(title);
+      await this.webpubService.delete(identifier);
       return 'webpub deleted';
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
