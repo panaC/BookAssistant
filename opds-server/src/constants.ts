@@ -41,10 +41,12 @@ export const LINK_SELF_SERVER = (query = '', rel = 'self') =>
 export const MORE_POPULAR_GROUP_NAME = 'les plus écoutés';
 export const MORE_RECENT_GROUP_NAME = 'les plus récents';
 
+export const ES_PROVIDER = 'ESsearchToken';
+export const ES_HOST = 'http://localhost:9200';
 export const ES_INDEX = 'book';
 export const ES_TYPE = 'book';
-export const ES_REF_INDEX = 'book';
-export const ES_REF_TYPE = 'book';
+export const ES_REF_INDEX = 'ref';
+export const ES_REF_TYPE = 'ref';
 export const ES_ENABLE = true;
 export const ES_MIN_SCORE = 0.5;
 export const ES_MEAN_SCORE = 3;

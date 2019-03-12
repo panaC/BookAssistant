@@ -12,15 +12,10 @@
  */
 
 import { Module } from '@nestjs/common';
-import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { searchProviders } from './search.providers';
 
 @Module({
-  imports: [ElasticsearchModule.registerAsync({
-    useFactory: () => ({
-      host: 'localhost:9200',
-      log: 'trace',
-    }),
-  })],
-  providers: [],
+    providers: [...searchProviders],
+    exports: [...searchProviders],
 })
 export class SearchModule { }

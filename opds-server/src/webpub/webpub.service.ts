@@ -18,21 +18,27 @@ import { ES_MIN_SCORE
   , ES_ENABLE
   , ES_INDEX
   , ES_TYPE
-  , WEBPUB_MODEL_PROVIDER } from './../constants';
+  , WEBPUB_MODEL_PROVIDER
+  , ES_PROVIDER } from './../constants';
 import { Model } from 'mongoose';
 import { Injectable, Inject, Param } from '@nestjs/common';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
-import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { LinksDto } from './dto/links.dto';
+import { Client, SearchResponse } from 'elasticsearch';
+
+interface IESref {
+  identifier: string;
+  ref: string;
+}
 
 @Injectable()
 export class WebpubService {
   constructor(
     @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>,
-    private readonly elasticsearchService: ElasticsearchService) {}
+    @Inject(ES_PROVIDER) private readonly elasticsearchService: Client) {}
 
   private static tocFlat(toc: LinksDto[]): string[] {
     return toc ? toc.map((link) =>
@@ -52,18 +58,18 @@ export class WebpubService {
         index: ES_INDEX,
         type: ES_TYPE,
         id: doc.id,
-      }).toPromise();
+      });
     }
     await this.elasticsearchService.deleteByQuery({
-        index: ES_REF_INDEX,
-        body: {
-          query: {
-            match: {
-              identifier,
-            },
+      index: ES_REF_INDEX,
+      body: {
+        query: {
+          match: {
+            identifier,
           },
         },
-      });
+      },
+    });
     return doc;
   }
 
@@ -81,7 +87,7 @@ export class WebpubService {
           author: webpubDto.metadata.author,
           ref: WebpubService.tocFlat(webpubDto.toc),
         },
-      }).toPromise();
+      });
       await this.elasticsearchService.deleteByQuery({
         index: ES_REF_INDEX,
         body: {
@@ -119,13 +125,13 @@ export class WebpubService {
           author: webpubDto.metadata.author,
           ref: WebpubService.tocFlat(webpubDto.toc),
         },
-      }).toPromise();
+      });
       for (const ref of WebpubService.tocFlat(webpubDto.toc)) {
-        await this.elasticsearchService.create({
+        await this.elasticsearchService.index({
           index: ES_REF_INDEX,
           type: ES_REF_TYPE,
           body: {
-            id: webpubDto.metadata.identifier,
+            identifier: webpubDto.metadata.identifier,
             ref,
           },
         });
@@ -145,8 +151,8 @@ export class WebpubService {
           },
         },
       },
-    }).toPromise();
-    if (es && es[0] && es[0].hits && es[0].hits.hits) {
+    });
+    if (es && es.hits && es.hits.hits) {
       if (!ref || ref === '') {
         return JSON.stringify({ state: true});
       } else {
@@ -164,19 +170,27 @@ export class WebpubService {
                   },
                   {
                     match: {
-                      ref: {
-                        query: ref,
-                        fuzziness: 'AUTO',
-                      },
+                      ref,
                     },
                   },
                 ],
               },
             },
           },
-        }).toPromise();
-        if (es && es[0] && es[0].hits && es[0].hits.hits) {
-          return JSON.stringify({ state: true, ref: es[0].hits.hits.map((f) => f._source.ref) });
+        });
+        if (es && es.hits && es.hits.hits) {
+          return JSON.stringify({
+            state: true,
+            ref: ((e) => {
+              const ret = [];
+              e.forEach((r) => {
+                if (r._score > 1) {
+                  ret.push(r._source.ref);
+                }
+              });
+              return ret;
+            })((es as SearchResponse<IESref>).hits.hits),
+          });
         }
       }
     }
@@ -191,13 +205,13 @@ export class WebpubService {
         index: ES_INDEX,
         q: title,
         size: 5,
-      }).toPromise();
-      if (es && es[0] && es[0].hits && es[0].hits.hits) {
-        for (const doc of es[0].hits.hits) {
+      });
+      if (es && es.hits && es.hits.hits) {
+        for (const doc of es.hits.hits) {
           if (doc._score > ES_MEAN_SCORE) {
             manifest = [await this.webpubModel.findOne({ _id: doc._id })];
             break;
-          } else if (doc._score > ES_MIN_SCORE || es[0].hits.total === 1) {
+          } else if (doc._score > ES_MIN_SCORE || es.hits.total === 1) {
             manifest.push(await this.webpubModel.findOne({ _id: doc._id }));
           }
         }
