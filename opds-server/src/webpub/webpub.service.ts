@@ -154,7 +154,7 @@ export class WebpubService {
     });
     if (es && es.hits && es.hits.hits && es.hits.hits.length) {
       if (!ref || ref === '') {
-        return JSON.stringify({ state: true});
+        return { state: true, ref: []};
       } else {
         es = await this.elasticsearchService.search({
           index: ES_REF_INDEX,
@@ -179,7 +179,7 @@ export class WebpubService {
           },
         });
         if (es && es.hits && es.hits.hits) {
-          return JSON.stringify({
+          return {
             state: true,
             ref: ((e) => {
               const ret = [];
@@ -190,11 +190,11 @@ export class WebpubService {
               });
               return ret;
             })((es as SearchResponse<IESref>).hits.hits),
-          });
+          };
         }
       }
     }
-    return JSON.stringify({ state: false });
+    return { state: false };
   }
 
   async find(title: string): Promise<WebpubDto[]> {

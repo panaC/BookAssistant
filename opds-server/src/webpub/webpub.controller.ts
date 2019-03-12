@@ -52,9 +52,9 @@ export class WebpubController {
   async create(@Body() webpubDto: WebpubDto) {
     try {
       if (await this.webpubService.create(webpubDto)) {
-        return JSON.stringify({ message: 'webpub saved' });
+        return { message: 'webpub saved' };
       }
-      return JSON.stringify({ message: 'an error is happened to index this webpub' });
+      return { message: 'an error is happened to index this webpub' };
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
@@ -69,9 +69,9 @@ export class WebpubController {
   async delete(@Query('q') identifier: string) {
     try {
       if (await this.webpubService.delete(identifier)) {
-        return JSON.stringify({ message: 'webpub deleted' });
+        return { message: 'webpub deleted' };
       }
-      return JSON.stringify({ message: 'webpub unknown' });
+      return { message: 'webpub unknown' };
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
@@ -86,9 +86,9 @@ export class WebpubController {
   async update(@Body() webpubDto: WebpubDto) {
     try {
       if (await this.webpubService.update(webpubDto)) {
-        return JSON.stringify({ message: 'webpub updated' });
+        return { message: 'webpub updated' };
       }
-      return JSON.stringify({ message: 'webpub unknown' });
+      return { message: 'webpub unknown' };
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
