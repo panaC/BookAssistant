@@ -41,27 +41,30 @@ export class WebpubService {
     const doc = await this.webpubModel.findOneAndDelete({
       'metadata.identifier': identifier,
     }).exec();
-    this.elasticsearchService.delete({
-      index: ES_INDEX,
-      type: ES_TYPE,
-      id: doc._id,
-    });
+    if (doc._id) {
+      this.elasticsearchService.delete({
+        index: ES_INDEX,
+        type: ES_TYPE,
+        id: doc._id,
+      });
+    }
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
     const created = new this.webpubModel(webpubDto);
     const doc = await created.save();
-
-    await this.elasticsearchService.create({
-      index: ES_INDEX,
-      type: ES_TYPE,
-      id: doc._id,
-      body: {
-        title: webpubDto.metadata.title,
-        author: webpubDto.metadata.author,
-        toc_title: WebpubService.tocFlat(webpubDto.toc),
-      },
-    });
+    if (doc._id) {
+      await this.elasticsearchService.create({
+        index: ES_INDEX,
+        type: ES_TYPE,
+        id: doc._id,
+        body: {
+          title: webpubDto.metadata.title,
+          author: webpubDto.metadata.author,
+          toc_title: WebpubService.tocFlat(webpubDto.toc),
+        },
+      });
+    }
     return doc;
   }
 
@@ -118,12 +121,12 @@ export class WebpubService {
   }
 
   async findGenre(genre: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
-    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.genre': genre})
-    .sort({'metadata.dateModified': sort})
-    .limit(numberOfItem)
-    .skip(page * numberOfItem)
-    .lean()
-    .exec();
+    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.genre': genre })
+      .sort({ 'metadata.dateModified': sort })
+      .limit(numberOfItem)
+      .skip(page * numberOfItem)
+      .lean()
+      .exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
@@ -133,11 +136,11 @@ export class WebpubService {
 
   async findGroup(group: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
     const manifest: IWebpub[] = await this.webpubModel.find({})
-    .sort({'metadata.dateModified': sort})
-    .limit(numberOfItem)
-    .skip(page * numberOfItem)
-    .lean()
-    .exec();
+      .sort({ 'metadata.dateModified': sort })
+      .limit(numberOfItem)
+      .skip(page * numberOfItem)
+      .lean()
+      .exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
@@ -149,16 +152,17 @@ export class WebpubService {
     const doc = await this.webpubModel.findOneAndUpdate({
       'metadata.identifier': webpubDto.metadata.identifier,
     }, webpubDto).exec();
-
-    await this.elasticsearchService.update({
-      index: ES_INDEX,
-      type: ES_TYPE,
-      id: doc._id,
-      body: {
-        title: webpubDto.metadata.title,
-        author: webpubDto.metadata.author,
-        toc_title: WebpubService.tocFlat(webpubDto.toc),
-      },
-    });
+    if (doc._id) {
+      await this.elasticsearchService.update({
+        index: ES_INDEX,
+        type: ES_TYPE,
+        id: doc._id,
+        body: {
+          title: webpubDto.metadata.title,
+          author: webpubDto.metadata.author,
+          toc_title: WebpubService.tocFlat(webpubDto.toc),
+        },
+      });
+    }
   }
 }
