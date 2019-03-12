@@ -13,24 +13,55 @@
 
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { WEBPUB_MODEL_PROVIDER, NAME_SERVER } from '../constants';
+import { WEBPUB_MODEL_PROVIDER, ES_TYPE, ES_INDEX } from '../constants';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
 import { JSON } from 'ta-json-x';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { LinksDto } from './dto/links.dto';
 
 @Injectable()
 export class WebpubService {
   constructor(
-    @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>) {}
+    @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>,
+    private readonly elasticsearchService: ElasticsearchService) {}
 
-  async delete(title: string): Promise<void> {
-    await this.webpubModel.deleteOne({ 'metadata.identifier': title }).exec();
+  async delete(identifier: string): Promise<void> {
+    const doc = await this.webpubModel.findOneAndDelete({
+      'metadata.identifier': identifier,
+    }).exec();
+    this.elasticsearchService.delete({
+      index: ES_INDEX,
+      type: ES_TYPE,
+      id: doc._id,
+    });
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
     const created = new this.webpubModel(webpubDto);
-    return await created.save();
+    const doc = await created.save();
+
+    const tocFlat = (toc: LinksDto[]): string[] => {
+      return toc.map((link) =>
+        link.children ? [link.title, ...tocFlat(link.children)] : [link.title])
+        .reduce((a, c) => {
+          a.push(...c);
+          return a;
+        }, []);
+    };
+
+    await this.elasticsearchService.create({
+      index: ES_INDEX,
+      type: ES_TYPE,
+      id: doc._id,
+      body: {
+        title: webpubDto.metadata.title,
+        author: webpubDto.metadata.author,
+        toc_title: tocFlat(webpubDto.toc),
+      },
+    });
+    return doc;
   }
 
   async find(title: string): Promise<WebpubDto[]> {

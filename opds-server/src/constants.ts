@@ -40,3 +40,6 @@ export const LINK_SELF_SERVER = (query = '', rel = 'self') =>
 
 export const MORE_POPULAR_GROUP_NAME = 'les plus écoutés';
 export const MORE_RECENT_GROUP_NAME = 'les plus récents';
+
+export const ES_INDEX = 'book';
+export const ES_TYPE = '_book';
