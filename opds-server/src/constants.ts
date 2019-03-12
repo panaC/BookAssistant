@@ -43,3 +43,4 @@ export const MORE_RECENT_GROUP_NAME = 'les plus récents';
 
 export const ES_INDEX = 'book';
 export const ES_TYPE = '_book';
+export const ES_ENABLE = true;

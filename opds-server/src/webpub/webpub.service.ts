@@ -13,7 +13,7 @@
 
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { WEBPUB_MODEL_PROVIDER, ES_TYPE, ES_INDEX } from '../constants';
+import { WEBPUB_MODEL_PROVIDER, ES_TYPE, ES_INDEX, ES_ENABLE } from '../constants';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
@@ -26,6 +26,16 @@ export class WebpubService {
   constructor(
     @Inject(WEBPUB_MODEL_PROVIDER) private readonly webpubModel: Model<IWebpub>,
     private readonly elasticsearchService: ElasticsearchService) {}
+
+  private static tocFlat(toc: LinksDto[]): string[] {
+    return toc.map((link) =>
+      link.children ? [link.title, ...WebpubService.tocFlat(link.children)] : [link.title])
+      .reduce((a, c) => {
+        a.push(...c);
+        return a;
+      }, []);
+
+  }
 
   async delete(identifier: string): Promise<void> {
     const doc = await this.webpubModel.findOneAndDelete({
@@ -42,15 +52,6 @@ export class WebpubService {
     const created = new this.webpubModel(webpubDto);
     const doc = await created.save();
 
-    const tocFlat = (toc: LinksDto[]): string[] => {
-      return toc.map((link) =>
-        link.children ? [link.title, ...tocFlat(link.children)] : [link.title])
-        .reduce((a, c) => {
-          a.push(...c);
-          return a;
-        }, []);
-    };
-
     await this.elasticsearchService.create({
       index: ES_INDEX,
       type: ES_TYPE,
@@ -58,14 +59,29 @@ export class WebpubService {
       body: {
         title: webpubDto.metadata.title,
         author: webpubDto.metadata.author,
-        toc_title: tocFlat(webpubDto.toc),
+        toc_title: WebpubService.tocFlat(webpubDto.toc),
       },
     });
     return doc;
   }
 
   async find(title: string): Promise<WebpubDto[]> {
-    const manifest = await this.webpubModel.find({$text: {$search: title}}).lean().exec();
+    let manifest = [];
+
+    if (ES_ENABLE) {
+      const es = await this.elasticsearchService.search({
+        index: ES_INDEX,
+        q: title,
+        size: 5,
+      }).toPromise();
+      if (es && es.hits && es.hits.hits) {
+        for (const doc of es.hits.hits) {
+          manifest.push(await this.webpubModel.find({ _id: doc._id }));
+        }
+      }
+    } else {
+      manifest = await this.webpubModel.find({ $text: { $search: title } }).lean().exec();
+    }
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
@@ -75,11 +91,11 @@ export class WebpubService {
 
   async findLang(lang: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
     const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.language': lang })
-    .sort({'metadata.dateModified': sort})
-    .limit(numberOfItem)
-    .skip(page * numberOfItem)
-    .lean()
-    .exec();
+      .sort({ 'metadata.dateModified': sort })
+      .limit(numberOfItem)
+      .skip(page * numberOfItem)
+      .lean()
+      .exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
@@ -88,12 +104,12 @@ export class WebpubService {
   }
 
   async findCollection(collection: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
-    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.corpus': collection})
-    .sort({'metadata.dateModified': sort})
-    .limit(numberOfItem)
-    .skip(page * numberOfItem)
-    .lean()
-    .exec();
+    const manifest: IWebpub[] = await this.webpubModel.find({ 'metadata.corpus': collection })
+      .sort({ 'metadata.dateModified': sort })
+      .limit(numberOfItem)
+      .skip(page * numberOfItem)
+      .lean()
+      .exec();
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);
@@ -130,6 +146,19 @@ export class WebpubService {
   }
 
   async update(webpubDto: WebpubDto): Promise<void> {
-    await this.webpubModel.updateOne({ 'metadata.identifier': webpubDto.metadata.identifier }, webpubDto).exec();
+    const doc = await this.webpubModel.findOneAndUpdate({
+      'metadata.identifier': webpubDto.metadata.identifier,
+    }, webpubDto).exec();
+
+    await this.elasticsearchService.update({
+      index: ES_INDEX,
+      type: ES_TYPE,
+      id: doc._id,
+      body: {
+        title: webpubDto.metadata.title,
+        author: webpubDto.metadata.author,
+        toc_title: WebpubService.tocFlat(webpubDto.toc),
+      },
+    });
   }
 }
