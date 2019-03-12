@@ -50,6 +50,24 @@ export class WebpubService {
     }
   }
 
+  async update(webpubDto: WebpubDto): Promise<void> {
+    const doc = await this.webpubModel.findOneAndUpdate({
+      'metadata.identifier': webpubDto.metadata.identifier,
+    }, webpubDto).exec();
+    if (doc._id) {
+      await this.elasticsearchService.update({
+        index: ES_INDEX,
+        type: ES_TYPE,
+        id: doc._id,
+        body: {
+          title: webpubDto.metadata.title,
+          author: webpubDto.metadata.author,
+          toc_title: WebpubService.tocFlat(webpubDto.toc),
+        },
+      });
+    }
+  }
+
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
     const created = new this.webpubModel(webpubDto);
     const doc = await created.save();
@@ -146,23 +164,5 @@ export class WebpubService {
       return JSON.serialize(object);
     }
     return [] as WebpubDto[];
-  }
-
-  async update(webpubDto: WebpubDto): Promise<void> {
-    const doc = await this.webpubModel.findOneAndUpdate({
-      'metadata.identifier': webpubDto.metadata.identifier,
-    }, webpubDto).exec();
-    if (doc._id) {
-      await this.elasticsearchService.update({
-        index: ES_INDEX,
-        type: ES_TYPE,
-        id: doc._id,
-        body: {
-          title: webpubDto.metadata.title,
-          author: webpubDto.metadata.author,
-          toc_title: WebpubService.tocFlat(webpubDto.toc),
-        },
-      });
-    }
   }
 }
