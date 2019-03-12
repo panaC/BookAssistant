@@ -20,7 +20,7 @@ import { ES_MIN_SCORE
   , ES_TYPE
   , WEBPUB_MODEL_PROVIDER } from './../constants';
 import { Model } from 'mongoose';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Param } from '@nestjs/common';
 import { IWebpub } from './interfaces/webpub.inteface';
 import { WebpubDto } from './dto/webpub.dto';
 import { plainToClass } from 'class-transformer';
@@ -132,6 +132,55 @@ export class WebpubService {
       }
     }
     return doc;
+  }
+
+  async findRef(identifier: string, ref: string): Promise<{}> {
+    let es = await this.elasticsearchService.search({
+      index: ES_REF_INDEX,
+      type: ES_REF_TYPE,
+      body: {
+        query: {
+          match: {
+            identifier,
+          },
+        },
+      },
+    }).toPromise();
+    if (es && es[0] && es[0].hits && es[0].hits.hits) {
+      if (!ref || ref === '') {
+        return JSON.stringify({ state: true});
+      } else {
+        es = await this.elasticsearchService.search({
+          index: ES_REF_INDEX,
+          type: ES_REF_TYPE,
+          body: {
+            query: {
+              bool: {
+                should: [
+                  {
+                    match: {
+                      identifier,
+                    },
+                  },
+                  {
+                    match: {
+                      ref: {
+                        query: ref,
+                        fuzziness: 'AUTO',
+                      },
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }).toPromise();
+        if (es && es[0] && es[0].hits && es[0].hits.hits) {
+          return JSON.stringify({ state: true, ref: es[0].hits.hits.map((f) => f._source.ref) });
+        }
+      }
+    }
+    return JSON.stringify({ state: false });
   }
 
   async find(title: string): Promise<WebpubDto[]> {

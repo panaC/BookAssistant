@@ -1,3 +1,4 @@
+import { Param } from '@nestjs/common';
 /*
  * File: webpub.controller.ts
  * Project: VoiceAssistant
@@ -132,6 +133,21 @@ export class WebpubController {
         return await this.webpubService.findGroup(group, lNumberOfItem, lSort, lPage);
       }
       return await this.feedService.feed();
+    } catch (err) {
+      throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: 200,
+    description: 'search into document toc reference',
+  })
+  @Get(':id')
+  async ref(@Param() params,
+            @Query(SEARCH_URI) ref: string) {
+    try {
+      return this.webpubService.findRef(params.id, ref);
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
