@@ -146,13 +146,13 @@ export class WebpubService {
       type: ES_REF_TYPE,
       body: {
         query: {
-          match: {
-            identifier,
+          term: {
+            'identifier.keyword': identifier,
           },
         },
       },
     });
-    if (es && es.hits && es.hits.hits) {
+    if (es && es.hits && es.hits.hits && es.hits.hits.length) {
       if (!ref || ref === '') {
         return JSON.stringify({ state: true});
       } else {
@@ -164,8 +164,8 @@ export class WebpubService {
               bool: {
                 should: [
                   {
-                    match: {
-                      identifier,
+                    term: {
+                      'identifier.keyword': identifier,
                     },
                   },
                   {
@@ -184,7 +184,7 @@ export class WebpubService {
             ref: ((e) => {
               const ret = [];
               e.forEach((r) => {
-                if (r._score > 1) {
+                if (r._score > ES_MIN_SCORE) {
                   ret.push(r._source.ref);
                 }
               });
