@@ -41,12 +41,14 @@ export class WebpubService {
     const doc = await this.webpubModel.findOneAndDelete({
       'metadata.identifier': identifier,
     }).exec();
-    if (doc._id) {
+    try {
       this.elasticsearchService.delete({
         index: ES_INDEX,
         type: ES_TYPE,
         id: doc._id,
       });
+    } catch (e) {
+      throw new Error('there are no books to delete');
     }
   }
 
@@ -54,7 +56,7 @@ export class WebpubService {
     const doc = await this.webpubModel.findOneAndUpdate({
       'metadata.identifier': webpubDto.metadata.identifier,
     }, webpubDto).exec();
-    if (doc._id) {
+    try {
       await this.elasticsearchService.update({
         index: ES_INDEX,
         type: ES_TYPE,
@@ -65,13 +67,15 @@ export class WebpubService {
           toc_title: WebpubService.tocFlat(webpubDto.toc),
         },
       });
+    } catch (e) {
+      throw new Error('there are no books to update');
     }
   }
 
   async create(webpubDto: WebpubDto): Promise<IWebpub> {
     const created = new this.webpubModel(webpubDto);
     const doc = await created.save();
-    if (doc._id) {
+    try {
       await this.elasticsearchService.create({
         index: ES_INDEX,
         type: ES_TYPE,
@@ -82,6 +86,8 @@ export class WebpubService {
           toc_title: WebpubService.tocFlat(webpubDto.toc),
         },
       });
+    } catch (e) {
+      throw new Error('An error is happened to index this webpub');
     }
     return doc;
   }
