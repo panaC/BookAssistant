@@ -1,4 +1,4 @@
-import { SEARCH } from './../../constants';
+import { SEARCH, REF } from './../../constants';
 import Axios from 'axios';
 import { ILinks } from './../../../../../opds-server/src/webpub/interfaces/links.interface';
 import { IWebpub } from './../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
@@ -84,6 +84,14 @@ const searchHrefWithRef = (toc: ILinks[], ref: string): string =>
       (link.children ? searchHrefWithRef(link.children, ref) : null))
     .reduce((a, c) => c, null);
 
+const getReference = async (identifier: string, ref: string): Promise<string> => {
+  const res = await Axios.get(REF(identifier, ref));
+  if (res && res.data, res.data.ref[0]) {
+    return res.data.ref[0];
+  }
+  return null;
+}
+
 export const getMediaReference = async (name: string, reference: string) => {
   let a: IWebpub;
   let link: string;
@@ -94,11 +102,13 @@ export const getMediaReference = async (name: string, reference: string) => {
 
   [state, a] = await getAudiobook(name);
   if (state.state === Eaudiobook.OK) {
-    if ((link = searchHrefWithRef(a.toc, reference))) {
-      if ((chapter = getChapterWithHref(a.readingOrder, link)) > -1) {
-        const media = await getMedia(name, chapter);
-        media.url = `${media.url}#${link.split('#')[1]}`;
-        return media;
+    if ((reference = await getReference(a.metadata.identifier, reference))) {
+      if ((link = searchHrefWithRef(a.toc, reference))) {
+        if ((chapter = getChapterWithHref(a.readingOrder, link)) > -1) {
+          const media = await getMedia(name, chapter);
+          media.url = `${media.url}#${link.split('#')[1]}`;
+          return media;
+        }
       }
     }
     return getState(Eaudiobook.ERROR_REF);

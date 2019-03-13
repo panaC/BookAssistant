@@ -20,3 +20,4 @@ export const ENTRY_POINT = '/fulfillment';
 export const SERVER_URL = 'http://127.0.0.1:3000/webpub';
 
 export const SEARCH = (audiobook: string) => `${SERVER_URL}?q=${encodeURI(audiobook)}`;
+export const REF = (identifier: string, ref: string) => `${SERVER_URL}/${identifier}?q=${encodeURI(ref)}`;
