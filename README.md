@@ -10,6 +10,7 @@ Based on Google Assistant with [Google Actions](https://developers.google.com/ac
  - `webpub-server` - an API server that handle web request and provide opds standard audiobook
  - `agent-dialogflow` - an [agent](https://dialogflow.com/docs/agents) for Dialogflow
  - `actions-server` - an API server to parse and react to the Dialogflow agent's webhook
+ - `audiobook` - an audiobook path info with json
  - `docs` - a few documentation
  - `demo` - script for loading demo audiobook inside `webpub-server`
  
