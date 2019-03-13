@@ -11,15 +11,22 @@ export const WebpubSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  numberOfListen: {
+    type: Number,
+    required: false,
+  },
   metadata: MetadataSchema,
   links: [LinksSchema],
   readingOrder: [LinksSchema],
   resources: [LinksSchema],
   toc: [LinksSchema],
+
 });
 
 WebpubSchema.pre('save', async function() {
   const webpub: any = this;
+
+  webpub.numberOfListen = 0;
 
   if (!webpub.links) {
     webpub.links = new Array();

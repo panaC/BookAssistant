@@ -1,3 +1,4 @@
+import { MORE_RECENT_GROUP_NAME } from './../constants';
 /*
  * File: webpub.service.ts
  * Project: VoiceAssistant
@@ -209,15 +210,27 @@ export class WebpubService {
       if (es && es.hits && es.hits.hits) {
         for (const doc of es.hits.hits) {
           if (doc._score > ES_MEAN_SCORE) {
-            manifest = [await this.webpubModel.findOne({ _id: doc._id })];
+            manifest = [await this.webpubModel.findOneAndUpdate({
+              _id: doc._id,
+            }, {
+              $inc: { numberOfListen: 1 },
+            })];
             break;
           } else if (doc._score > ES_MIN_SCORE || es.hits.total === 1) {
-            manifest.push(await this.webpubModel.findOne({ _id: doc._id }));
+            manifest.push(await this.webpubModel.findOneAndUpdate({
+              _id: doc._id,
+            }, {
+              $inc: { numberOfListen: 1 },
+            }));
           }
         }
       }
     } else {
-      manifest = await this.webpubModel.find({ $text: { $search: title } }).lean().exec();
+      manifest = [await this.webpubModel.findOneAndUpdate({
+        $text: { $search: title },
+      }, {
+        $inc: { numberOfListen: 1 },
+      }).lean().exec()];
     }
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
@@ -268,13 +281,23 @@ export class WebpubService {
     return [] as WebpubDto[];
   }
 
-  async findGroup(group: string, numberOfItem: number = 5, sort: number = 1, page: number = 0): Promise<WebpubDto[]> {
-    const manifest: IWebpub[] = await this.webpubModel.find({})
-      .sort({ 'metadata.dateModified': sort })
-      .limit(numberOfItem)
-      .skip(page * numberOfItem)
-      .lean()
-      .exec();
+  async findGroup(group: string, numberOfItem: number = 5, sort: number = -1, page: number = 0): Promise<WebpubDto[]> {
+    let manifest: IWebpub[];
+    if (group === MORE_RECENT_GROUP_NAME) {
+      manifest = await this.webpubModel.find({})
+        .sort({ 'metadata.dateModified': sort })
+        .limit(numberOfItem)
+        .skip(page * numberOfItem)
+        .lean()
+        .exec();
+    } else {
+      manifest = await this.webpubModel.find({})
+        .sort({ numberOfListen: sort })
+        .limit(numberOfItem)
+        .skip(page * numberOfItem)
+        .lean()
+        .exec();
+    }
     if (manifest) {
       const object = plainToClass(WebpubDto, JSON.parse(JSON.stringify(manifest)));
       return JSON.serialize(object);

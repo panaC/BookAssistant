@@ -166,7 +166,7 @@ export class FeedService extends OpdsDto {
       popular.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
         JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${GROUP_URI}=${encodeURI(MORE_POPULAR_GROUP_NAME)}`, 'self'), LinksDto)));
       // here set the algorithm line for extract more listen webpub from mongodb
-      const manifest: IWebpub[] = await self.webpubModel.find({}).limit(5).lean().exec();
+      const manifest: IWebpub[] = await self.webpubModel.find({}).sort({ numberOfListen: -1 }).limit(5).lean().exec();
       if (manifest && manifest.length) {
         popular.publication = new Array();
         manifest.forEach(el => popular.publication.push(JSON.parse(JSON.stringify(el))));
@@ -183,7 +183,7 @@ export class FeedService extends OpdsDto {
       recent.links.push(plainToClass<LinksDto, LinksDto>(LinksDto,
         JSON.parse<LinksDto>(LINK_SELF_SERVER(`?${GROUP_URI}=${encodeURI(MORE_RECENT_GROUP_NAME)}`, 'self'), LinksDto)));
       // here set the algorithm line for extract more recent webpub from mongodb
-      const manifest: IWebpub[] = await self.webpubModel.find({}).limit(5).lean().exec();
+      const manifest: IWebpub[] = await self.webpubModel.find({}).sort({ 'metadata.dateModified': -1 }).limit(5).lean().exec();
       if (manifest && manifest.length) {
         recent.publication = new Array();
         manifest.forEach(el => recent.publication.push(JSON.parse(JSON.stringify(el))));
