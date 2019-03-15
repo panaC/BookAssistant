@@ -18,11 +18,11 @@ export const DB_URI = 'mongodb://127.0.0.1:27017/webpub';
 export const WEBPUB_MODEL_PROVIDER = 'WebpubModelToken';
 
 // Server info
-export const PORT_SERVER = 3000;
-export const NAME_SERVER = 'OPDS2-server';
-export const DOMAIN_SERVER = 'edrlab.ml';
-export const PROTOCOL_SERVER = 'https';
-export const ROOT_SERVER = 'api';
+export const PORT_SERVER = process.env.PORT_OPDS_SERVER || 3000;
+export const NAME_SERVER = process.env.NAME_OPDS_SERVER || 'OPDS2-server';
+export const DOMAIN_SERVER = process.env.DOMAIN_OPDS_SERVER || 'edrlab.ml';
+export const PROTOCOL_SERVER = process.env.PROTOCOL_OPDS_SERVER || 'https';
+export const ROOT_SERVER = process.env.ROOT_OPDS_SERVER || 'api';
 
 // Query available in GET
 export const SEARCH_URI = 'q';
