@@ -18,6 +18,7 @@ export const DB_URI = 'mongodb://127.0.0.1:27017/webpub';
 export const WEBPUB_MODEL_PROVIDER = 'WebpubModelToken';
 
 // Server info
+export const PORT_SERVER = 3000;
 export const NAME_SERVER = 'OPDS2-server';
 export const DOMAIN_SERVER = 'edrlab.ml';
 export const PROTOCOL_SERVER = 'https';
