@@ -11,12 +11,12 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-export const PORT = 4000;
+export const PORT = process.env.PORT_ACTIONS_SERVER || 4000;
 
-export const SERVER_NAME = 'Actions-Server';
+export const SERVER_NAME = process.env.NAME_ACTIONS_SERVER || 'Actions-Server';
 
 export const ENTRY_POINT = '/fulfillment';
 
-export const SERVER_URL = 'http://127.0.0.1:3000/webpub';
+export const SERVER_URL = process.env.OPDS_SERVER_URL || 'http://127.0.0.1:3000/webpub';
 
 export const SEARCH = (audiobook: string) => `${SERVER_URL}?q=${encodeURI(audiobook)}`;
