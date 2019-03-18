@@ -34,7 +34,7 @@
   "customClassifierMode": "use.after",
   "mlMinConfidence": 0.3,
   "supportedLanguages": [],
-  "onePlatformApiVersion": "v1legacy",
+  "onePlatformApiVersion": "v2",
   "analyzeQueryTextSentiment": false,
   "enabledKnowledgeBaseNames": [],
   "knowledgeServiceConfidenceAdjustment": -0.4,
