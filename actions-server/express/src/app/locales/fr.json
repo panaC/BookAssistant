@@ -35,7 +35,7 @@
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },
   "default": {
-    "no_input": " ",
+    "no_input": "Que voulez-vous faire ?",
     "goodbye": "Reviens vite !"
   },
   "error": {
