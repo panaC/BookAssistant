@@ -83,21 +83,21 @@ export const prompts: Iprompts = {
   play_chapter: {
     elements: [
       i18n.__('play.chapter'),
-      i18n.__('play.follow'),
+      i18n.__('default.no_input'),
     ],
     suggestions: [],
   },
   play_numberOfChapter: {
     elements: [
       i18n.__('play.numberOfChapter'),
-      i18n.__('play.follow'),
+      i18n.__('default.no_input'),
     ],
     suggestions: [],
   },
   play_author: {
     elements: [
       i18n.__('play.author'),
-      i18n.__('play.follow'),
+      i18n.__('default.no_input'),
     ],
     suggestions: [],
   },
