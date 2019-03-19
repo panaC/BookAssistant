@@ -15,6 +15,8 @@ sudo ufw default allow outgoing
 sudo ufw allow 22/tcp
 # https 443
 sudo ufw allow 443/tcp
+# http 80
+sudo ufw allow 80/tcp
 
 # enable firewall
 sudo ufw enable
