@@ -22,6 +22,7 @@ services:
   https-nginx:
     image: nginx:1.15
     volumes:
+      - ./conf:/etc/nginx/conf.d
       - certbot:/etc/letsencrypt
       - audiobook:/var/www/audiobook
     deploy:
