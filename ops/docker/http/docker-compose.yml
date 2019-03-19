@@ -5,7 +5,7 @@ services:
     volumes:
       - certbot:/etc/letsencrypt
     environment:
-      DOMAINS: edrlab.tk
+      DOMAINS: "edrlab.tk www.edrlab.tk"
       EMAIL: pierre.leroux@edrlab.org
     deploy:
       replicas: 1
