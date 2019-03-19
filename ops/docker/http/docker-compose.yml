@@ -32,7 +32,7 @@ services:
           cpus: "1"
           memory: 1024M
       restart_policy:
-        condition: always
+        condition: on-failure
     ports:
       - 443:443
     networks:
