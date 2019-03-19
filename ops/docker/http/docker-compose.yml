@@ -4,7 +4,10 @@ services:
     # replace username/repo:tag with your name and image details
     image: panac/easy-https
     volumes:
-      - certbot:/etc/letsencrypt/live
+      - certbot:/etc/letsencrypt/live/edrlab.tk
+    environement:
+      DOMAINS: edrlab.tk
+      EMAIL: pierre.leroux@edrlab.org
     deploy:
       replicas: 1
       resources:
