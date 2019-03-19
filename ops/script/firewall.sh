@@ -17,6 +17,8 @@ sudo ufw allow 22/tcp
 sudo ufw allow 443/tcp
 # http 80
 sudo ufw allow 80/tcp
+# ftp 21
+sudo ufw allow 21/tcp
 
 # enable firewall
 sudo ufw enable
