@@ -14,7 +14,7 @@ services:
           cpus: "1"
           memory: 1024M
       restart_policy:
-        condition: on-failure
+        condition: any
     ports:
       - "80:80"
     networks:
@@ -32,7 +32,7 @@ services:
           cpus: "1"
           memory: 1024M
       restart_policy:
-        condition: on-failure
+        condition: any
     ports:
       - 443:443
     networks:
@@ -52,7 +52,7 @@ services:
           cpus: "1"
           memory: "1024M"
       restart_policy:
-        condition: always
+        condition: any
     ports:
       - 20:20
       - 21:21
