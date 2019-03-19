@@ -1,0 +1,23 @@
+version: "3.7"
+services:
+  http-certbot:
+    # replace username/repo:tag with your name and image details
+    image: panac/easy-https
+    volumes:
+      - certbot:/etc/letsencrypt/live
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "80:80"
+    networks:
+      - webnet
+networks:
+  webnet:
+volumes:
+  certbot:
