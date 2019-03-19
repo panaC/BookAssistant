@@ -42,9 +42,9 @@ services:
     volumes:
       - audiobook:/home/vsftpd
     environment:
-      FTP_USER=eole
-      FTP_PASS=b39b4bd4b964526379fefa59fcd03403ae3e2f52a608455f7466c827673a6ed4
-      PASV_ADDRESS=51.159.3.43
+      FTP_USER: eole
+      FTP_PASS: b39b4bd4b964526379fefa59fcd03403ae3e2f52a608455f7466c827673a6ed4
+      PASV_ADDRESS: "51.159.3.43"
     deploy:
       replicas: 1
       ressources:
