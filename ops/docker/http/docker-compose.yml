@@ -47,7 +47,7 @@ services:
       PASV_ADDRESS: "51.159.3.43"
     deploy:
       replicas: 1
-      ressources:
+      resources:
         limits:
           cpu: "1"
           memory: "1024M"
