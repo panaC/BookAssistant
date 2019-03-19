@@ -1,10 +1,9 @@
 version: "3.7"
 services:
   http-certbot:
-    # replace username/repo:tag with your name and image details
     image: panac/easy-https
     volumes:
-      - certbot:/etc/letsencrypt/live/edrlab.tk
+      - certbot:/etc/letsencrypt
     environment:
       DOMAINS: edrlab.tk
       EMAIL: pierre.leroux@edrlab.org
@@ -20,7 +19,47 @@ services:
       - "80:80"
     networks:
       - webnet
+  https-nginx:
+    image: nginx:1.15
+    volumes:
+      - certbot:/etc/letsencrypt
+      - audiobook:/var/www/audiobook
+    deploy:
+      replicas: 2
+      ressources:
+        limits:
+          cpu: "1"
+          memory: 1024M
+      restart_policy:
+        condition: always
+    ports:
+      - 443:443
+    networks:
+      - webnet
+  ftp:
+    image: bogem/ftp
+    volumes:
+      - audiobook:/home/vsftpd
+    environment:
+      FTP_USER=eole
+      FTP_PASS=b39b4bd4b964526379fefa59fcd03403ae3e2f52a608455f7466c827673a6ed4
+      PASV_ADDRESS=51.159.3.43
+    deploy:
+      replicas: 1
+      ressources:
+        limits:
+          cpu: "1"
+          memory: "1024M"
+      restart_policy:
+        condition: always
+    ports:
+      - 20:20
+      - 21:21
+      - 47400-47470:47400-47470
+    networks:
+      - webnet
 networks:
   webnet:
 volumes:
   certbot:
+  audiobook:
