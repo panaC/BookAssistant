@@ -27,7 +27,7 @@ services:
       - audiobook:/var/www/audiobook
     deploy:
       replicas: 2
-      ressources:
+      resources:
         limits:
           cpu: "1"
           memory: 1024M
