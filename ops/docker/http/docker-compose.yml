@@ -5,7 +5,7 @@ services:
     image: panac/easy-https
     volumes:
       - certbot:/etc/letsencrypt/live/edrlab.tk
-    environement:
+    environment:
       DOMAINS: edrlab.tk
       EMAIL: pierre.leroux@edrlab.org
     deploy:
