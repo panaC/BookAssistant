@@ -13,7 +13,7 @@ if(isset($_GET["path"])) {
     }
 }
 
-$json = new \stdClass();
+$json = new stdClass();
 $json->path = true;
 $json->files = scandir($path);
 
