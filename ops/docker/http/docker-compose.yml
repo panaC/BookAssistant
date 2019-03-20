@@ -59,6 +59,21 @@ services:
       - 47400-47470:47400-47470
     networks:
       - webnet
+  php:
+    image: panac/audiobook-api
+    volumes:
+      - audiobook:/audiobook
+    deploy:
+      replicas: 1
+      resources:
+        cpus: "0.5"
+        memory: "512M"
+      restart_policy:
+        condition: any
+    ports:
+      - 9000:9000
+    networks:
+      - webnet
 networks:
   webnet:
 volumes:
