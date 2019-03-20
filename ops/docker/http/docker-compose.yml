@@ -61,7 +61,7 @@ services:
     networks:
       - webnet
   php:
-    image: panac/audiobook-api
+    image: panac/audiobook-api:v1.1
     volumes:
       - audiobook:/audiobook
       - php:/var/www/html
