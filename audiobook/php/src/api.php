@@ -1,6 +1,6 @@
 <?php
 
-$audiobookPath    = '/home/pierre/Documents/audiobook/';
+$audiobookPath    = '/audiobook';
 $path = $audiobookPath;
 
 if(isset($_GET["path"])) {
