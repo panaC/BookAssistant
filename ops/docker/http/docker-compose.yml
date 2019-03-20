@@ -36,6 +36,7 @@ services:
         condition: any
     ports:
       - 443:443
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     networks:
       - webnet
   ftp:
@@ -75,6 +76,17 @@ services:
         condition: any
     ports:
       - 9000:9000
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:7777"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
     networks:
       - webnet
 networks:
