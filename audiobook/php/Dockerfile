@@ -1,5 +1,5 @@
 FROM php:fpm
 LABEL maintainer="pierre.leroux@edrlab.org"
 
-COPY src/ /var/www/html/
+COPY src/ /php/
 
