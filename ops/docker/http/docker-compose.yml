@@ -25,6 +25,7 @@ services:
       - ./conf:/etc/nginx/conf.d
       - certbot:/etc/letsencrypt
       - audiobook:/var/www/audiobook
+      - php:/var/www/html
     deploy:
       replicas: 2
       resources:
@@ -63,6 +64,7 @@ services:
     image: panac/audiobook-api
     volumes:
       - audiobook:/audiobook
+      - php:/var/www/html
     deploy:
       replicas: 1
       resources:
