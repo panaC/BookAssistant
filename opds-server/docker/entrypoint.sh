@@ -18,3 +18,4 @@ if [ "$NODE_ENV" = "development" ] ; then
   exit 1
 fi
 
+npm install --production
