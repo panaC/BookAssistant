@@ -13,7 +13,7 @@
 
 export const DB_PROVIDER = 'DbConnectionToken';
 
-export const DB_URI = 'mongodb://127.0.0.1:27017/webpub';
+export const DB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/webpub';
 
 export const WEBPUB_MODEL_PROVIDER = 'WebpubModelToken';
 
