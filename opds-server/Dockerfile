@@ -14,7 +14,7 @@ ENV NAME_OPDS_SERVER 'OPDS2-server on Docker'
 ENV DOMAIN_OPDS_SERVER 'edrlab.ml'
 ENV PROTOCOL_OPDS_SERVER 'https'
 ENV ROOT_OPDS_SERVER 'api'
-ENV MONGODB_URI 'mongodb://mongo:27017'
+ENV MONGODB_URI 'mongodb://mongo:27017/webpub'
 ENV NODE_ENV ${NODE_ENV:-production}
 
 EXPOSE ${PORT_OPDS_SERVER}
