@@ -89,9 +89,45 @@ services:
         constraints: [node.role == manager]
     networks:
       - webnet
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "2"
+          memory: "4096M"
+      restart_policy:
+        condition: any
+    network:
+      - backnet
+  opds-server:
+    image: panac/opds-server
+    ports:
+      - 3000:3000
+    environment:
+      PORT_OPDS_SERVER: 3000
+      DOMAIN_OPDS_SERVER: 'edrlab.tk'
+      ROOT_OPDS_SERVER: 'api'
+      MONGODB_URI: 'mongodb://mongo:27017/webpub'
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1024M"
+      restart_policy:
+        condition: any
+    network:
+      - backne
 networks:
   webnet:
 volumes:
   certbot:
   audiobook:
   php:
+  mongo:
