@@ -13,6 +13,7 @@ if [ "$NODE_ENV" = "development" ] ; then
     git fetch --all >> /var/log/bookAssistant/gitlog.txt
     git reset --hard origin/opds-server >> /var/log/bookAssistant/gitlog.txt
   done &
+  npm install
   npm run start:dev
   exit 1
 fi
