@@ -6,7 +6,7 @@ if [ "$NODE_ENV" = "development" ] ; then
 
   mkdir /var/log/bookAssistant
   git clone https://github.com/panaC/BookAssistant.git /app-dev
-  cd /app-dev
+  cd /app-dev/opds-server
   git checkout opds-server
   while true; do 
     sleep 10
