@@ -19,5 +19,5 @@ ENV NODE_ENV ${NODE_ENV:-production}
 EXPOSE ${PORT_OPDS_SERVER}
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#entrypoint
-ENTRYPOINT [ "/bin/bash", "entrypoint.sh" ]
+ENTRYPOINT [ "/bin/bash", "docker/entrypoint.sh" ]
 CMD [ "npm", "run", "start:prod" ]

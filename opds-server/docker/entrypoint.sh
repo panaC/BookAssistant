@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$NODE_ENV" = "devlopment" ] ; then
+if [ "$NODE_ENV" = "development" ] ; then
   git checkout opds-server
   while true; do 
     sleep 10
