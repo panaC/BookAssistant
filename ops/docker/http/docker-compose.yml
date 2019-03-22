@@ -130,6 +130,7 @@ services:
       DOMAIN_OPDS_SERVER: 'edrlab.tk'
       ROOT_OPDS_SERVER: 'api'
       MONGODB_URI: 'mongodb://mongo:27017/webpub'
+      NODE_ENV: 'development'
     deploy:
       replicas: 2
       resources:
@@ -148,6 +149,7 @@ services:
     environment:
       PORT_ACTIONS_SERVER: 4000
       PROTOCOL_OPDS_SERVER: 'http://opds-server:3000/webpub'
+      NODE_ENV: 'development'
     deploy:
       replicas: 2
       resources:
