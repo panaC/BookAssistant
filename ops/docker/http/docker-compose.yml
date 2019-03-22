@@ -105,6 +105,22 @@ services:
         condition: any
     network:
       - backnet
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.6.2
+    ports:
+      - 9200:9200
+    volumes:
+      - es:/usr/share/elasticsearch/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "2"
+          memory: "4096M"
+      restart_policy:
+        condition: any
+    network:
+      - backnet
   opds-server:
     image: panac/opds-server
     ports:
@@ -125,6 +141,24 @@ services:
     network:
       - backnet
       - webnet
+  actions-server:
+    image: panac/actions-server
+    ports:
+      - 4000:4000
+    environment:
+      PORT_ACTIONS_SERVER: 4000
+      PROTOCOL_OPDS_SERVER: 'http://opds-server:3000/webpub'
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "1"
+          memory: "1024M"
+      restart_policy:
+        condition: any
+    network:
+      - backnet
+      - webnet
 networks:
   webnet:
 volumes:
@@ -132,3 +166,4 @@ volumes:
   audiobook:
   php:
   mongo:
+  es:
