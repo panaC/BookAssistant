@@ -149,7 +149,7 @@ services:
       - 4000:4000
     environment:
       PORT_ACTIONS_SERVER: 4000
-      PROTOCOL_OPDS_SERVER: 'http://opds-server:3000/webpub'
+      OPDS_SERVER_URL: 'http://opds-server:3000/webpub'
       NODE_ENV: 'development'
     deploy:
       replicas: 2
