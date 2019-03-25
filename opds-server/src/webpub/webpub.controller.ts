@@ -1,3 +1,4 @@
+import { Param } from '@nestjs/common';
 /*
  * File: webpub.controller.ts
  * Project: VoiceAssistant
@@ -50,8 +51,10 @@ export class WebpubController {
   @Post()
   async create(@Body() webpubDto: WebpubDto) {
     try {
-      await this.webpubService.create(webpubDto);
-      return 'webpub saved';
+      if (await this.webpubService.create(webpubDto)) {
+        return { message: 'webpub saved' };
+      }
+      return { message: 'an error is happened to index this webpub' };
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
@@ -63,10 +66,12 @@ export class WebpubController {
       description: 'delete webpub Manifest with title identification',
   })
   @Delete()
-  async delete(@Query('q') title: string) {
+  async delete(@Query('q') identifier: string) {
     try {
-      await this.webpubService.delete(title);
-      return 'webpub deleted';
+      if (await this.webpubService.delete(identifier)) {
+        return { message: 'webpub deleted' };
+      }
+      return { message: 'webpub unknown' };
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
@@ -80,8 +85,10 @@ export class WebpubController {
   @Put()
   async update(@Body() webpubDto: WebpubDto) {
     try {
-      await this.webpubService.update(webpubDto);
-      return 'webpub updated';
+      if (await this.webpubService.update(webpubDto)) {
+        return { message: 'webpub updated' };
+      }
+      return { message: 'webpub unknown' };
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
@@ -126,6 +133,21 @@ export class WebpubController {
         return await this.webpubService.findGroup(group, lNumberOfItem, lSort, lPage);
       }
       return await this.feedService.feed();
+    } catch (err) {
+      throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: 200,
+    description: 'search into document toc reference',
+  })
+  @Get(':id')
+  async ref(@Param() params,
+            @Query(SEARCH_URI) ref: string) {
+    try {
+      return this.webpubService.findRef(params.id, ref);
     } catch (err) {
       throw new HttpException(err.toString(), HttpStatus.BAD_REQUEST);
     }
