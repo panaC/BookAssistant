@@ -2,7 +2,7 @@
 **/*.cert
 **/*.key
 # Credential json file DNT
-**/credential.json
+**/*.credential.json
 
 # Logs
 logs

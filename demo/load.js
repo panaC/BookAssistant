@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 const HOME = '/home/pierre/Documents/audiobook';
-const SERVER = 'https://edrlab.ml';
+const SERVER = 'https://edrlab.tk';
 const SERVER_AUDIO = `${SERVER}/audiobook`;
 
 const json = {
