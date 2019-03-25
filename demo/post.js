@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios');
 
 const HOME = '/home/pierre/Documents/audiobook/json';
-const SERVER = 'https://edrlab.ml';
+const SERVER = 'https://edrlab.tk';
 const SERVER_API = `${SERVER}/api`;
 
 fs.readdirSync(HOME).forEach(async (json) => {
