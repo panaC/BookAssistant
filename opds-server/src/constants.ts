@@ -42,7 +42,7 @@ export const MORE_POPULAR_GROUP_NAME = 'les plus écoutés';
 export const MORE_RECENT_GROUP_NAME = 'les plus récents';
 
 export const ES_PROVIDER = 'ESsearchToken';
-export const ES_HOST = 'http://localhost:9200';
+export const ES_HOST = process.env.ELASTICSEARCH_URI || 'http://localhost:9200';
 export const ES_INDEX = 'book';
 export const ES_TYPE = 'book';
 export const ES_REF_INDEX = 'ref';
