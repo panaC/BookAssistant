@@ -18,9 +18,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "credential": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"./credential.json\\\"",
-    "backup-launch": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"./credential.json\\\" node dist/backup.js",
-    "agent": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"./credential.json\\\" ts-node src/backup.ts && bash ./src/unzip.sh",
+    "credential": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"./v1.credential.json\\\"",
+    "backup-launch": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"./v1.credential.json\\\" node dist/backup.js",
+    "agent": "cross-env GOOGLE_APPLICATION_CREDENTIALS=\\\"./v1.credential.json\\\" ts-node src/backup.ts && bash ./src/unzip.sh",
     "dev": "nodemon"
   },
   "keywords": [],
