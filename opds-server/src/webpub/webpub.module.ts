@@ -1,4 +1,3 @@
-import { FeedService } from './opds/feed.service';
 /*
  * File: webpub.module.ts
  * Project: VoiceAssistant
@@ -12,14 +11,19 @@ import { FeedService } from './opds/feed.service';
  * Use of this source code is governed by a BSD-style license
  */
 
-import { DatabaseModule } from './../database/database.module';
 import { Module } from '@nestjs/common';
+import { FeedService } from './opds/feed.service';
+import { DatabaseModule } from './../database/database.module';
 import { WebpubController } from './webpub.controller';
 import { WebpubService } from './webpub.service';
 import { webpubProviders } from './webpub.providers';
+import { SearchModule } from 'src/search/search.module';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    DatabaseModule,
+    SearchModule,
+  ],
   controllers: [WebpubController],
   providers: [
     FeedService,
