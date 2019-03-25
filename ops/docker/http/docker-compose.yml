@@ -131,6 +131,7 @@ services:
       DOMAIN_OPDS_SERVER: 'edrlab.tk'
       ROOT_OPDS_SERVER: 'api'
       MONGODB_URI: 'mongodb://mongo:27017/webpub'
+      ELASTICSEARCH_URI: 'http://elasticsearch:9200'
       NODE_ENV: 'development'
     deploy:
       replicas: 2
