@@ -21,7 +21,7 @@
   },
   "defaultTimezone": "Europe/Madrid",
   "webhook": {
-    "url": "https://edrlab.ml/actions",
+    "url": "https://edrlab.tk/actions",
     "headers": {
       "": ""
     },
