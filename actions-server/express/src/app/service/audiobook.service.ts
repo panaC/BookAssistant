@@ -33,15 +33,17 @@ const getAudiobook = async (name: string) => {
   return [getState(Eaudiobook.OK), res.data];
 }
 
-export const getMedia = async (name: string, chapter: number): Promise<IplayingMedia> => {
+export const getMedia = async (name: string, chapter: number, nb: number = 0): Promise<IplayingMedia> => {
+  let data: IWebpub[];
   let a: IWebpub;
   let link: ILinks;
   let state: {
     state: Eaudiobook;
   }
 
-  [state, [a]] = await getAudiobook(name);
-  if (state.state === Eaudiobook.OK) {
+  [state, data] = await getAudiobook(name);
+  if (state.state === Eaudiobook.OK && nb < data.length && nb >= 0) {
+    a = data[nb];
     if (a.readingOrder && a.readingOrder.length) {
       if (chapter === a.readingOrder.length) {
         return getState(Eaudiobook.END_CHAPTER);
@@ -84,26 +86,27 @@ const searchHrefWithRef = (toc: ILinks[], ref: string): string =>
       (link.children ? searchHrefWithRef(link.children, ref) : null))
     .reduce((a, c) => c, null);
 
-const getReference = async (identifier: string, ref: string): Promise<string> => {
+const getReference = async (identifier: string, ref: string): Promise<string[]> => {
   const res = await Axios.get(REF(identifier, ref));
-  if (res && res.data, res.data.ref[0]) {
-    return res.data.ref[0];
+  if (res && res.data && res.data.ref) {
+    return res.data.ref;
   }
   return null;
 }
 
-export const getMediaReference = async (name: string, reference: string) => {
+export const getMediaReference = async (name: string, reference: string, nb: number = 0) => {
   let a: IWebpub;
   let link: string;
   let chapter: number;
   let state: {
     state: Eaudiobook;
   }
+  let ref: string[];
 
   [state, a] = await getAudiobook(name);
   if (state.state === Eaudiobook.OK) {
-    if ((reference = await getReference(a.metadata.identifier, reference))) {
-      if ((link = searchHrefWithRef(a.toc, reference))) {
+    if ((ref = await getReference(a.metadata.identifier, reference))) {
+      if ((link = searchHrefWithRef(a.toc, ref[nb]))) {
         if ((chapter = getChapterWithHref(a.readingOrder, link)) > -1) {
           const media = await getMedia(name, chapter);
           media.url = `${media.url}#${link.split('#')[1]}`;
