@@ -30,7 +30,7 @@ const getAudiobook = async (name: string) => {
   } else if (!res || !res.data) {
     return [getState(Eaudiobook.ERROR_AXIOS)];
   }
-  return [getState(Eaudiobook.OK), res.data[0]];
+  return [getState(Eaudiobook.OK), res.data];
 }
 
 export const getMedia = async (name: string, chapter: number): Promise<IplayingMedia> => {
@@ -40,7 +40,7 @@ export const getMedia = async (name: string, chapter: number): Promise<IplayingM
     state: Eaudiobook;
   }
 
-  [state, a] = await getAudiobook(name);
+  [state, [a]] = await getAudiobook(name);
   if (state.state === Eaudiobook.OK) {
     if (a.readingOrder && a.readingOrder.length) {
       if (chapter === a.readingOrder.length) {
