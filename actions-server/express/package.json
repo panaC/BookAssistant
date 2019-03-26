@@ -4,7 +4,7 @@
   "description": "diagflow - actions server that purpose the app intent",
   "main": "main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc",
     "launch": "node dist/main.js",
     "start": "ts-node src/main.ts",
@@ -31,13 +31,16 @@
     "sprintf-js": "^1.1.2"
   },
   "devDependencies": {
-    "@types/sprintf-js": "^1.1.2",
     "@types/body-parser": "^1.17.0",
     "@types/debug": "0.0.31",
     "@types/express": "^4.16.1",
     "@types/i18n": "^0.8.5",
+    "@types/jest": "^24.0.11",
     "@types/node": "^10.12.21",
+    "@types/sprintf-js": "^1.1.2",
+    "jest": "^24.5.0",
     "nodemon": "^1.18.9",
+    "ts-jest": "^24.0.0",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.1"
   }

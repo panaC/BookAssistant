@@ -13,7 +13,7 @@ export enum Eaudiobook {
   OK = 'ok',
 }
 
-const getState = (state: Eaudiobook) => {
+export const getState = (state: Eaudiobook) => {
   return {
     state,
   };
