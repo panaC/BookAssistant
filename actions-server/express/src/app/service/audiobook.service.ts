@@ -23,8 +23,12 @@ const getLink = (a: IWebpub) => a.links.filter((ln) => ln.rel === 'audiobook').p
 
 const getImg = (a: IWebpub) => a.resources.filter((ln) => ln.rel === 'cover').pop();
 
-const getAudiobook = async (name: string) => {
-  const res = await Axios.get(SEARCH(name));
+
+// get audiobook needed title and/or author
+// how implement this ?
+
+const getAudiobook = async (name: string, author: string = undefined) => {
+  const res = await Axios.get(SEARCH(name, author));
   if (res && res.data && !res.data.length) {
     return [getState(Eaudiobook.NOT_FOUND)];
   } else if (!res || !res.data) {
@@ -33,7 +37,12 @@ const getAudiobook = async (name: string) => {
   return [getState(Eaudiobook.OK), res.data];
 }
 
-export const getMedia = async (name: string, chapter: number, nb: number = 0): Promise<IplayingMedia> => {
+export const getMedia = async (
+    name: string
+  , chapter: number = 0
+  , author: string = undefined
+  , nb: number = 0): Promise<IplayingMedia> => {
+
   let data: IWebpub[];
   let a: IWebpub;
   let link: ILinks;
@@ -41,7 +50,7 @@ export const getMedia = async (name: string, chapter: number, nb: number = 0): P
     state: Eaudiobook;
   }
 
-  [state, data] = await getAudiobook(name);
+  [state, data] = await getAudiobook(name, author);
   if (state.state === Eaudiobook.OK && nb < data.length && nb >= 0) {
     a = data[nb];
     if (a.readingOrder && a.readingOrder.length) {

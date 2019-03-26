@@ -19,5 +19,6 @@ export const ENTRY_POINT = '/fulfillment';
 
 export const SERVER_URL = process.env.OPDS_SERVER_URL || 'http://127.0.0.1:3000/webpub';
 
-export const SEARCH = (audiobook: string) => `${SERVER_URL}?q=title:${encodeURI(audiobook)}`;
+export const SEARCH = (title: string, author: string = undefined) => 
+  `${SERVER_URL}?q=title:${encodeURI(title)}${author ? ` AND author:${author}` : ''}`;
 export const REF = (identifier: string, ref: string) => `${SERVER_URL}/${identifier}?q=${encodeURI(ref)}`;

@@ -3,7 +3,14 @@ import { Eaudiobook } from '../service/audiobook.service';
 export interface IsessionStorage {
   currentPlayingMedia: IplayingMedia;
   chapterToPlay: number;
+  // tellByUser :
   titleTellByUser: string;
+  // author
+  // ref
+  // yes-no
+  // choice-number
+  //
+  // don't forget to errase
 }
 
 export interface IplayingMedia {
