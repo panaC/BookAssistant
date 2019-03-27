@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getState, Eaudiobook, getMedia } from './audiobook.service';
+import { getState, Eaudiobook, getMedia, getMediaReference } from './audiobook.service';
 
 jest.mock('axios');
 
@@ -122,4 +122,19 @@ it('get media la femme de trente ans chapter too high', async () => {
   });
 });
 
+it('get ref tom sawyer', async () => {
+  (axios.get as jest.Mock).mockImplementationOnce(() => 
+    Promise.resolve({
+      data: [{"@context":"https://readium.org/webpub-manifest/context.jsonld","metadata":{"@type":"http://schema.org/Book","title":"Tom sawyer","identifier":"mark-twain_tom-sawyer","dateCreated":"2019-03-25T10:56:40.620Z","dateModified":"2019-03-25T13:13:46.048Z","language":"EN","author":"Mark Twain","genre":"classique"},"links":[{"href":"https://edrlab.tk/api?q=Tom%20sawyer","type":"application/opds+json","rel":"self","children":[]},{"href":"https://edrlab.tk/api?q=Tom%20sawyer","type":"application/opds+json","rel":"self","children":[]}],"readingOrder":[{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_01-02_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_03-04_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_03-04_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_05-06_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_05-06_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_07-08_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_07-08_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_09-10_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_09-10_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_11-12_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_11-12_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_13-14-15_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_13-14-15_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_16-17_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_16-17_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_18-19-20_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_18-19-20_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_21-22-23_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_21-22-23_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_24-25_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_24-25_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_26_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_26_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_27-28_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_27-28_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_29_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_29_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_30_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_30_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_31-32_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_31-32_twain_64kb","children":[]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_33-34-35_twain_64kb.mp3","type":"audio/mp3","rel":"TSawyer_33-34-35_twain_64kb","children":[]}],"resources":[{"href":"https://images-na.ssl-images-amazon.com/images/I/41fK2D8MUjL._SX331_BO1,204,203,200_.jpg","type":"image/jpeg","rel":"cover","children":[]}],"toc":[{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3#t=60","title":"partie 1","children":[{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3#t=500","title":"une citation","children":[{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3#t=2000","title":"une citation plus intéressante","children":[]}]}]},{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_03-04_twain_64kb.mp3#t=13","title":"chapitre 3","children":[{"href":"https://edrlab.tk/audiobook/mark-twain_tom-sawyer/TSawyer_03-04_twain_64kb.mp3#t=783","title":"chapitre 4","children":[]}]}]}],
+    })
+  ).mockImplementationOnce(() =>
+    Promise.resolve({
+      data: {"state":true,"ref":["une citation","une citation plus intéressante"]}
+    })
+  )
+
+  expect(await getMediaReference("tom sayer", "citation")).toEqual({
+    state: "error.audiobook.chapter",
+  });
+});
 

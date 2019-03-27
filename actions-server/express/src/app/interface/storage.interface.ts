@@ -1,5 +1,7 @@
 import { Eaudiobook } from '../service/audiobook.service';
 
+/*
+** RM session storage replace by couchdb
 export interface IsessionStorage {
   currentPlayingMedia: IplayingMedia;
   chapterToPlay: number;
@@ -12,6 +14,7 @@ export interface IsessionStorage {
   //
   // don't forget to errase
 }
+*/
 
 export interface IplayingMedia {
   state: Eaudiobook;
@@ -32,7 +35,15 @@ interface ImediaId {
   [identifier: string]: number;
 }
 
+//
+// Save only userId generate by couchdb to get back user information
+export interface IuserStorage {
+  id: string;
+}
+
+/*
 export interface IuserStorage {
   mediaIdentifier: ImediaId;
   lastSeen: Date;
 }
+*/
