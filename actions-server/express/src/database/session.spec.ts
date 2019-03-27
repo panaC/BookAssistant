@@ -1,6 +1,6 @@
 import { Session } from './session';
 
-it('session start', async () => {
+it('session cycle', async () => {
 
     let session = new Session();
     await session.waitInit;
