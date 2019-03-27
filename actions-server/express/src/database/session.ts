@@ -11,7 +11,7 @@ export class Session implements Isession {
 
   user: Iuser;
   state: Istate;
-  historic: Ihistoric;
+  historic: Ihistoric[];
 
   constructor(id: string = undefined) {
     this._id = id;
@@ -20,11 +20,18 @@ export class Session implements Isession {
     const n = Nano(DB_URL);
     this._db = n.db.use<Isession>(DB_NAME);
 
+    this.user = {
+      lastseen: new Date(),
+    };
+    this.state = {};
+    this.historic = [];
+
     this._wait = new Promise<void>((resolve, reject) => {
       if (this._id) {
         this.get().then(() => resolve()).catch((e) => reject(e));
+      } else {
+        this.set().then(() => resolve()).catch((e) => reject(e));
       }
-      this.set().then(() => resolve()).catch((e) => reject(e));
     });
   }
 
@@ -39,19 +46,31 @@ export class Session implements Isession {
     try {
       Object.assign(this, await this._db.get(this._id));
     } catch(e) {
-      // error e
+      console.error(e);
     }
+  }
+
+  get data() {
+    const data = Object.assign({}, this);
+    data._db = undefined;
+    data._wait = undefined;
+    return data;
   }
 
   public async set() {
     try {
-      const data = Object.assign({}, this);
-      data._db = undefined;
-      data._wait = undefined;
-      const response = await this._db.insert(data);
+      const response = await this._db.insert(this.data);
       this.processAPIResponse(response);
     } catch(e) {
-      // error e
+      console.error(e);
+    }
+  }
+  
+  public async del() {
+    try {
+      await this._db.destroy(this._id, this._rev);
+    } catch(e) {
+      console.error(e);
     }
   }
 
@@ -62,4 +81,28 @@ export class Session implements Isession {
   get waitInit() {
     return this._wait;
   }
+}
+
+// main test
+if (typeof require !== 'undefined' && require.main === module) {
+  ( async () => {
+
+    let session = new Session();
+    await session.waitInit;
+    
+    session.user = {
+      lastseen: new Date(Date.now()),
+      name: "fake test",
+    };
+    await session.set();
+
+    let session2 = new Session(session.id);
+    await session2.waitInit;
+
+    //await session.del();
+    
+    console.log(session.data);
+    console.log(session2.data);
+    
+  })();
 }

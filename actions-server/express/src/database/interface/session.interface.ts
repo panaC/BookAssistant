@@ -27,11 +27,11 @@ export interface IplayingMedia {
 }
 
 export interface Istate {
-  webpub: IWebpub;
-  state: number;
-  playingMedia: IplayingMedia;
-  choice: number;
-  yes_no: boolean;
+  webpub?: IWebpub;
+  state?: number;
+  playingMedia?: IplayingMedia;
+  choice?: number;
+  yes_no?: boolean;
 }
 
 interface IrawInput {
@@ -45,20 +45,20 @@ interface ImediaId {
 
 export interface Ihistoric {
   date: Date;
-  input: IrawInput[];
-  surfaceCapabilities: Capabilities;
-  media: ImediaId;
+  input?: IrawInput[];
+  surfaceCapabilities?: Capabilities;
+  media?: ImediaId;
 }
 
 export interface Iuser {
-  name: string;
   lastseen: Date;
-  sessionCount: number;
-  locale: string;
+  name?: string;
+  sessionCount?: number;
+  locale?: string;
 }
 
 export interface Isession extends Nano.MaybeDocument {
   user: Iuser;
   state: Istate;
-  historic: Ihistoric;
+  historic: Ihistoric[];
 }
