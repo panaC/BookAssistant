@@ -37,3 +37,9 @@ npm run start
 ```
 
 then, configure NGINX to an HTTPS server with reverse proxy. see `/docs/server.md`
+
+## Run test
+
+```
+npm t
+```
