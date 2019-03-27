@@ -7,7 +7,7 @@ it('fake test', async () => {
   expect(getState(Eaudiobook.OK)).toEqual(getState(Eaudiobook.OK));
 });
 
-it('get media', async () => {
+it('get media number neg', async () => {
   (axios.get as jest.Mock).mockImplementationOnce(() => 
     Promise.resolve({
       data: { }
@@ -15,4 +15,14 @@ it('get media', async () => {
   );
 
   expect(await getMedia("", 0, undefined, -1)).toEqual(getState(Eaudiobook.NOT_FOUND));
+});
+
+it('get media number too high', async () => {
+  (axios.get as jest.Mock).mockImplementationOnce(() => 
+    Promise.resolve({
+      data: { }
+    })
+  );
+
+  expect(await getMedia("", 0, undefined, 4)).toEqual(getState(Eaudiobook.NOT_FOUND));
 });
