@@ -36,7 +36,7 @@ export class Session implements Isession {
       if (this._id) {
         this.get().then(() => resolve()).catch((e) => reject(e));
       } else {
-        this.set().then(() => resolve()).catch((e) => reject(e));
+        this.save().then(() => resolve()).catch((e) => reject(e));
       }
     });
   }
@@ -100,7 +100,7 @@ if (typeof require !== 'undefined' && require.main === module) {
       lastseen: new Date(Date.now()),
       name: "fake test",
     };
-    await session.set();
+    await session.save();
 
     let session2 = new Session(session.id);
     await session2.waitInit;

@@ -8,7 +8,7 @@ it('session cycle', async () => {
       lastseen: new Date(Date.now()),
       name: "fake test",
     };
-    await session.set();
+    await session.save();
 
     let session2 = new Session(session.id);
     await session2.waitInit;
