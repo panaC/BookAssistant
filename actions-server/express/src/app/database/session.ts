@@ -1,6 +1,6 @@
 import Nano from 'nano'
 import { Isession, Iuser, Istate, Ihistoric } from './interface/session.interface';
-import { DB_URL, DB_NAME } from '../constants';
+import { DB_URL, DB_NAME } from '../../constants';
 
 // coucdb session implemtentation
 // request from app.middleware
