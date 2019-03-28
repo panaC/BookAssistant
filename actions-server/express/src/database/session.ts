@@ -23,7 +23,13 @@ export class Session implements Isession {
     this.user = {
       lastseen: new Date(),
     };
-    this.state = {};
+    this.state = {
+      chapterToPlay: 0,
+      state: 0,
+      currentPlayingMedia: null,
+      choice: null,
+      yes_no: null,
+    };
     this.historic = [];
 
     this._wait = new Promise<void>((resolve, reject) => {
