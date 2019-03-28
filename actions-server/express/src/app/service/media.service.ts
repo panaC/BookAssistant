@@ -1,3 +1,4 @@
+import { IplayingMedia } from './../../database/interface/session.interface';
 /*
  * File: media.service.ts
  * Project: VoiceAssistant
@@ -52,12 +53,14 @@ export class MediaService {
     this._title = t;
     this._webpub = [];
     this._nb = 0;
+    this._length = 0;
   }
 
   set author(a: string) {
     this._author = a;
     this._webpub = [];
     this._nb = 0;
+    this._length = 0;
   }
 
   // first step in "I want listen" intent
@@ -65,7 +68,8 @@ export class MediaService {
   public async length() {
     await this.getWebpub();
     if (this._state === Eaudiobook.OK) {
-      return this._webpub.length;
+      this._length = this._webpub.length;
+      return this._length;
     }
     return 0;
   }
@@ -79,13 +83,13 @@ export class MediaService {
         await this.getWebpub();
       }
       this._conv.session.state.currentPlayingMedia = this.media();
-      this._conv.session.save();
+      await this._conv.session.save();
     }
   }
 
   // private method for handle media in Iplaying Format
   // generate a play media
-  private media() {
+  public media(): IplayingMedia {
     let a = this.webpub;
     let chapter = this._conv.session.state.chapterToPlay;
     let link: ILinks;
