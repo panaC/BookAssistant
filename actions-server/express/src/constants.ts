@@ -24,3 +24,5 @@ export const DB_NAME = process.env.COUCHDB_DB_NAME || 'session';
 export const SEARCH = (title: string, author: string = undefined) => 
   `${SERVER_URL}?q=title:${encodeURI(title)}${author ? ` AND author:${author}` : ''}`;
 export const REF = (identifier: string, ref: string) => `${SERVER_URL}/${identifier}?q=${encodeURI(ref)}`;
+
+export const MAE_LOOP_MAX = 100;
