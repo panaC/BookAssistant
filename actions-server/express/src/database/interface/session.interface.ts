@@ -30,7 +30,7 @@ export interface Istate {
   webpub?: IWebpub;
   state?: number;
   currentPlayingMedia?: IplayingMedia;
-  chapterToPlay: number;
+  chapterToPlay?: number;
   choice?: number;
   yes_no?: boolean;
 }

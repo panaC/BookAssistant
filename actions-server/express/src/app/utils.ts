@@ -4,7 +4,7 @@ import { DialogflowConversation, Suggestions, MediaObject, Image } from 'actions
 import { Iprompt } from './prompt';
 import { sprintf } from 'sprintf-js';
 import { setLocale } from './prompt';
-import { Eaudiobook } from './service/audiobook.service';
+import { Eaudiobook } from '../../database/interface/session.interface';
 
 export class Utils {
   constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {

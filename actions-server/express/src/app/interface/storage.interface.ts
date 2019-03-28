@@ -1,4 +1,5 @@
-import { Eaudiobook } from '../service/media.service';
+import { Eaudiobook } from '../../database/interface/session.interface';
+
 
 /*
 ** RM session storage replace by couchdb
@@ -16,6 +17,10 @@ export interface IsessionStorage {
 }
 */
 
+export interface IsessionStorage {
+  // empty
+}
+
 export interface IplayingMedia {
   state: Eaudiobook;
   name?: string;
@@ -29,10 +34,6 @@ export interface IplayingMedia {
   };
   chapter?: number;
   numberOfChapter?: number;
-}
-
-interface ImediaId {
-  [identifier: string]: number;
 }
 
 //
