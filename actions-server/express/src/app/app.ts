@@ -32,6 +32,12 @@ export const app = dialogflow({
   /*debug: true,*/
 });
 
+
+// src in actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
+// app.middleware is call at each new request
+// save here all my service class
+// each call is push data fct into an array
+// allow multiple call
 app.middleware((conv: DFConv) => {
   conv.utils = new Utils(conv);
 });

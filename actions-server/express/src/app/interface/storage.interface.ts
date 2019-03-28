@@ -1,4 +1,4 @@
-import { Eaudiobook } from '../service/audiobook.service';
+import { Eaudiobook } from '../service/media.service';
 
 /*
 ** RM session storage replace by couchdb

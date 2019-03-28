@@ -29,7 +29,8 @@ export interface IplayingMedia {
 export interface Istate {
   webpub?: IWebpub;
   state?: number;
-  playingMedia?: IplayingMedia;
+  currentPlayingMedia?: IplayingMedia;
+  chapterToPlay: number;
   choice?: number;
   yes_no?: boolean;
 }

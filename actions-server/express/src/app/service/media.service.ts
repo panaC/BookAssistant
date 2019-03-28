@@ -1,17 +1,9 @@
-import { SEARCH, REF } from './../../constants';
+import { SEARCH, REF } from '../../constants';
 import Axios from 'axios';
-import { ILinks } from './../../../../../opds-server/src/webpub/interfaces/links.interface';
-import { IWebpub } from './../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
+import { ILinks } from '../../../../../opds-server/src/webpub/interfaces/links.interface';
+import { IWebpub } from '../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 import { IplayingMedia } from '../interface/storage.interface';
-
-export enum Eaudiobook {
-  ERROR_AXIOS = 'error.audiobook.network',
-  END_CHAPTER = 'play.finish',
-  ERROR_CHAPTER = 'error.audiobook.chapter',
-  NOT_FOUND = 'error.audiobook.not_found',
-  ERROR_REF = 'error.audiobook.ref',
-  OK = 'ok',
-}
+import { Eaudiobook } from '../../database/interface/session.interface';
 
 export const getState = (state: Eaudiobook) => {
   return {
@@ -86,45 +78,3 @@ export const getMedia = async (
   return state;
 };
 
-const getChapterWithHref = (readingOrder: ILinks[], href: string) =>
-  readingOrder.map((link) => link.href === href.split('#')[0]).findIndex((value) => value);
-
-const searchHrefWithRef = (toc: ILinks[], ref: string): string => 
-  toc.map((link) => 
-    link.title === ref ? link.href :
-      (link.children ? searchHrefWithRef(link.children, ref) : null))
-    .reduce((a, c) => c, null);
-
-export const getReference = async (identifier: string, ref: string): Promise<string[]> => {
-  const res = await Axios.get(REF(identifier, ref));
-  if (res && res.data && res.data.ref) {
-    return res.data.ref;
-  }
-  return null;
-}
-
-export const getMediaReference = async (
-    a: IplayingMedia
-  , reference: string
-  , nb: number = 0) => {
-  let link: string;
-  let chapter: number;
-  let state: {
-    state: Eaudiobook;
-  }
-  let ref: string[];
-
-  if (a && a.state === Eaudiobook.OK) {
-    if ((ref = await getReference(a.identifier, reference)) && ref.length > nb) {
-      if ((link = searchHrefWithRef(a.toc, ref[nb]))) {
-        if ((chapter = getChapterWithHref(a.readingOrder, link)) > -1) {
-          const media = await getMedia(name, chapter);
-          media.url = `${media.url}#${link.split('#')[1]}`;
-          return media;
-        }
-      }
-    }
-    return getState(Eaudiobook.ERROR_REF);
-  }
-  return state;
-}

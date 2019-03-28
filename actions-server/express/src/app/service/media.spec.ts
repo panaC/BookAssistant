@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getState, Eaudiobook, getMedia, getMediaReference } from './audiobook.service';
+import { getState, Eaudiobook, getMedia, getMediaReference } from './media.service';
 
 jest.mock('axios');
 
