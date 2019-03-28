@@ -7,7 +7,9 @@ import { setLocale } from '../prompt';
 import { Eaudiobook } from '../../database/interface/session.interface';
 import { DFConv } from '../app';
 
-export class Utils {
+// middleware Utils service
+// request from app.middleware
+export class UtilsService {
   constructor(public conv: DFConv) {
     this.conv = conv;
     setLocale(conv.user.locale);

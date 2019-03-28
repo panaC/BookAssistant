@@ -20,13 +20,15 @@
 
 import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
-import { Utils } from './service/utils.service';
 import { intent } from './intent/intent';
 import { Session } from '../database/session';
+import { MediaService } from './service/media.service';
+import { UtilsService } from './service/utils.service';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
-  utils: Utils;
+  utils: UtilsService;
   session: Session;
+  media: MediaService;
 }
 
 // Create an app instance
@@ -41,8 +43,9 @@ export const app = dialogflow({
 // each call is push data fct into an array
 // allow multiple call
 app.middleware((conv: DFConv) => {
-  conv.utils = new Utils(conv);
+  conv.utils = new UtilsService(conv);
   conv.session = new Session(conv.user.storage.id);
+  conv.media = new MediaService(conv);
 });
 
 // start intents
