@@ -25,12 +25,14 @@ import { Session } from './database/session';
 import { MediaService } from './service/media.service';
 import { UtilsService } from './service/utils.service';
 import { RefService } from './service/ref.service';
+import { MaeMae } from './mae/mae';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   utils: UtilsService;
   session: Session;
   media: MediaService;
   ref: RefService;
+  mae: MaeMae;
 }
 
 // Create an app instance
@@ -49,6 +51,7 @@ app.middleware((conv: DFConv) => {
   conv.session = new Session(conv.user.storage.id);
   conv.media = new MediaService(conv);
   conv.ref = new RefService(conv);
+  conv.mae = new MaeMae(conv);
 });
 
 // start intents
