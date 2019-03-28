@@ -63,7 +63,7 @@ export class Session implements Isession {
     return data;
   }
 
-  public async set() {
+  public async save() {
     try {
       const response = await this._db.insert(this.data);
       this.processAPIResponse(response);

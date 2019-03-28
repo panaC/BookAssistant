@@ -24,10 +24,10 @@ export interface IplayingMedia {
   };
   chapter?: number;
   numberOfChapter?: number;
+  webpub?: IWebpub;
 }
 
 export interface Istate {
-  webpub?: IWebpub;
   state?: number;
   currentPlayingMedia?: IplayingMedia;
   chapterToPlay?: number;

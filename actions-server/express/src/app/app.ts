@@ -20,11 +20,13 @@
 
 import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
-import { Utils } from './utils';
+import { Utils } from './service/utils.service';
 import { intent } from './intent/intent';
+import { Session } from '../database/session';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   utils: Utils;
+  session: Session;
 }
 
 // Create an app instance
@@ -40,6 +42,7 @@ export const app = dialogflow({
 // allow multiple call
 app.middleware((conv: DFConv) => {
   conv.utils = new Utils(conv);
+  conv.session = new Session(conv.user.storage.id);
 });
 
 // start intents

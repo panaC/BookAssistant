@@ -1,13 +1,14 @@
 import i18n from 'i18n';
-import { IsessionStorage, IuserStorage, IplayingMedia } from './interface/storage.interface';
-import { DialogflowConversation, Suggestions, MediaObject, Image } from 'actions-on-google';
-import { Iprompt } from './prompt';
+import { IplayingMedia } from '../interface/storage.interface';
+import { Suggestions, MediaObject, Image } from 'actions-on-google';
+import { Iprompt } from '../prompt';
 import { sprintf } from 'sprintf-js';
-import { setLocale } from './prompt';
+import { setLocale } from '../prompt';
 import { Eaudiobook } from '../../database/interface/session.interface';
+import { DFConv } from '../app';
 
 export class Utils {
-  constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {
+  constructor(public conv: DFConv) {
     this.conv = conv;
     setLocale(conv.user.locale);
   }
