@@ -5,6 +5,14 @@ import { IWebpub } from '../../../../../opds-server/src/webpub/interfaces/webpub
 import { IplayingMedia } from '../interface/storage.interface';
 import { Eaudiobook } from '../../database/interface/session.interface';
 
+export class MediaService {
+  constructor(public conv: DialogflowConversation<IsessionStorage, IuserStorage>) {
+    this.conv = conv;
+    setLocale(conv.user.locale);
+  }
+
+}
+
 export const getState = (state: Eaudiobook) => {
   return {
     state,
