@@ -1,4 +1,3 @@
-import { MAE_LOOP_MAX } from './../../constants';
 /*
  * File: core.ts
  * Project: VoiceAssistant
@@ -14,38 +13,52 @@ import { MAE_LOOP_MAX } from './../../constants';
 
 import { DFConv } from '../app';
 import { Estate } from './state';
+import { prompts } from '../prompt';
+import { MAE_LOOP_MAX } from './../../constants';
+import { intent } from '../intent/intent';
+import { convert } from 'actions-on-google/dist/service/actionssdk';
 
 export class MaeMae {
   constructor(private _conv: DFConv) {
   }
 
-  public mae(loop: number = 0) {
+  set state(state: Estate) {
+    this._conv.session.state.state
+  }
+
+  get state() {
+    return this._conv.session.state.state;
+  }
+
+  public mae(loop: number = 0): void {
 
     if (loop > MAE_LOOP_MAX) {
-      // return conv.close error
+      return this._conv.utils.close(prompts.error);
     }
 
     const state = this._conv.session.state.state;
     if (state === Estate.start) {
-
-    } else if (state === Estate.session) {
-
+      this.state = Estate.selection;
+    } else if (state === Estate.welcome) {
+      this.state = Estate.choice;
+      return intent.welcome(this._conv);
     } else if (state === Estate.choice) {
-
+      // return handle choice
     } else if (state >= Estate.play && state <= Estate.play_end) {
-
+      // return mae play
     } else if (state >= Estate.toc && state <= Estate.toc_end) {
-
+      // return mae toc
     } else if (state >= Estate.info && state <= Estate.info_end) {
-
+      // return mae info
     } else if (state === Estate.fallback) {
-
+      // doesn't used, wired in dialogflog
     } else if (state === Estate.no_input) {
-
+      return intent.noInput(this._conv);
     } else if (state === Estate.goodbye) {
-      
+      return intent.goodbye(this._conv);
     } else {
-
+      // change this message
+      return this._conv.utils.close(prompts.error);
     }
   }
 }

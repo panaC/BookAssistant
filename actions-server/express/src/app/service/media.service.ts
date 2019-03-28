@@ -83,7 +83,8 @@ export class MediaService {
         await this.getWebpub();
       }
       this._conv.session.state.currentPlayingMedia = this.media();
-      await this._conv.session.save();
+      // saved only at the end of intent
+      // await this._conv.session.save();
     }
   }
 

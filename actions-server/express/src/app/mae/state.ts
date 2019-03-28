@@ -15,6 +15,8 @@ export enum Estate {
   start,
   welcome,
   session,
+  yes_no,
+  selection,
   choice,
   play = 10,
   play_start = 11,
