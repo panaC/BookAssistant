@@ -20,7 +20,7 @@
 
 import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
-import { intent } from './intent/intent';
+import { intent, intentName } from './intent/intent';
 import { Session } from './database/session';
 import { MediaService } from './service/media.service';
 import { UtilsService } from './service/utils.service';
@@ -54,22 +54,4 @@ app.middleware((conv: DFConv) => {
   conv.mae = new MaeMae(conv);
 });
 
-// start intents
-app.intent('Default Welcome Intent', intent.welcome);
-
-// play intents
-app.intent('play_audiobook', intent.play);
-app.intent('play_audiobook-media_status', intent.playNext);
-app.intent('play_audiobook-repeat', intent.play);
-app.intent('play_audiobook-next', intent.playNext);
-app.intent('play_audiobook-previous', intent.playPrev);
-app.intent('play_audiobook-yes', intent.play);
-app.intent('play_audiobook-no', intent.playNo);
-app.intent('play_audiobook-reference', intent.playReference);
-app.intent('play_audiobook-numberOfChapter', intent.numberOfChapter);
-app.intent('play_audiobook-chapter', intent.currentChapter);
-app.intent('play_audiobook-author', intent.author);
-
-// default intents
-app.intent('no_input', intent.noInput);
-app.intent('goodbye', intent.goodbye);
+app.intent(intentName, intent.main);

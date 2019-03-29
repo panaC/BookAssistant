@@ -16,14 +16,14 @@ import { Estate } from './state';
 import { prompts } from '../prompt';
 import { MAE_LOOP_MAX } from './../../constants';
 import { intent } from '../intent/intent';
-import { convert } from 'actions-on-google/dist/service/actionssdk';
+import { mainChoice } from './state/main/mainChoice';
 
 export class MaeMae {
   constructor(private _conv: DFConv) {
   }
 
   set state(state: Estate) {
-    this._conv.session.state.state
+    this._conv.session.state.state = state;
   }
 
   get state() {
@@ -32,33 +32,40 @@ export class MaeMae {
 
   public mae(loop: number = 0): void {
 
+    // blocking infernal recursive loop
     if (loop > MAE_LOOP_MAX) {
       return this._conv.utils.close(prompts.error);
     }
 
-    const state = this._conv.session.state.state;
+    const state = this.state;
+
+    // Mae
     if (state === Estate.start) {
-      this.state = Estate.selection;
+      this.state = Estate.welcome;
+      return this.mae(++loop);
+
     } else if (state === Estate.welcome) {
-      this.state = Estate.choice;
+      this.state = Estate.main;
       return intent.welcome(this._conv);
-    } else if (state === Estate.choice) {
+
+    } else if (state >= Estate.main && state <= Estate.main_end) {
       // return handle choice
-    } else if (state >= Estate.play && state <= Estate.play_end) {
-      // return mae play
-    } else if (state >= Estate.toc && state <= Estate.toc_end) {
-      // return mae toc
-    } else if (state >= Estate.info && state <= Estate.info_end) {
-      // return mae info
+      return main(this._conv, loop);
+
     } else if (state === Estate.fallback) {
       // doesn't used, wired in dialogflog
+
     } else if (state === Estate.no_input) {
       return intent.noInput(this._conv);
+
     } else if (state === Estate.goodbye) {
       return intent.goodbye(this._conv);
+
     } else {
       // change this message
       return this._conv.utils.close(prompts.error);
+
     }
   }
 }
+

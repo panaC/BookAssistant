@@ -17,17 +17,43 @@ export enum Estate {
   session,
   yes_no,
   selection,
-  choice,
+  main = 9,
   play = 10,
-  play_start = 11,
   play_end = 29,
   toc = 30,
-  toc_start = 31,
   toc_end = 49,
   info = 50,
-  info_start = 51,
   info_end = 69,
+  main_end = 100,
   fallback,
   no_input,
   goodbye,
+}
+
+export const state = {
+  name: 'mae',
+  state: Estate.start,
+  range: {},
+  children: [
+    {
+      name: "main",
+      state: Estate.main,
+      range: {
+        begin: Estate.main,
+        end: Estate.main_end,
+      },
+      fct: mainChoice,
+      children: [
+        {
+          name: "play",
+          state: Estate.play,
+          range: {
+            begin: Estate.play,
+            end: Estate.play_end,
+          },
+          fct: play,
+        }
+      ]
+    }
+  ]
 }
