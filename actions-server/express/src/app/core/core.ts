@@ -39,7 +39,7 @@ export class Core {
 
     console.log(path);
     
-    this._currentState = this._state[path] || this._state.error;
+    this._currentState = eval(`this._state.${path}`) || this._state.error;
     console.log(this._currentState);
     
   }
