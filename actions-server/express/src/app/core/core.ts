@@ -51,6 +51,8 @@ export class Core {
         this._currentResult = tmp;
       }
     }
+    console.log(this._currentResult);
+    
   }
 
   private execSwitch(): void {
@@ -59,6 +61,8 @@ export class Core {
     } else {
       this.state = this._currentState.switch.default;
     }
+    console.log(this.state);
+    
   }
 
   private convHandle(): void {
