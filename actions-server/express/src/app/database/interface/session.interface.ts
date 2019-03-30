@@ -28,9 +28,9 @@ export interface IplayingMedia {
 }
 
 export interface Istate {
-  state?: number;
-  currentPlayingMedia?: IplayingMedia;
-  chapterToPlay?: number;
+  state: string;
+  currentPlayingMedia: IplayingMedia;
+  chapterToPlay: number;
   choice?: number;
   yes_no?: boolean;
 }

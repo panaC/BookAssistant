@@ -11,13 +11,14 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-interface IstateName {
+export interface IstateName {
   // handle multiple string for apply a map-reduce logic in fct -> return a concatenation string
   // accept in fct : variable name or function name, type test before execution
   fct?: string | string[];
   // only default switch state is required
   switch: {
-    [result: string]: string;
+    // allow to add multiple context name with string[]
+    [result: string]: string | string[];
     default: string;
   }
   conv?: {
@@ -28,13 +29,24 @@ interface IstateName {
   }
   // no by default
   return?: boolean;
-  children?: Istate;
+  children?: IstateChildren;
+}
+
+export interface IstateChildren {
+  [state: string]: IstateName;
 }
 
 export interface Istate {
-  [context: string]: {
-    [state: string]: IstateName;
-    fallback: IstateName;
-    no_input: IstateName;
-  }
+  [state: string]: IstateName;
+  fallback: IstateName;
+  no_input: IstateName;
+  error: IstateName;
 }
+
+/*
+export interface Istate {
+  [state: string]: IstateContext;
+  // default context if a stateName is unknown
+  default: IstateContext;
+}
+*/

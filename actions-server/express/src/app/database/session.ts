@@ -1,4 +1,3 @@
-import { Estate } from './../mae/state';
 import Nano from 'nano'
 import { Isession, Iuser, Istate, Ihistoric } from './interface/session.interface';
 import { DB_URL, DB_NAME } from '../../constants';
@@ -29,7 +28,7 @@ export class Session implements Isession {
     };
     this.state = {
       chapterToPlay: 0,
-      state: Estate.start,
+      state: 'start',
       currentPlayingMedia: null,
       choice: null,
       yes_no: null,

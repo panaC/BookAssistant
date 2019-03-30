@@ -25,14 +25,13 @@ import { Session } from './database/session';
 import { MediaService } from './service/media.service';
 import { UtilsService } from './service/utils.service';
 import { RefService } from './service/ref.service';
-import { MaeMae } from './mae/mae';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
-  utils: UtilsService;
-  session: Session;
-  media: MediaService;
-  ref: RefService;
-  mae: MaeMae;
+  //utils: UtilsService;
+  //session: Session;
+  //media: MediaService;
+  //ref: RefService;
+  init: (conv: DFConv) => string;
 }
 
 // Create an app instance
@@ -40,17 +39,23 @@ export const app = dialogflow({
   /*debug: true,*/
 });
 
+const init = (conv: DFConv) => {
+  conv.data.state = 'start';
+  return '';
+}
+
 // src in actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
 // app.middleware is call at each new request
 // save here all my service class
 // each call is push data fct into an array
 // allow multiple call
 app.middleware((conv: DFConv) => {
-  conv.utils = new UtilsService(conv);
-  conv.session = new Session(conv.user.storage.id);
-  conv.media = new MediaService(conv);
-  conv.ref = new RefService(conv);
-  conv.mae = new MaeMae(conv);
+  // conv.utils = new UtilsService(conv);
+  // conv.session = new Session(conv.user.storage.id);
+  // await conv.session.waitInit;
+  // conv.media = new MediaService(conv);
+  // conv.ref = new RefService(conv);
+  conv.init = init;
 });
 
 app.intent(intentName, intent.main);

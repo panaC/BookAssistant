@@ -31,6 +31,8 @@ export interface IsessionStorage {
 
 export interface IsessionStorage {
   // empty
+  // tmp for test only
+  state: string;
 }
 
 export interface IplayingMedia {
