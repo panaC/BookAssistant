@@ -34,8 +34,8 @@ export class Core {
   }
 
   private findState(): void {
-    const path = this.state;
-    path.replace(/\./gi, '.children.');
+    let path = this.state;
+    path = path.replace(/\./gi, '.children.');
     this._currentState = this._state[path] || this._state.error;
     console.log(this._currentState);
     
