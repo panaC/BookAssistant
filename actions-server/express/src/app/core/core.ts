@@ -105,6 +105,11 @@ export class Core {
     if (!this._currentState.return) {
       return this.main(++loop);
     }
+
+    if (this._currentState.context) {
+      this._conv.contexts.set(this._currentState.context as string, 10);
+    }
+
     // await this._conv.session.save();
   }
 }

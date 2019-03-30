@@ -12,6 +12,7 @@
  */
 
 export interface IstateName {
+  context?: string | string[];
   // handle multiple string for apply a map-reduce logic in fct -> return a concatenation string
   // accept in fct : variable name or function name, type test before execution
   fct?: string | string[];
