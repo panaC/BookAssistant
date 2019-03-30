@@ -11,6 +11,8 @@
  * Use of this source code is governed by a BSD-style license
  */
 
+import { Istate } from "./interface/state.interface";
+
 export enum Estate {
   start,
   welcome,
@@ -28,18 +30,25 @@ export enum Estate {
   fallback,
   no_input,
   goodbye,
+  end,
 }
 
-export const state = {
+// !! maybe add a previous state in session for keep save the path to finish in this state
+
+export const state: Istate = {
   name: 'mae',
   state: Estate.start,
-  range: {},
+  range: {
+    start: Estate.start,
+    end: Estate.end,
+  },
+  fct: mae,
   children: [
     {
       name: "main",
       state: Estate.main,
       range: {
-        begin: Estate.main,
+        start: Estate.main,
         end: Estate.main_end,
       },
       fct: mainChoice,
@@ -48,11 +57,12 @@ export const state = {
           name: "play",
           state: Estate.play,
           range: {
-            begin: Estate.play,
+            start: Estate.play,
             end: Estate.play_end,
           },
           fct: play,
-        }
+          children: [],
+        },
       ]
     }
   ]

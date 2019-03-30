@@ -1,5 +1,17 @@
-import { Eaudiobook } from '../../database/interface/session.interface';
+/*
+ * File: storage.interface.ts
+ * Project: VoiceAssistant
+ * File Created: Saturday, 30th March 2019 10:57:43 am
+ * Author: pierre (p.leroux@gmx.com)
+ * -----
+ * Last Modified: Saturday, 30th March 2019 10:57:49 am
+ * Modified By: pierre (p.leroux@gmx.com>)
+ * -----
+ * Copyright 2019 - 2019 EDRLab.org
+ * Use of this source code is governed by a BSD-style license
+ */
 
+import { Eaudiobook } from '../database/interface/session.interface';
 
 /*
 ** RM session storage replace by couchdb

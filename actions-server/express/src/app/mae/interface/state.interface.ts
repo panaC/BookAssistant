@@ -12,7 +12,7 @@
  */
 
 import { Estate } from './../state';
-import { DFConv } from '../../app';
+import { Imae } from './mae.interface';
 
 export interface Istate {
   name: string,
@@ -21,6 +21,6 @@ export interface Istate {
     start: Estate,
     end: Estate,
   },
-  fct: (conv: DFConv, loop: number) => void,
+  fct: Imae,
   children : Istate[],
 }

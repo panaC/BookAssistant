@@ -16,7 +16,13 @@ import { Estate } from './state';
 import { prompts } from '../prompt';
 import { MAE_LOOP_MAX } from './../../constants';
 import { intent } from '../intent/intent';
-import { mainChoice } from './state/main/mainChoice';
+import { Imae } from './interface/mae.interface';
+
+export const maeFactory = (fct: (conv: DFConv) => void): Imae => {
+  const factory = <Imae>fct;
+  factory.getState = () => 
+  return factory;
+}
 
 export class MaeMae {
   constructor(private _conv: DFConv) {
