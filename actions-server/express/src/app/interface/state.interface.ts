@@ -12,18 +12,23 @@
  */
 
 interface IstateName {
-  fct: () => string;
+  // handle multiple string for apply a map-reduce logic in fct -> return a concatenation string
+  // accept in fct : variable name or function name, type test before execution
+  fct?: string | string[];
+  // only default switch state is required
   switch: {
     [result: string]: string;
     default: string;
   }
-  return: boolean;
-  conv: {
-    ask: string | string[];
-    close: string;
-    suggestion: string | string[];
+  conv?: {
+    arg?: string | string[];
+    ask?: string | string[];
+    close?: string;
+    suggestion?: string | string[];
   }
-  children: Istate[];
+  // no by default
+  return?: boolean;
+  children?: Istate;
 }
 
 export interface Istate {
