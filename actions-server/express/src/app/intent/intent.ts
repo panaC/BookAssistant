@@ -30,7 +30,7 @@ export const intentNamePlayAudiobookIndex = 1;
 
 export const intentName = [
   'start',
-  'start.page',
+  'start.age',
   'start.name',
   'fallback',
   'no_input'
