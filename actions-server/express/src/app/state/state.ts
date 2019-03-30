@@ -50,6 +50,7 @@ export const state: Istate = {
     }
   },
   fallback: {
+    return: true,
     switch: {
       default: '',
     },
@@ -58,11 +59,13 @@ export const state: Istate = {
     }
   },
   no_input: {
+    return: true,
     switch: {
       default: ''
     }
   },
   error: {
+    return: true,
     switch: {
       default: ''
     },
