@@ -43,6 +43,8 @@ export class Core {
     if (this._currentState.fct) {
       // https://stackoverflow.com/questions/49525389/element-implicitly-has-an-any-type-because-type-0-has-no-index-signature
       const tmp = eval(`this._conv.${this._currentState.fct}`);
+      console.log('tmp:', tmp);
+      
       this._currentResult = '';
       if (typeof tmp === 'function') {
         // handle if function is async
