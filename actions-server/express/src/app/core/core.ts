@@ -118,6 +118,8 @@ export class Core {
     }
 
     if (this._currentState.context) {
+      console.log('context-set:', this._currentState.context);
+      
       this._conv.contexts.set(this._currentState.context as string, 10);
     }
 
