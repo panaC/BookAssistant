@@ -44,6 +44,8 @@ export const app = dialogflow({
 
 const init = (conv: DFConv) => {
   conv.data.state = 'start';
+  console.log('INIT', conv.data.state);
+  
   return '';
 }
 

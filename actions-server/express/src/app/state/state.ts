@@ -15,6 +15,7 @@ import { Istate } from './../interface/state.interface';
 
 export const state: Istate = {
   start: {
+    fct: 'init',
     switch: {
       default: 'start.choice',
     },
