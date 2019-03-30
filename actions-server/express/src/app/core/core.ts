@@ -37,6 +37,8 @@ export class Core {
     const path = this.state;
     path.replace(/\./gi, '.children.');
     this._currentState = this._state[path] || this._state.error;
+    console.log(this._currentState);
+    
   }
 
   private async execFct() {
