@@ -43,9 +43,10 @@ export const app = dialogflow({
 });
 
 const init = (conv: DFConv) => {
-  conv.data.state = 'start';
-  console.log('INIT', conv.data.state);
-  
+  if (!conv.data.state) {
+    conv.data.state = 'start';
+    console.log('INIT', conv.data.state);
+  }
   return '';
 }
 
@@ -61,7 +62,7 @@ app.middleware((conv: DFConv) => {
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
   conv.core = new Core(conv);
-  conv.init = init;
+  init(conv);
 });
 
 app.intent(intentName, (conv: DFConv) => conv.core.main());
