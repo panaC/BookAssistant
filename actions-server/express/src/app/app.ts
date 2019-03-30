@@ -20,17 +20,20 @@
 
 import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
-import { intent, intentName } from './intent/intent';
+import { intentName } from './intent/intent';
 import { Session } from './database/session';
 import { MediaService } from './service/media.service';
 import { UtilsService } from './service/utils.service';
 import { RefService } from './service/ref.service';
+
+import { Core } from './core/core';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   //utils: UtilsService;
   //session: Session;
   //media: MediaService;
   //ref: RefService;
+  core: Core;
   init: (conv: DFConv) => string;
 }
 
@@ -55,7 +58,8 @@ app.middleware((conv: DFConv) => {
   // await conv.session.waitInit;
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
+  conv.core = new Core(conv);
   conv.init = init;
 });
 
-app.intent(intentName, intent.main);
+app.intent(intentName, (conv: DFConv) => conv.core.main());
