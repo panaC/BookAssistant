@@ -37,10 +37,10 @@ export class Core {
     let path = this.state;
     path = path.replace(/\./gi, '.children.');
 
-    console.log(path);
+    console.log('path:', path);
     
     this._currentState = eval(`this._state.${path}`) || this._state.error;
-    console.log(this._currentState);
+    console.log('currentState:', this._currentState);
     
   }
 
@@ -58,7 +58,7 @@ export class Core {
         this._currentResult = tmp;
       }
     }
-    console.log(this._currentResult);
+    console.log('exect-fct res:', this._currentResult);
     
   }
 
@@ -68,7 +68,7 @@ export class Core {
     } else {
       this.state = this._currentState.switch.default;
     }
-    console.log(this.state);
+    console.log('switch:', this.state);
     
   }
 
@@ -104,18 +104,24 @@ export class Core {
      * 6/ end
      */
 
+     console.log('main:start');
+     
+
     this.findState();
     this.execFct();
     this.execSwitch();
     this.convHandle();
 
     if (!this._currentState.return) {
+     console.log('main:end-loop');
       return this.main(++loop);
     }
 
     if (this._currentState.context) {
       this._conv.contexts.set(this._currentState.context as string, 10);
     }
+
+     console.log('main:end');
 
     // await this._conv.session.save();
   }
