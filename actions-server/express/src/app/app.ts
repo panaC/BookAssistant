@@ -55,10 +55,10 @@ const init = (conv: DFConv) => {
 // save here all my service class
 // each call is push data fct into an array
 // allow multiple call
-app.middleware((conv: DFConv) => {
+app.middleware(async (conv: DFConv) => {
   // conv.utils = new UtilsService(conv);
   conv.session = new Session(conv.user.storage.id);
-  // await conv.session.waitInit;
+  await conv.session.waitInit;
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
   conv.core = new Core(conv);
