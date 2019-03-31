@@ -163,12 +163,33 @@ services:
     networks:
       - backnet
       - webnet
+  couchdb:
+    image: couchdb
+    ports:
+      - 5984:5984
+    environment:
+      COUCHDB_USER: 'actions'
+      COUCHDB_PASSWORD: '123qwe321'
+    volumes:
+      - couchdb:/opt/couchdb/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "1"
+          memory: "2048M"
+      restart_policy:
+        condition: any
+    networks:
+      - actionsnet
 networks:
   webnet:
   backnet:
+  actionsnet:
 volumes:
   certbot:
   audiobook:
   php:
   mongo:
   es:
+  couchdb:
