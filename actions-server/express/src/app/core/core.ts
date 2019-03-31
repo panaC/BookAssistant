@@ -36,10 +36,17 @@ export class Core {
   private findState(): void {
     let path = this.state;
     path = path.replace(/\./gi, '.children.');
+    if (path === '') {
+      path = 'start';
+    }
 
     console.log('path:', path);
     
-    this._currentState = eval(`this._state.${path}`) || this._state.error;
+    try {
+      this._currentState = eval(`this._state.${path}`) || this._state.error;
+    } catch {
+      this._currentState = this._state.error;
+    }
     console.log('currentState:', this._currentState);
     
   }
