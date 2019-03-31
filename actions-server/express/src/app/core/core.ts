@@ -92,7 +92,7 @@ export class Core {
       return;
     }
 
-    await this._conv.session.waitInit;
+    //await this._conv.session.waitInit;
 
     /*
      * 1/ found in graph the stateName
