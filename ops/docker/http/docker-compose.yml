@@ -163,6 +163,7 @@ services:
         condition: any
     networks:
       - backnet
+      - actionsnet
       - webnet
   couchdb:
     image: couchdb
