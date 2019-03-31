@@ -9,18 +9,20 @@ sudo apt-get install ufw -y
 # Par défaut, on refuse tout.
 sudo ufw default deny
 # Puis, nous autorisons le trafic sortant
-sudo ufw default allow outgoing
+# sudo ufw default allow outgoing
+
+# by default docker bypass ufw
 
 # ssh 22
-sudo ufw allow 22/tcp
+# sudo ufw allow 22/tcp
 # https 443
-sudo ufw allow 443/tcp
+# sudo ufw allow 443/tcp
 # http 80
-sudo ufw allow 80/tcp
+# sudo ufw allow 80/tcp
 # ftp 21
-sudo ufw allow 21/tcp
+# sudo ufw allow 21/tcp
 # if http_visualizer
-sudo ufw allow 8080/tcp
+# sudo ufw allow 8080/tcp
 
 # enable firewall
 sudo ufw enable
