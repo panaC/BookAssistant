@@ -30,11 +30,11 @@ import { Core } from './core/core';
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   //utils: UtilsService;
-  //session: Session;
+  session: Session;
   //media: MediaService;
   //ref: RefService;
   core: Core;
-  init: (conv: DFConv) => string;
+  // init: (conv: DFConv) => string;
 }
 
 // Create an app instance
@@ -57,12 +57,12 @@ const init = (conv: DFConv) => {
 // allow multiple call
 app.middleware((conv: DFConv) => {
   // conv.utils = new UtilsService(conv);
-  // conv.session = new Session(conv.user.storage.id);
+  conv.session = new Session(conv.user.storage.id);
   // await conv.session.waitInit;
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
   conv.core = new Core(conv);
-  init(conv);
+  // init(conv);
 });
 
-app.intent(intentName, (conv: DFConv) => conv.core.main());
+app.intent(intentName, async (conv: DFConv) => await conv.core.main());

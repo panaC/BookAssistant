@@ -26,11 +26,11 @@ export class Core {
   }
 
   set state(state: string) {
-    this._conv.data.state = state;
+    this._conv.session.state.state = state;
   }
 
   get state() {
-    return this._conv.data.state;
+    return this._conv.session.state.state;
   }
 
   private findState(): void {
@@ -125,6 +125,6 @@ export class Core {
 
      console.log('main:end');
 
-    // await this._conv.session.save();
+    await this._conv.session.save();
   }
 }
