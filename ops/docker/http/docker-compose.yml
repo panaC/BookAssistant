@@ -151,6 +151,7 @@ services:
     environment:
       PORT_ACTIONS_SERVER: 4000
       OPDS_SERVER_URL: 'http://opds-server:3000/webpub'
+      COUCHDB_URL: 'http://couchdb:5984'
       NODE_ENV: 'development'
     deploy:
       replicas: 1
