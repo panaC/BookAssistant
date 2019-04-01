@@ -22,7 +22,7 @@ import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
 import { intentName } from './intent/intent';
 import { Session } from './database/session';
-import { Core } from './core/core';
+import { Core, setLocale } from './core/core';
 
 const generateUUID = () => 
   Math.random().toString(36).substring(2, 15) + '-' +
@@ -70,6 +70,7 @@ app.middleware(async (conv: DFConv) => {
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
   conv.core = new Core(conv);
+  setLocale(conv.user.locale);
 });
 
 // extract intentName from state.ts

@@ -20,7 +20,7 @@ export const state: Istate = {
       default: 'start.choice',
     },
     conv: {
-      ask: 'veux-tu ton age ou ton nom ?'
+      ask: 'welcome.home'
     },
     return: true,
     children: {

@@ -15,6 +15,24 @@ import { Istate, IstateName } from "../interface/state.interface";
 import { state } from "../state/state";
 import { DFConv } from './../app';
 import { MAE_LOOP_MAX } from './../../constants';
+import i18n from 'i18n';
+import { join } from 'path';
+
+i18n.configure({
+  directory: join(__dirname, '/locales'),
+  objectNotation: true,
+  fallbacks: {
+    'fr-FR': 'fr',
+    'fr-CA': 'fr',
+    'en-US': 'en',
+    'en-GB': 'en',
+  },
+  defaultLocale: 'fr',
+});
+
+export const translate = (str: string): string => i18n.__(str);
+
+export const setLocale = (local: string) => { i18n.setLocale(local); };
 
 export class Core {
 
@@ -23,6 +41,7 @@ export class Core {
   private _currentResult: string = '';
 
   constructor(public _conv: DFConv) {
+
   }
 
   set state(state: string) {
@@ -84,10 +103,10 @@ export class Core {
     const conv = this._currentState.conv;
     if (conv) {
       if (conv.ask) {
-        this._conv.ask(conv.ask as string);
+        this._conv.ask(translate(conv.ask as string));
       }
       if (conv.close) {
-        this._conv.close(conv.close);
+        this._conv.close(translate(conv.close));
         await this._conv.session.close();
       }
     }
