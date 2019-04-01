@@ -19,7 +19,7 @@ import i18n from 'i18n';
 import { join } from 'path';
 
 i18n.configure({
-  directory: join(__dirname, '/locales'),
+  directory: join(__dirname, '../../locales'),
   objectNotation: true,
   fallbacks: {
     'fr-FR': 'fr',
