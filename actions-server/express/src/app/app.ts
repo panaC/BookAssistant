@@ -22,8 +22,15 @@ import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
 import { intentName } from './intent/intent';
 import { Session } from './database/session';
-
 import { Core } from './core/core';
+
+const generateUUID = () => 
+  Math.random().toString(36).substring(2, 15) + '-' +
+  Math.random().toString(36).substring(2, 15) + '-' +
+  Math.random().toString(36).substring(2, 15) + '-' +
+  Math.random().toString(36).substring(2, 15) + '-' +
+  Math.random().toString(36).substring(2, 15) + '-' +
+  Math.random().toString(36).substring(2, 15);
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   //utils: UtilsService;
@@ -46,7 +53,13 @@ export const app = dialogflow({
 // allow multiple call
 app.middleware(async (conv: DFConv) => {
   // conv.utils = new UtilsService(conv);
-  conv.session = new Session(conv.user.id, conv.id);
+  if (!conv.user.storage.userId) {
+    conv.user.storage.userId = generateUUID();
+  }
+  if (!conv.data.sessionId) {
+    conv.data.sessionId = generateUUID();
+  }
+  conv.session = new Session(conv.user.storage.userId, conv.data.sessionId);
   await conv.session.waitInit;
   // conv.user.storage.id = conv.session.id;
   // conv.media = new MediaService(conv);

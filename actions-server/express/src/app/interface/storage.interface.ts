@@ -28,7 +28,7 @@ export interface IsessionStorage {
 */
 
 export interface IsessionStorage {
-  // empty
+  sessionId: string;
 }
 
 /*
@@ -50,10 +50,9 @@ export interface IplayingMedia {
 */
 
 //
-// Save only userId generate by couchdb to get back user information
+// Save only userId for couchdb to get back user information
 export interface IuserStorage {
-  // empty
-  // id: string;
+  userId: string;
 }
 
 /*
