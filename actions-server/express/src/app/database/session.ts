@@ -11,7 +11,7 @@ export class Session implements Isession {
   
   private _db: Nano.DocumentScope<Isession>;
   private _wait: Promise<void>;
-  private _convId: string;
+  private _stateId: string;
 
   user: Iuser;
   state: {
@@ -19,29 +19,29 @@ export class Session implements Isession {
   };
   historic: Ihistoric[];
 
-  constructor(userId: string, convId: string, locale: string) {
+  constructor(userId: string, stateId: string, locale: string) {
     this._id = userId;
     this._rev = undefined;
-    this._convId = convId;
+    this._stateId = stateId;
 
     const n = Nano(DB_URL);
     this._db = n.db.use<Isession>(DB_NAME);
 
     this.user = {
       lastseen: new Date(),
-      sessionCount: 0,
+      sessionCount: 1,
       locale, 
     };
     this.state = {};
-    this.state[convId] = this.initState();
+    this.state[stateId] = this.initState();
     this.historic = [];
 
     this._wait = new Promise<void>((resolve, reject) => {
       this.get()
       .then(() => {
-        if (!this.state[this._convId]) {
+        if (!this.state[stateId]) {
           ++this.user.sessionCount;
-          this.state[convId] = this.initState();
+          this.state[stateId] = this.initState();
           this.save().then(() => resolve()).catch((e) => reject(e));
         } else {
           resolve();
@@ -80,8 +80,23 @@ export class Session implements Isession {
     const data = Object.assign({}, this);
     data._db = undefined;
     data._wait = undefined;
-    data._convId = undefined;
+    data._stateId = undefined;
     return data;
+  }
+
+  public async wipeState() {
+    const delta = (d1: Date, d2: Date) => 
+      Math.abs((d1.getTime() - d2.getTime()) / 1000)
+
+    // remove old state
+    // the state must have at least 7 days to be removed
+    for (const state in this.state) {
+      if (this.state.hasOwnProperty(state) && state !== this._stateId) {
+        if (delta(this.state[state].lastSeen, new Date(Date.now())) > 60 * 60 * 24 * 7) {
+          this.state[state].lastSeen = undefined;
+        }
+      }
+    }
   }
 
   public async save() {
@@ -90,7 +105,7 @@ export class Session implements Isession {
   }
 
   public async close() {
-    this.state[this._convId] = undefined;
+    this.state[this._stateId] = undefined;
   }
   
   public async del() {

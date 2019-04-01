@@ -58,12 +58,15 @@ app.middleware(async (conv: DFConv) => {
   }
   if (!conv.data.sessionId) {
     conv.data.sessionId = generateUUID();
+    await conv.session.wipeState();
   }
   conv.session = new Session(
       conv.user.storage.userId
     , conv.data.sessionId
     , conv.user.locale);
   await conv.session.waitInit;
+  // erase all state that don't belong to sessionId
+  // use this for apply memory session in actual session, for the next feature
   // conv.user.storage.id = conv.session.id;
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
