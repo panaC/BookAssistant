@@ -93,7 +93,7 @@ export class Session implements Isession {
     // the state must have at least 7 days to be removed
     for (const state in this.state) {
       if (this.state.hasOwnProperty(state) && state !== this._stateId) {
-        if (delta(this.state[state].lastSeen, new Date(Date.now())) > 60 * 60 * 24 * 7) {
+        if (delta(new Date(this.state[state].lastSeen), new Date(Date.now())) > 60 * 60 * 24 * 7) {
           this.state[state].lastSeen = undefined;
         }
       }
