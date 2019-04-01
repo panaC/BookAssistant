@@ -59,7 +59,10 @@ app.middleware(async (conv: DFConv) => {
   if (!conv.data.sessionId) {
     conv.data.sessionId = generateUUID();
   }
-  conv.session = new Session(conv.user.storage.userId, conv.data.sessionId);
+  conv.session = new Session(
+      conv.user.storage.userId
+    , conv.data.sessionId
+    , conv.user.locale);
   await conv.session.waitInit;
   // conv.user.storage.id = conv.session.id;
   // conv.media = new MediaService(conv);

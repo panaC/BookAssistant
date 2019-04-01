@@ -19,7 +19,7 @@ export class Session implements Isession {
   };
   historic: Ihistoric[];
 
-  constructor(userId: string, convId: string) {
+  constructor(userId: string, convId: string, locale: string) {
     this._id = userId;
     this._rev = undefined;
     this._convId = convId;
@@ -30,6 +30,7 @@ export class Session implements Isession {
     this.user = {
       lastseen: new Date(),
       sessionCount: 0,
+      locale, 
     };
     this.state = {};
     this.state[convId] = this.initState();
