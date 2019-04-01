@@ -29,6 +29,7 @@ export class Session implements Isession {
 
     this.user = {
       lastseen: new Date(),
+      sessionCount: 0,
     };
     this.state = {};
     this.state[convId] = this.initState();
@@ -38,6 +39,7 @@ export class Session implements Isession {
       this.get()
       .then(() => {
         if (!this.state[this._convId]) {
+          ++this.user.sessionCount;
           this.state[convId] = this.initState();
           this.save().then(() => resolve()).catch((e) => reject(e));
         } else {
