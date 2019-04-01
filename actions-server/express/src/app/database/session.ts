@@ -11,14 +11,18 @@ export class Session implements Isession {
   
   private _db: Nano.DocumentScope<Isession>;
   private _wait: Promise<void>;
+  private _convId: string;
 
   user: Iuser;
-  state: Istate;
+  state: {
+    [id: string]: Istate;
+  };
   historic: Ihistoric[];
 
-  constructor(id: string = undefined) {
-    this._id = id;
+  constructor(userId: string, convId: string) {
+    this._id = userId;
     this._rev = undefined;
+    this._convId = convId;
 
     const n = Nano(DB_URL);
     this._db = n.db.use<Isession>(DB_NAME);
@@ -26,7 +30,8 @@ export class Session implements Isession {
     this.user = {
       lastseen: new Date(),
     };
-    this.state = {
+    this.state[convId] = {
+      lastSeen: new Date(),
       chapterToPlay: 0,
       state: 'start',
       currentPlayingMedia: null,
@@ -36,11 +41,11 @@ export class Session implements Isession {
     this.historic = [];
 
     this._wait = new Promise<void>((resolve, reject) => {
-      if (this._id) {
-        this.get().then(() => resolve()).catch((e) => reject(e));
-      } else {
-        this.save().then(() => resolve()).catch((e) => reject(e));
-      }
+      this.get()
+      .then(() => 
+        this.save().then(() => resolve()).catch((e) => reject(e)))
+      .catch((e) =>
+        this.save().then(() => resolve()).catch((e) => reject(e)));
     });
   }
 
@@ -48,31 +53,30 @@ export class Session implements Isession {
     if (response.ok === true) {
       this._id = response.id
       this._rev = response.rev
+    } else {
+      throw new Error('Nano save response');
     }
   }
 
   private async get() {
-    try {
       Object.assign(this, await this._db.get(this._id));
-    } catch(e) {
-      console.error(e);
-    }
   }
 
   get data() {
     const data = Object.assign({}, this);
     data._db = undefined;
     data._wait = undefined;
+    data._convId = undefined;
     return data;
   }
 
   public async save() {
-    try {
       const response = await this._db.insert(this.data);
       this.processAPIResponse(response);
-    } catch(e) {
-      console.error(e);
-    }
+  }
+
+  public async close() {
+    this.state[this._convId] = undefined;
   }
   
   public async del() {

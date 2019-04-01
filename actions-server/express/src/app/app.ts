@@ -57,9 +57,9 @@ const init = (conv: DFConv) => {
 // allow multiple call
 app.middleware(async (conv: DFConv) => {
   // conv.utils = new UtilsService(conv);
-  conv.session = new Session(conv.user.storage.id);
+  conv.session = new Session(conv.user.id, conv.id);
   await conv.session.waitInit;
-  conv.user.storage.id = conv.session.id;
+  // conv.user.storage.id = conv.session.id;
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
   conv.core = new Core(conv);

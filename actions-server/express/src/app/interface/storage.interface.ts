@@ -11,8 +11,6 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Eaudiobook } from '../database/interface/session.interface';
-
 /*
 ** RM session storage replace by couchdb
 export interface IsessionStorage {
@@ -31,10 +29,10 @@ export interface IsessionStorage {
 
 export interface IsessionStorage {
   // empty
-  // tmp for test only
-  state: string;
 }
 
+/*
+// declare in session.interface.ts
 export interface IplayingMedia {
   state: Eaudiobook;
   name?: string;
@@ -49,11 +47,13 @@ export interface IplayingMedia {
   chapter?: number;
   numberOfChapter?: number;
 }
+*/
 
 //
 // Save only userId generate by couchdb to get back user information
 export interface IuserStorage {
-  id: string;
+  // empty
+  // id: string;
 }
 
 /*

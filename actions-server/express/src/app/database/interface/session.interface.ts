@@ -28,6 +28,7 @@ export interface IplayingMedia {
 }
 
 export interface Istate {
+  lastSeen: Date;
   state: string;
   currentPlayingMedia: IplayingMedia;
   chapterToPlay: number;
@@ -60,6 +61,8 @@ export interface Iuser {
 
 export interface Isession extends Nano.MaybeDocument {
   user: Iuser;
-  state: Istate;
+  state: {
+    [id: string]: Istate;
+  }
   historic: Ihistoric[];
 }
