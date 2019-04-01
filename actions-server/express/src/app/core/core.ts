@@ -26,11 +26,11 @@ export class Core {
   }
 
   set state(state: string) {
-    this._conv.session.state.state = state;
+    this._conv.session.state[this._conv.id].state = state;
   }
 
   get state() {
-    return this._conv.session.state.state;
+    return this._conv.session.state[this._conv.id].state;
   }
 
   private findState(): void {
