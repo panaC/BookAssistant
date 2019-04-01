@@ -42,6 +42,7 @@ export class Session implements Isession {
         if (!this.state[stateId]) {
           ++this.user.sessionCount;
           this.state[stateId] = this.initState();
+          this.wipeState();
           this.save().then(() => resolve()).catch((e) => reject(e));
         } else {
           resolve();

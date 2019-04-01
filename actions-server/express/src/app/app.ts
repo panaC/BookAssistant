@@ -58,7 +58,6 @@ app.middleware(async (conv: DFConv) => {
   }
   if (!conv.data.sessionId) {
     conv.data.sessionId = generateUUID();
-    await conv.session.wipeState();
   }
   conv.session = new Session(
       conv.user.storage.userId
