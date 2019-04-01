@@ -72,4 +72,7 @@ app.middleware(async (conv: DFConv) => {
   conv.core = new Core(conv);
 });
 
+// extract intentName from state.ts
+// futur feature
+// must be specified in json
 app.intent(intentName, async (conv: DFConv) => await conv.core.main());

@@ -33,5 +33,6 @@ export const intentName = [
   'start.age',
   'start.name',
   'fallback',
-  'no_input'
+  'no_input',
+  'cancel'
 ]
