@@ -85,7 +85,7 @@ export class Session implements Isession {
     return data;
   }
 
-  public async wipeState() {
+  public wipeState() {
     const delta = (d1: Date, d2: Date) => 
       Math.abs((d1.getTime() - d2.getTime()) / 1000)
 
