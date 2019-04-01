@@ -42,14 +42,6 @@ export const app = dialogflow({
   /*debug: true,*/
 });
 
-const init = (conv: DFConv) => {
-  if (!conv.data.state) {
-    conv.data.state = 'start';
-    console.log('INIT', conv.data.state);
-  }
-  return '';
-}
-
 // src in actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
 // app.middleware is call at each new request
 // save here all my service class
@@ -63,7 +55,6 @@ app.middleware(async (conv: DFConv) => {
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
   conv.core = new Core(conv);
-  // init(conv);
 });
 
 app.intent(intentName, async (conv: DFConv) => await conv.core.main());
