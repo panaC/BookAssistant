@@ -50,6 +50,15 @@ export const state: Istate = {
       }
     }
   },
+  cancel: {
+    return: true,
+    switch: {
+      default: ''
+    },
+    conv: {
+      close: 'Au revoir'
+    }
+  },
   fallback: {
     return: true,
     switch: {
