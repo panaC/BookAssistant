@@ -22,9 +22,6 @@ import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from './interface/storage.interface';
 import { intentName } from './intent/intent';
 import { Session } from './database/session';
-import { MediaService } from './service/media.service';
-import { UtilsService } from './service/utils.service';
-import { RefService } from './service/ref.service';
 
 import { Core } from './core/core';
 
