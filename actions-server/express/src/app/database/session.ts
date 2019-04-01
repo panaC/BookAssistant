@@ -30,22 +30,32 @@ export class Session implements Isession {
     this.user = {
       lastseen: new Date(),
     };
-    this.state[convId] = {
+    this.state[convId] = this.initState();
+    this.historic = [];
+
+    this._wait = new Promise<void>((resolve, reject) => {
+      this.get()
+      .then(() => {
+        if (this.state[this._convId]) {
+          this.state[convId] = this.initState();
+          this.save().then(() => resolve()).catch((e) => reject(e));
+        } else {
+          resolve();
+        }
+      })
+      .catch((e) =>
+        this.save().then(() => resolve()).catch((e) => reject(e)));
+    });
+  }
+
+  private initState(): Istate {
+    return ({
       lastSeen: new Date(),
       chapterToPlay: 0,
       state: 'start',
       currentPlayingMedia: null,
       choice: null,
       yes_no: null,
-    };
-    this.historic = [];
-
-    this._wait = new Promise<void>((resolve, reject) => {
-      this.get()
-      .then(() => 
-        this.save().then(() => resolve()).catch((e) => reject(e)))
-      .catch((e) =>
-        this.save().then(() => resolve()).catch((e) => reject(e)));
     });
   }
 
@@ -100,7 +110,7 @@ export class Session implements Isession {
 if (typeof require !== 'undefined' && require.main === module) {
   ( async () => {
 
-    let session = new Session();
+    let session = new Session('userId', 'sessionId');
     await session.waitInit;
     
     session.user = {
@@ -109,7 +119,7 @@ if (typeof require !== 'undefined' && require.main === module) {
     };
     await session.save();
 
-    let session2 = new Session(session.id);
+    let session2 = new Session('userId', 'sessionId');
     await session2.waitInit;
 
     //await session.del();
