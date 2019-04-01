@@ -30,6 +30,7 @@ export class Session implements Isession {
     this.user = {
       lastseen: new Date(),
     };
+    this.state = {};
     this.state[convId] = this.initState();
     this.historic = [];
 
