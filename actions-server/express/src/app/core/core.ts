@@ -52,7 +52,7 @@ export class Core {
     return this._conv.session.state[this._conv.data.sessionId].state;
   }
 
-  private async findState(): Promise<void> {
+  private findState(): void {
     let path = this.state;
     path = path.replace(/\./gi, '.children.');
     if (path === '') {
@@ -88,7 +88,7 @@ export class Core {
     
   }
 
-  private async execSwitch(): Promise<void> {
+  private execSwitch(): void {
     if (this._currentState.switch[this._currentResult]) {
       this.state = this._currentState.switch[this._currentResult] as string;
     } else {
@@ -98,7 +98,7 @@ export class Core {
     
   }
 
-  private async convHandle(): Promise<void> {
+  private convHandle(): void {
     // handle all conv object in state
     const conv = this._currentState.conv;
     if (conv) {
@@ -107,7 +107,7 @@ export class Core {
       }
       if (conv.close) {
         this._conv.close(translate(conv.close));
-        await this._conv.session.close();
+        this._conv.session.close();
       }
     }
   }
@@ -136,10 +136,10 @@ export class Core {
      console.log('main:start');
      
 
-    await this.findState();
+    this.findState();
     await this.execFct();
-    await this.execSwitch();
-    await this.convHandle();
+    this.execSwitch();
+    this.convHandle();
 
     if (!this._currentState.return) {
      console.log('main:end-loop');
