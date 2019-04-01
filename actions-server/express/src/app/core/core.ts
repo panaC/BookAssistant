@@ -33,7 +33,7 @@ export class Core {
     return this._conv.session.state[this._conv.id].state;
   }
 
-  private findState(): void {
+  private async findState(): Promise<void> {
     let path = this.state;
     path = path.replace(/\./gi, '.children.');
     if (path === '') {
@@ -51,7 +51,7 @@ export class Core {
     
   }
 
-  private async execFct() {
+  private async execFct(): Promise<void> {
     if (this._currentState.fct) {
       // https://stackoverflow.com/questions/49525389/element-implicitly-has-an-any-type-because-type-0-has-no-index-signature
       const tmp = eval(`this._conv.${this._currentState.fct}`);
@@ -69,7 +69,7 @@ export class Core {
     
   }
 
-  private execSwitch(): void {
+  private async execSwitch(): Promise<void> {
     if (this._currentState.switch[this._currentResult]) {
       this.state = this._currentState.switch[this._currentResult] as string;
     } else {
@@ -79,7 +79,7 @@ export class Core {
     
   }
 
-  private convHandle(): void {
+  private async convHandle(): Promise<void> {
     // handle all conv object in state
     const conv = this._currentState.conv;
     if (conv) {
@@ -88,6 +88,7 @@ export class Core {
       }
       if (conv.close) {
         this._conv.close(conv.close);
+        await this._conv.session.close();
       }
     }
   }
@@ -116,10 +117,10 @@ export class Core {
      console.log('main:start');
      
 
-    this.findState();
-    this.execFct();
-    this.execSwitch();
-    this.convHandle();
+    await this.findState();
+    await this.execFct();
+    await this.execSwitch();
+    await this.convHandle();
 
     if (!this._currentState.return) {
      console.log('main:end-loop');
