@@ -114,7 +114,7 @@ export class Session implements Isession {
 if (typeof require !== 'undefined' && require.main === module) {
   ( async () => {
 
-    let session = new Session('userId', 'sessionId');
+    let session = new Session('userId', 'sessionId', 'fr');
     await session.waitInit;
     
     session.user = {
@@ -123,7 +123,7 @@ if (typeof require !== 'undefined' && require.main === module) {
     };
     await session.save();
 
-    let session2 = new Session('userId', 'sessionId');
+    let session2 = new Session('userId', 'sessionId', 'fr');
     await session2.waitInit;
 
     //await session.del();
