@@ -29,6 +29,7 @@ export const state: Istate = {
         switch: {
           'start.name': 'start.name',
           'start.age': 'start.age',
+          'cancel': 'cancel',
           default: 'fallback',
         }
       },
