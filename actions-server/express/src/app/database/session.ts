@@ -37,7 +37,7 @@ export class Session implements Isession {
     this._wait = new Promise<void>((resolve, reject) => {
       this.get()
       .then(() => {
-        if (this.state[this._convId]) {
+        if (!this.state[this._convId]) {
           this.state[convId] = this.initState();
           this.save().then(() => resolve()).catch((e) => reject(e));
         } else {
