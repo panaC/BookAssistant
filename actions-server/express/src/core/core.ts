@@ -20,7 +20,7 @@ import { join } from 'path';
 import { debug } from './../utils/debug';
 
 i18n.configure({
-  directory: join(__dirname, '../../locales'),
+  directory: join(__dirname, '../locales'),
   objectNotation: true,
   fallbacks: {
     'fr-FR': 'fr',
