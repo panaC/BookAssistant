@@ -23,7 +23,7 @@ import { IsessionStorage, IuserStorage } from '../interface/storage.interface';
 import { Session } from './database/session';
 import { Core, setLocale } from '../core/core';
 
-const generateUUID = () => 
+const generateUUID = () =>
   Math.random().toString(36).substring(2, 15) + '-' +
   Math.random().toString(36).substring(2, 15) + '-' +
   Math.random().toString(36).substring(2, 15) + '-' +
@@ -32,10 +32,10 @@ const generateUUID = () =>
   Math.random().toString(36).substring(2, 15);
 
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
-  //utils: UtilsService;
+  // utils: UtilsService;
   session: Session;
-  //media: MediaService;
-  //ref: RefService;
+  // media: MediaService;
+  // ref: RefService;
   core: Core;
   // init: (conv: DFConv) => string;
 }
@@ -78,8 +78,8 @@ const intentName = [
   'start.name',
   'fallback',
   'no_input',
-  'cancel'
-]
+  'cancel',
+];
 
 // extract intentName from state.ts
 // futur feature

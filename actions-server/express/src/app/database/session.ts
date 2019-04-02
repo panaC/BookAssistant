@@ -30,7 +30,7 @@ export class Session implements Isession {
     this.user = {
       lastseen: new Date(),
       sessionCount: 1,
-      locale, 
+      locale,
     };
     this.state = {};
     this.state[stateId] = this.initState();
@@ -86,8 +86,8 @@ export class Session implements Isession {
   }
 
   public wipeState() {
-    const delta = (d1: Date, d2: Date) => 
-      Math.abs((d1.getTime() - d2.getTime()) / 1000)
+    const delta = (d1: Date, d2: Date) =>
+      Math.abs((d1.getTime() - d2.getTime()) / 1000);
 
     // remove old state
     // the state must have at least 7 days to be removed
@@ -108,13 +108,9 @@ export class Session implements Isession {
   public async close() {
     this.state[this._stateId] = undefined;
   }
-  
+
   public async del() {
-    try {
-      await this._db.destroy(this._id, this._rev);
-    } catch(e) {
-      console.error(e);
-    }
+    await this._db.destroy(this._id, this._rev);
   }
 
   get id() {
