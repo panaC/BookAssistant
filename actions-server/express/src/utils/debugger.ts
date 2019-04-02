@@ -147,13 +147,13 @@ export class Debugger implements Console {
         });
     }
 
-    protected doIfEnabled(action: () => void): any {
+    private doIfEnabled(action: () => void): any {
         if (this.isEnabled) {
             return action();
         }
     }
 
-    protected addPrefix(message: any): any {
+    private addPrefix(message: any): any {
         if (this.prefix && (typeof message === 'string' || !message)) {
             return `${new Date(Date.now()).toLocaleString()} ${this.prefix} ${message}`;
         }
