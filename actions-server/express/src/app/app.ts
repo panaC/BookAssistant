@@ -19,10 +19,9 @@
   */
 
 import { dialogflow, DialogflowConversation } from 'actions-on-google';
-import { IsessionStorage, IuserStorage } from './interface/storage.interface';
-import { intentName } from './intent/intent';
+import { IsessionStorage, IuserStorage } from '../interface/storage.interface';
 import { Session } from './database/session';
-import { Core, setLocale } from './core/core';
+import { Core, setLocale } from '../core/core';
 
 const generateUUID = () => 
   Math.random().toString(36).substring(2, 15) + '-' +
@@ -72,6 +71,15 @@ app.middleware(async (conv: DFConv) => {
   conv.core = new Core(conv);
   setLocale(conv.user.locale);
 });
+
+const intentName = [
+  'start',
+  'start.age',
+  'start.name',
+  'fallback',
+  'no_input',
+  'cancel'
+]
 
 // extract intentName from state.ts
 // futur feature

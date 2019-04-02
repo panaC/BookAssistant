@@ -12,7 +12,7 @@
  */
 
 import { Estate } from './../state';
-import { DFConv } from './../../app';
+import { DFConv } from '../../app';
 
  export interface Imae {
    (conv: DFConv): void;

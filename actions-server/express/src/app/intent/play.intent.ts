@@ -1,5 +1,5 @@
 import { getMedia, Eaudiobook, getMediaReference } from './../service/audiobook.service';
-import { DFConv } from './../app';
+import { DFConv } from '../app';
 import { prompts, translate } from './../prompt';
 
 // play intent with output play_audiobook-follow

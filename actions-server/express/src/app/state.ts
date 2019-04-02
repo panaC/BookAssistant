@@ -11,7 +11,7 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Istate } from './../interface/state.interface';
+import { Istate } from '../interface/state.interface';
 
 export const state: Istate = {
   start: {
@@ -20,7 +20,7 @@ export const state: Istate = {
       default: 'start.choice',
     },
     conv: {
-      ask: 'welcome.home'
+      ask: 'welcome.home',
     },
     return: true,
     children: {
@@ -30,8 +30,8 @@ export const state: Istate = {
           'start.name': 'start.name',
           'start.age': 'start.age',
           'cancel': 'cancel',
-          default: 'fallback',
-        }
+          'default': 'fallback',
+        },
       },
       name: {
         switch: {
@@ -39,7 +39,7 @@ export const state: Istate = {
         },
         conv: {
           ask: 'ton nom est pierre',
-        }
+        },
       },
       age: {
         switch: {
@@ -47,18 +47,18 @@ export const state: Istate = {
         },
         conv: {
           ask: 'ton age est 24 ans',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   cancel: {
     return: true,
     switch: {
-      default: ''
+      default: '',
     },
     conv: {
-      close: 'Au revoir'
-    }
+      close: 'Au revoir',
+    },
   },
   fallback: {
     return: true,
@@ -66,22 +66,22 @@ export const state: Istate = {
       default: '',
     },
     conv: {
-      close: 'pas compris'
-    }
+      close: 'pas compris',
+    },
   },
   no_input: {
     return: true,
     switch: {
-      default: ''
-    }
+      default: '',
+    },
   },
   error: {
     return: true,
     switch: {
-      default: ''
+      default: '',
     },
     conv: {
       close: 'Oups, erreur logiciel',
-    }
-  }
-}
+    },
+  },
+};

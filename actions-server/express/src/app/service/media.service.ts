@@ -16,7 +16,7 @@ import Axios from 'axios';
 import { ILinks } from '../../../../../opds-server/src/webpub/interfaces/links.interface';
 import { IWebpub } from '../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 import { Eaudiobook } from '../database/interface/session.interface';
-import { IplayingMedia } from './../database/interface/session.interface';
+import { IplayingMedia } from '../database/interface/session.interface';
 import { DFConv } from '../app';
 
 export const getState = (state: Eaudiobook) => {

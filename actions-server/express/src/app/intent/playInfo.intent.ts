@@ -1,4 +1,4 @@
-import { DFConv } from './../app';
+import { DFConv } from '../app';
 import { prompts } from '../prompt';
 
 export const numberOfChapter = (conv: DFConv) => {

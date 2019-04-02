@@ -11,12 +11,13 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Istate, IstateName } from "../interface/state.interface";
-import { state } from "../state/state";
-import { DFConv } from './../app';
-import { MAE_LOOP_MAX } from './../../constants';
+import { Istate, IstateName } from '../interface/state.interface';
+import { state } from '../app/state';
+import { DFConv } from '../app/app';
+import { MAE_LOOP_MAX } from './../constants';
 import i18n from 'i18n';
 import { join } from 'path';
+import { debug } from './../utils/debug';
 
 i18n.configure({
   directory: join(__dirname, '../../locales'),
@@ -44,8 +45,8 @@ export class Core {
 
   }
 
-  set state(state: string) {
-    this._conv.session.state[this._conv.data.sessionId].state = state;
+  set state(s: string) {
+    this._conv.session.state[this._conv.data.sessionId].state = s;
   }
 
   get state() {
@@ -59,23 +60,22 @@ export class Core {
       path = 'start';
     }
 
-    console.log('path:', path);
-    
+    debug.core('path:', path);
+
     try {
       this._currentState = eval(`this._state.${path}`) || this._state.error;
     } catch {
       this._currentState = this._state.error;
     }
-    console.log('currentState:', this._currentState);
-    
+    debug.core('currentState:', this._currentState);
+
   }
 
   private async execFct(): Promise<void> {
     if (this._currentState.fct) {
       // https://stackoverflow.com/questions/49525389/element-implicitly-has-an-any-type-because-type-0-has-no-index-signature
       const tmp = eval(`this._conv.${this._currentState.fct}`);
-      console.log('tmp:', tmp);
-      
+      debug.core('tmp:', tmp);
       this._currentResult = '';
       if (typeof tmp === 'function') {
         // handle if function is async
@@ -84,8 +84,7 @@ export class Core {
         this._currentResult = tmp;
       }
     }
-    console.log('exect-fct res:', this._currentResult);
-    
+    debug.core('exect-fct res:', this._currentResult);
   }
 
   private execSwitch(): void {
@@ -94,8 +93,7 @@ export class Core {
     } else {
       this.state = this._currentState.switch.default;
     }
-    console.log('switch:', this.state);
-    
+    debug.core('switch:', this.state);
   }
 
   private convHandle(): void {
@@ -119,7 +117,7 @@ export class Core {
       return;
     }
 
-    //await this._conv.session.waitInit;
+    // await this._conv.session.waitInit;
 
     /*
      * 1/ found in graph the stateName
@@ -133,8 +131,7 @@ export class Core {
      * 6/ end
      */
 
-     console.log('main:start');
-     
+    debug.core('main:start');
 
     this.findState();
     await this.execFct();
@@ -142,17 +139,16 @@ export class Core {
     this.convHandle();
 
     if (!this._currentState.return) {
-     console.log('main:end-loop');
+      debug.core('main:end-loop');
       return this.main(++loop);
     }
 
     if (this._currentState.context) {
-      console.log('context-set:', this._currentState.context);
-      
+      debug.core('context-set:', this._currentState.context);
       this._conv.contexts.set(this._currentState.context as string, 10);
     }
 
-     console.log('main:end');
+    debug.core('main:end');
 
     await this._conv.session.save();
   }

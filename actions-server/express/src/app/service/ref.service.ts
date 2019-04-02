@@ -16,7 +16,7 @@ import { REF } from './../../constants';
 import Axios from 'axios';
 import { ILinks } from './../../../../../opds-server/src/webpub/interfaces/links.interface';
 import { getState } from './media.service';
-import { Eaudiobook } from '../../database/interface/session.interface';
+import { Eaudiobook } from '../database/interface/session.interface';
 
 export const getChapterWithHref = (readingOrder: ILinks[], href: string) =>
   readingOrder.map((link) => link.href === href.split('#')[0]).findIndex((value) => value);

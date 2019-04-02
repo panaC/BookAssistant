@@ -1,4 +1,4 @@
-import { DFConv } from './../app';
+import { DFConv } from '../app';
 import { currentChapter, numberOfChapter, author } from './playInfo.intent';
 import { noInput, goodbye } from './default.intent';
 import { welcome } from './welcome.intent';
@@ -25,8 +25,6 @@ export const intent = {
   goodbye,
 };
 */
-
-export const intentNamePlayAudiobookIndex = 1;
 
 export const intentName = [
   'start',
