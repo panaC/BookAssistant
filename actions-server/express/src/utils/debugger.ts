@@ -10,9 +10,22 @@ export class Debugger implements Console {
         this.prefix = prefix;
     }
 
+    protected doIfEnabled(action: () => void): any {
+        if (this.isEnabled) {
+            return action();
+        }
+    }
+
+    protected addPrefix(message: any): any {
+        if (this.prefix && (typeof message === 'string' || !message)) {
+            return `${new Date(Date.now()).toLocaleString()} ${this.prefix} ${message}`;
+        }
+        return message;
+    }
+
     public get memory(): any {
-      // tslint:disable-next-line
-      return this.doIfEnabled(() => console.hasOwnProperty('memory') && console.memory);
+        // tslint:disable-next-line
+        return this.doIfEnabled(() => console.hasOwnProperty('memory') && console.memory);
     }
 
     public assert(value: any, message?: string, ...optionalParams: any[]): void;
@@ -147,17 +160,5 @@ export class Debugger implements Console {
         });
     }
 
-    private doIfEnabled(action: () => void): any {
-        if (this.isEnabled) {
-            return action();
-        }
-    }
-
-    private addPrefix(message: any): any {
-        if (this.prefix && (typeof message === 'string' || !message)) {
-            return `${new Date(Date.now()).toLocaleString()} ${this.prefix} ${message}`;
-        }
-        return message;
-    }
 
 }
