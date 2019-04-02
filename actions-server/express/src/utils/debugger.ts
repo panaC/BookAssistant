@@ -159,6 +159,4 @@ export class Debugger implements Console {
             throw error;
         });
     }
-
-
 }
