@@ -60,14 +60,14 @@ export class Core {
       path = 'start';
     }
 
-    debug.core('path:', path);
+    debug.core.log('path:', path);
 
     try {
       this._currentState = eval(`this._state.${path}`) || this._state.error;
     } catch {
       this._currentState = this._state.error;
     }
-    debug.core('currentState:', this._currentState);
+    debug.core.log('currentState:', this._currentState);
 
   }
 
@@ -75,7 +75,7 @@ export class Core {
     if (this._currentState.fct) {
       // https://stackoverflow.com/questions/49525389/element-implicitly-has-an-any-type-because-type-0-has-no-index-signature
       const tmp = eval(`this._conv.${this._currentState.fct}`);
-      debug.core('tmp:', tmp);
+      debug.core.log('tmp:', tmp);
       this._currentResult = '';
       if (typeof tmp === 'function') {
         // handle if function is async
@@ -84,7 +84,7 @@ export class Core {
         this._currentResult = tmp;
       }
     }
-    debug.core('exect-fct res:', this._currentResult);
+    debug.core.log('exect-fct res:', this._currentResult);
   }
 
   private execSwitch(): void {
@@ -93,7 +93,7 @@ export class Core {
     } else {
       this.state = this._currentState.switch.default;
     }
-    debug.core('switch:', this.state);
+    debug.core.log('switch:', this.state);
   }
 
   private convHandle(): void {
@@ -131,7 +131,7 @@ export class Core {
      * 6/ end
      */
 
-    debug.core('main:start');
+    debug.core.log('main:start');
 
     this.findState();
     await this.execFct();
@@ -139,16 +139,16 @@ export class Core {
     this.convHandle();
 
     if (!this._currentState.return) {
-      debug.core('main:end-loop');
+      debug.core.log('main:end-loop');
       return this.main(++loop);
     }
 
     if (this._currentState.context) {
-      debug.core('context-set:', this._currentState.context);
+      debug.core.log('context-set:', this._currentState.context);
       this._conv.contexts.set(this._currentState.context as string, 10);
     }
 
-    debug.core('main:end');
+    debug.core.log('main:end');
 
     await this._conv.session.save();
   }

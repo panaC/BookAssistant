@@ -16,7 +16,7 @@ import { Debugger } from './debugger';
 const isEnabled = process.env.NODE_ENV !== 'production';
 
 export const debug = {
-  core: (new Debugger(console, isEnabled, '[CORE]')).log,
-  service: (new Debugger(console, isEnabled, '[SERVICE]')).log,
-  app: (new Debugger(console, isEnabled, '[APP]')).log,
+  core: new Debugger(console, isEnabled, '[CORE]'),
+  service: new Debugger(console, isEnabled, '[SERVICE]'),
+  app: new Debugger(console, isEnabled, '[APP]'),
 };
