@@ -14,7 +14,7 @@ export class UserInfo extends Io<Iuser> implements Iuser {
   constructor(id: string, db: string) {
     super(id, db, 'user');
 
-    this.sessionCount = 0;
+    this.sessionCount = 1;
     this.session = [];
     this.data = {};
   }
