@@ -15,13 +15,13 @@ export interface IstateName {
   context?: string | string[];
 
   // declare var used
-  var?: Ivar;
+  // var?: Ivar;
 
   // http request requisite
-  http?: Ihttp | Ihttp[];
+  // http?: Ihttp | Ihttp[];
 
   // variable to compute
-  compute?: string | string[];
+  // compute?: string | string[];
 
   // handle multiple string for apply a map-reduce logic in fct -> return a concatenation string
   // accept in fct : variable name or function name, type test before execution
@@ -68,11 +68,9 @@ export interface Ihttp {
 
 export interface Ivar {
   [name: string]: {
-    // false by default
-    userInfo: boolean;
-    session: boolean;
+    // false by default for session else it's saved in userInfo
+    persistence: boolean;
     array: boolean;
-    type: string;
     init: string;
   };
 }
