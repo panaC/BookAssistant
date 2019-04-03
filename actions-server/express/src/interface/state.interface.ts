@@ -81,7 +81,7 @@ export interface IstateChildren {
 }
 
 export interface Istate {
-  [state: string]: IstateName;
+  start: IstateName;
   fallback: IstateName;
   no_input: IstateName;
   error: IstateName;
