@@ -34,8 +34,8 @@ export const state: Istate = {
       },
       listen: {
         fct: 'service.media.get',
-        switch: {``
-          default: 's',
+        switch: {
+          default: 'start',
         },
         conv: {
           ask: 'ton nom est pierre',
