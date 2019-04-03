@@ -58,8 +58,8 @@ export interface Istate {
 
 export interface IrawInput {
   date: Date;
+  state: string;
   query: string;
-  surfaceCapabilities?: Capabilities;
 }
 
 export interface Isession extends Nano.MaybeDocument {

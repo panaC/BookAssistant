@@ -109,6 +109,14 @@ export class Core {
     }
   }
 
+  private stat(): void {
+    this._conv.session.raw.push({
+      date: new Date(Date.now()),
+      state: this.state,
+      query: this._conv.query,
+    });
+  }
+
   public async main(loop: number = 0): Promise<void> {
 
     if (loop > MAE_LOOP_MAX) {
@@ -131,6 +139,8 @@ export class Core {
      */
 
     debug.core.log('main:start');
+
+    this.stat();
 
     this.findState();
     await this.execFct();
