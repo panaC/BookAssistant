@@ -150,5 +150,6 @@ export class Core {
     debug.core.log('main:end');
 
     await this._conv.session.save();
+    await this._conv.userInfo.save();
   }
 }
