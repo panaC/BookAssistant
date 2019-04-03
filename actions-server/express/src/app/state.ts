@@ -27,8 +27,8 @@ export const state: Istate = {
       choice: {
         fct: 'intent',
         switch: {
-          'play.name': 'play.listen',
-          'play.age': 'play.age',
+          'start.name': 'play.listen',
+          'start.age': 'play.age',
           'cancel': 'cancel',
           'default': 'fallback',
         },
