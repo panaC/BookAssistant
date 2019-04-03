@@ -14,10 +14,10 @@
 import { Istate } from '../interface/state.interface';
 
 export const state: Istate = {
-  start: {
-    context: 'start',
+  play: {
+    context: 'play',
     switch: {
-      default: 'start.choice',
+      default: 'play.choice',
     },
     conv: {
       ask: 'welcome.home',
@@ -27,15 +27,15 @@ export const state: Istate = {
       choice: {
         fct: 'intent',
         switch: {
-          'start.name': 'start.name',
-          'start.age': 'start.age',
+          'play.listen': 'play.listen',
           'cancel': 'cancel',
           'default': 'fallback',
         },
       },
-      name: {
-        switch: {
-          default: 'start',
+      listen: {
+        fct: 'service.media.get',
+        switch: {``
+          default: 's',
         },
         conv: {
           ask: 'ton nom est pierre',

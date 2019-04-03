@@ -1,6 +1,6 @@
-import { IWebpub } from "../../../../../../opds-server/src/webpub/interfaces/webpub.inteface";
-import { Capabilities } from "actions-on-google/dist/service/actionssdk";
-import * as Nano  from 'nano'
+import { IWebpub } from './../../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
+import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
+import * as Nano from 'nano';
 
 export enum Eaudiobook {
   ERROR_AXIOS = 'error.audiobook.network',
@@ -30,6 +30,11 @@ export interface IplayingMedia {
 export interface Istate {
   lastSeen: Date;
   state: string;
+  bookAvailable: [{
+    title: string,
+    author: string,
+    identifier: string,
+  }];
   currentPlayingMedia: IplayingMedia;
   chapterToPlay: number;
   choice?: number;
