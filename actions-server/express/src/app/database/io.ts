@@ -39,7 +39,7 @@ export abstract class Io<T> implements Nano.MaybeDocument {
   }
 
   public get json() {
-    const data: T = null;
+    const data: T = {} as T;
     Object.assign<T, this>(data, this);
     // Type T doesn't include _db
     // data._db = undefined;
