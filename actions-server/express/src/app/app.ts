@@ -65,7 +65,7 @@ app.middleware(async (conv: DFConv) => {
   conv.session = new Session(conv.data.sessionId, DB_URL);
   await conv.session.sync();
   Session.update(conv.session, conv);
-  conv.userInfo = new UserInfo(conv.data.sessionId, DB_URL);
+  conv.userInfo = new UserInfo(conv.user.storage.userId, DB_URL);
   await conv.userInfo.sync();
   UserInfo.update(conv.userInfo, conv);
 
