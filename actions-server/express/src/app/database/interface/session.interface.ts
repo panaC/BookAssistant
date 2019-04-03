@@ -1,7 +1,21 @@
-import { IWebpub } from './../../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
+/*
+ * File: session.interface.ts
+ * Project: VoiceAssistant
+ * File Created: Wednesday, 3rd April 2019 9:58:07 am
+ * Author: pierre (p.leroux@gmx.com)
+ * -----
+ * Last Modified: Wednesday, 3rd April 2019 9:58:10 am
+ * Modified By: pierre (p.leroux@gmx.com>)
+ * -----
+ * Copyright 2019 - 2019 EDRLab.org
+ * Use of this source code is governed by a BSD-style license
+ */
+
+// import { IWebpub } from './../../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
 import * as Nano from 'nano';
 
+/*
 export enum Eaudiobook {
   ERROR_AXIOS = 'error.audiobook.network',
   END_CHAPTER = 'play.finish',
@@ -40,34 +54,17 @@ export interface Istate {
   choice?: number;
   yes_no?: boolean;
 }
+*/
 
-interface IrawInput {
+export interface IrawInput {
   date: Date;
   query: string;
-}
-
-interface ImediaId {
-  [identifier: string]: number;
-}
-
-export interface Ihistoric {
-  date: Date;
-  input?: IrawInput[];
   surfaceCapabilities?: Capabilities;
-  media?: ImediaId;
-}
-
-export interface Iuser {
-  lastseen: Date;
-  name?: string;
-  sessionCount?: number;
-  locale?: string;
 }
 
 export interface Isession extends Nano.MaybeDocument {
-  user: Iuser;
-  state: {
-    [id: string]: Istate;
-  }
-  historic: Ihistoric[];
+  lastSeen: Date;
+  surfaceCapabilities?: Capabilities;
+  raw: IrawInput[];
+  data: {};
 }

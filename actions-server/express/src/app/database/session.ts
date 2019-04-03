@@ -1,7 +1,30 @@
-import Nano from 'nano'
-import { Isession, Iuser, Istate, Ihistoric } from './interface/session.interface';
-import { DB_URL, DB_NAME } from '../../constants';
+import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
+import { Isession, IrawInput } from './interface/session.interface';
+import { DFConv } from './../app';
+import { Io } from './io';
 
+export class Session extends Io<Isession> implements Isession {
+
+  public lastSeen: Date;
+  public surfaceCapabilities: Capabilities;
+  public raw: IrawInput[];
+  public data: any;
+
+  constructor(id: string, db: string, conv: DFConv) {
+    super(id, db, 'session');
+
+    const date = new Date(Date.now());
+
+    this.lastSeen = date;
+    this.surfaceCapabilities = conv.surface.capabilities;
+    this.raw = [];
+    this.data = {};
+  }
+
+}
+
+
+/*
 // coucdb session implemtentation
 // request from app.middleware
 // get and save from userId session data
@@ -145,3 +168,4 @@ if (typeof require !== 'undefined' && require.main === module) {
     
   })();
 }
+*/

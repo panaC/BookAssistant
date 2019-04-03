@@ -1,3 +1,6 @@
+import { debug } from './../utils/debug';
+import { User } from './database/user';
+import { DB_URL } from './../constants';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -34,6 +37,7 @@ const generateUUID = () =>
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   // utils: UtilsService;
   session: Session;
+  userInfo: User;
   // media: MediaService;
   // ref: RefService;
   core: Core;
@@ -58,11 +62,13 @@ app.middleware(async (conv: DFConv) => {
   if (!conv.data.sessionId) {
     conv.data.sessionId = generateUUID();
   }
-  conv.session = new Session(
-      conv.user.storage.userId
-    , conv.data.sessionId
-    , conv.user.locale);
-  await conv.session.waitInit;
+  conv.session = new Session(conv.data.sessionId, DB_URL, conv);
+  await conv.session.sync();
+  conv.userInfo = new User(conv.data.sessionId, DB_URL, conv);
+  await conv.userInfo.sync();
+
+  debug.app.log('conv.session : ', conv.session);
+  debug.app.log('conv.userInfo : ', conv.userInfo);
   // erase all state that don't belong to sessionId
   // use this for apply memory session in actual session, for the next feature
   // conv.user.storage.id = conv.session.id;
