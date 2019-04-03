@@ -8,6 +8,7 @@ export class Session extends Io<Isession> implements Isession {
   public lastSeen: Date;
   public surfaceCapabilities: Capabilities;
   public raw: IrawInput[];
+  public state: string;
   public data: any;
 
   constructor(id: string, db: string, conv: DFConv) {

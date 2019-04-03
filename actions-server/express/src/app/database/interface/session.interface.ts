@@ -66,5 +66,6 @@ export interface Isession extends Nano.MaybeDocument {
   lastSeen: Date;
   surfaceCapabilities?: Capabilities;
   raw: IrawInput[];
+  state: string;
   data: {};
 }
