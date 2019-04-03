@@ -12,16 +12,20 @@ export class Session extends Io<Isession> implements Isession {
   public state: string;
   public data: any;
 
-  constructor(id: string, db: string, conv: DFConv) {
+  constructor(id: string, db: string) {
     super(id, db, 'session');
 
-    const date = new Date(Date.now());
-
-    this.lastSeen = date;
-    this.surfaceCapabilities = conv.surface.capabilities;
     this.raw = [];
     this.state = INTENT_START_NAME;
     this.data = {};
+  }
+
+  static update(session: Session, conv: DFConv) {
+
+    const date = new Date(Date.now());
+
+    session.lastSeen = date;
+    session.surfaceCapabilities = conv.surface.capabilities;
   }
 
 }

@@ -1,5 +1,5 @@
 import { debug } from './../utils/debug';
-import { User } from './database/user';
+import { UserInfo } from './database/userInfo';
 import { DB_URL } from './../constants';
 /*
  * File: app.ts
@@ -37,7 +37,7 @@ const generateUUID = () =>
 export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   // utils: UtilsService;
   session: Session;
-  userInfo: User;
+  userInfo: UserInfo;
   // media: MediaService;
   // ref: RefService;
   core: Core;
@@ -62,10 +62,12 @@ app.middleware(async (conv: DFConv) => {
   if (!conv.data.sessionId) {
     conv.data.sessionId = generateUUID();
   }
-  conv.session = new Session(conv.data.sessionId, DB_URL, conv);
+  conv.session = new Session(conv.data.sessionId, DB_URL);
   await conv.session.sync();
-  conv.userInfo = new User(conv.data.sessionId, DB_URL, conv);
+  Session.update(conv.session, conv);
+  conv.userInfo = new UserInfo(conv.data.sessionId, DB_URL);
   await conv.userInfo.sync();
+  UserInfo.update(conv.userInfo, conv);
 
   debug.app.log('conv.session : ', conv.session);
   debug.app.log('conv.userInfo : ', conv.userInfo);
