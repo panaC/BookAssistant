@@ -15,9 +15,9 @@ import { Istate } from '../interface/state.interface';
 
 export const state: Istate = {
   play: {
-    context: 'play',
+    context: 'start',
     switch: {
-      default: 'play.choice',
+      default: 'start.choice',
     },
     conv: {
       ask: 'welcome.home',
@@ -27,7 +27,8 @@ export const state: Istate = {
       choice: {
         fct: 'intent',
         switch: {
-          'play.listen': 'play.listen',
+          'play.name': 'play.listen',
+          'play.age': 'play.age',
           'cancel': 'cancel',
           'default': 'fallback',
         },
