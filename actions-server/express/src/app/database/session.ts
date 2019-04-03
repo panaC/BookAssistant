@@ -1,3 +1,4 @@
+import { INTENT_START_NAME } from './../../constants';
 import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
 import { Isession, IrawInput } from './interface/session.interface';
 import { DFConv } from './../app';
@@ -19,6 +20,7 @@ export class Session extends Io<Isession> implements Isession {
     this.lastSeen = date;
     this.surfaceCapabilities = conv.surface.capabilities;
     this.raw = [];
+    this.state = INTENT_START_NAME;
     this.data = {};
   }
 

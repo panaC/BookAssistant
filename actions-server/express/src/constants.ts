@@ -25,3 +25,5 @@ export const SEARCH = (title: string, author: string = undefined) =>
 export const REF = (identifier: string, ref: string) => `${SERVER_URL}/${identifier}?q=${encodeURI(ref)}`;
 
 export const MAE_LOOP_MAX = 100;
+
+export const INTENT_START_NAME = 'start';
