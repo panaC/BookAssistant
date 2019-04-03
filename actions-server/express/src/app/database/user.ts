@@ -28,4 +28,3 @@ export class User extends Io<Iuser> implements Iuser {
   }
 
 }
-
