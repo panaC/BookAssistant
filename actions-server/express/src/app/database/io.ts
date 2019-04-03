@@ -38,7 +38,7 @@ export abstract class Io<T> implements Nano.MaybeDocument {
     });
   }
 
-  public get data() {
+  public get json() {
     const data: T = null;
     Object.assign<T, this>(data, this);
     // Type T doesn't include _db
@@ -55,7 +55,7 @@ export abstract class Io<T> implements Nano.MaybeDocument {
   }
 
   public async save() {
-      const response = await this._db.insert(this.data);
+      const response = await this._db.insert(this.json);
       this.processAPIResponse(response);
   }
 
