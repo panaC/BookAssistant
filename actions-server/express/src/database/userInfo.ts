@@ -1,4 +1,4 @@
-import { DFConv } from '../app';
+import { DFConv } from './../app/app';
 import { Iuser } from './interface/user.interface';
 import { IuserSession } from './interface/user.interface';
 import { Io } from './io';

@@ -1,7 +1,7 @@
-import { INTENT_START_NAME } from './../../constants';
+import { INTENT_START_NAME } from './../constants';
 import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
 import { Isession, IrawInput } from './interface/session.interface';
-import { DFConv } from './../app';
+import { DFConv } from './../app/app';
 import { Io } from './io';
 
 export class Session extends Io<Isession> implements Isession {

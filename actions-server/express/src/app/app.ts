@@ -1,6 +1,3 @@
-import { debug } from './../utils/debug';
-import { UserInfo } from './database/userInfo';
-import { DB_URL } from './../constants';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -25,6 +22,8 @@ import { dialogflow, DialogflowConversation } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from '../interface/storage.interface';
 import { Session } from './database/session';
 import { Core, setLocale } from '../core/core';
+import { UserInfo } from './database/userInfo';
+import { DB_URL } from './../constants';
 
 const generateUUID = () =>
   Math.random().toString(36).substring(2, 15) + '-' +
