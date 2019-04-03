@@ -69,8 +69,6 @@ app.middleware(async (conv: DFConv) => {
   await conv.userInfo.sync();
   UserInfo.update(conv.userInfo, conv);
 
-  debug.app.log('conv.session : ', conv.session);
-  debug.app.log('conv.userInfo : ', conv.userInfo);
   // erase all state that don't belong to sessionId
   // use this for apply memory session in actual session, for the next feature
   // conv.user.storage.id = conv.session.id;
