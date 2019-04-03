@@ -56,18 +56,20 @@ export const app = dialogflow({
 // allow multiple call
 app.middleware(async (conv: DFConv) => {
   // conv.utils = new UtilsService(conv);
+
   if (!conv.user.storage.userId) {
     conv.user.storage.userId = generateUUID();
   }
+  conv.userInfo = new UserInfo(conv.user.storage.userId, DB_URL);
+  await conv.userInfo.sync();
+
   if (!conv.data.sessionId) {
     conv.data.sessionId = generateUUID();
+    UserInfo.update(conv.userInfo, conv);
   }
   conv.session = new Session(conv.data.sessionId, DB_URL);
   await conv.session.sync();
   Session.update(conv.session, conv);
-  conv.userInfo = new UserInfo(conv.user.storage.userId, DB_URL);
-  await conv.userInfo.sync();
-  UserInfo.update(conv.userInfo, conv);
 
   // erase all state that don't belong to sessionId
   // use this for apply memory session in actual session, for the next feature
