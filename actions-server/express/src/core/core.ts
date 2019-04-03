@@ -46,11 +46,11 @@ export class Core {
   }
 
   set state(s: string) {
-    this._conv.session.state[this._conv.data.sessionId].state = s;
+    this._conv.session.state = s;
   }
 
   get state() {
-    return this._conv.session.state[this._conv.data.sessionId].state;
+    return this._conv.session.state;
   }
 
   private findState(): void {
@@ -105,7 +105,6 @@ export class Core {
       }
       if (conv.close) {
         this._conv.close(translate(conv.close));
-        this._conv.session.close();
       }
     }
   }

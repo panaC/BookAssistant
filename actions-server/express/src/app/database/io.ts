@@ -50,16 +50,16 @@ export abstract class Io<T> implements Nano.MaybeDocument {
     return this._id;
   }
 
-  protected async get() {
+  public async get() {
     Object.assign(this, await this._db.get(this._id));
   }
 
-  protected async save() {
+  public async save() {
       const response = await this._db.insert(this.data);
       this.processAPIResponse(response);
   }
 
-  protected async del() {
+  public async del() {
     await this._db.destroy(this._id, this._rev);
   }
 
