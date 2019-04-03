@@ -24,7 +24,6 @@ export class Session extends Io<Isession> implements Isession {
 
     const date = new Date(Date.now());
 
-    session.state = INTENT_START_NAME;
     session.lastSeen = date;
     session.surfaceCapabilities = conv.surface.capabilities;
   }

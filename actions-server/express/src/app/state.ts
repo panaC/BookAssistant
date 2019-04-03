@@ -14,7 +14,7 @@
 import { Istate } from '../interface/state.interface';
 
 export const state: Istate = {
-  play: {
+  start: {
     context: 'start',
     switch: {
       default: 'start.choice',
