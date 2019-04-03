@@ -11,21 +11,24 @@
  * Use of this source code is governed by a BSD-style license
  */
 
+import { DFConv } from './../app/app';
+
 export interface IstateName {
   context?: string | string[];
 
   // declare var used
   // var?: Ivar;
 
-  // http request requisite
-  // http?: Ihttp | Ihttp[];
+  // http request if required
+  http?: Ihttp | Ihttp[];
 
   // variable to compute
   // compute?: string | string[];
 
   // handle multiple string for apply a map-reduce logic in fct -> return a concatenation string
   // accept in fct : variable name or function name, type test before execution
-  test?: string | string[];
+  // add function directly but i can't use json in config file but only ts files
+  test?: (conv: DFConv) => string;
   // only default switch state is required
   switch: {
     // Option :
@@ -61,9 +64,7 @@ export interface Ihttp {
   type: string;
   body: string;
   header: string;
-  save: {
-    [name: string]: string;
-  };
+  data: (data: any, conv: DFConv) => void;
 }
 
 export interface Ivar {
@@ -85,11 +86,3 @@ export interface Istate {
   no_input: IstateName;
   error: IstateName;
 }
-
-/*
-export interface Istate {
-  [state: string]: IstateContext;
-  // default context if a stateName is unknown
-  default: IstateContext;
-}
-*/
