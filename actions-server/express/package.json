@@ -8,7 +8,14 @@
     "build": "tsc",
     "launch": "node dist/main.js",
     "start": "ts-node src/main.ts",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
   },
   "repository": {
     "type": "git",
@@ -40,6 +47,7 @@
     "nodemon": "^1.18.9",
     "ts-jest": "^24.0.0",
     "ts-node": "^8.0.2",
-    "typescript": "^3.3.1"
+    "typescript": "~3.1.0",
+    "gts": "^0.9.0"
   }
 }

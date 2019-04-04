@@ -11,11 +11,11 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Istate, IstateName } from '../interface/state.interface';
+import { Istate, Igraph } from '../interface/state.interface';
 import { state } from '../app/state';
 import { DFConv } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
-import i18n from 'i18n';
+import * as i18n from 'i18n';
 import { join } from 'path';
 import { debug } from './../utils/debug';
 
@@ -37,11 +37,15 @@ export const setLocale = (local: string) => { i18n.setLocale(local); };
 
 export class Core {
 
-  private _state: Istate = state;
-  private _currentState: IstateName = null;
-  private _currentResult: string = '';
+  // private _state: Istate = state;
+  /* private _currentState: IstateName = {
+    switch: {
+      default: '',
+    }
+  };*/
+  // private _currentResult = '';
 
-  constructor(public _conv: DFConv) {
+  constructor(public _conv: DFConv, public _graph: Igraph) {
 
   }
 
@@ -53,7 +57,7 @@ export class Core {
     return this._conv.session.state;
   }
 
-  private findState(): void {
+  private findState(): Istate {
     let path = this.state;
     path = path.replace(/\./gi, '.children.');
     if (path === '') {
@@ -63,31 +67,23 @@ export class Core {
     debug.core.log('path:', path);
 
     try {
-      this._currentState = eval(`this._state.${path}`) || this._state.error;
+      return eval(`this._graph.${path}`) || this._graph.error;
     } catch {
-      this._currentState = this._state.error;
+      return this._graph.error;
     }
-    debug.core.log('currentState:', this._currentState);
-
   }
 
-  private async execFct(): Promise<void> {
-    if (this._currentState.fct) {
-      // https://stackoverflow.com/questions/49525389/element-implicitly-has-an-any-type-because-type-0-has-no-index-signature
-      const tmp = eval(`this._conv.${this._currentState.fct}`);
-      debug.core.log('tmp:', tmp);
-      this._currentResult = '';
-      if (typeof tmp === 'function') {
+  private async exec(state: Istate): Promise<string> {
+    if (state.test) {
+      if (typeof state.test === 'function') {
         // handle if function is async
-        this._currentResult = tmp();
-      } else if (typeof tmp === 'string') {
-        this._currentResult = tmp;
+        return state.test(this._conv);
       }
     }
-    debug.core.log('exect-fct res:', this._currentResult);
+    return '';
   }
 
-  private execSwitch(): void {
+  private switch(state: Istate, ): void {
     if (this._currentState.switch[this._currentResult]) {
       this.state = this._currentState.switch[this._currentResult] as string;
     } else {
@@ -117,7 +113,7 @@ export class Core {
     });
   }
 
-  public async main(loop: number = 0): Promise<void> {
+  async main(loop = 0): Promise<void> {
 
     if (loop > MAE_LOOP_MAX) {
       this._conv.close('error loop');

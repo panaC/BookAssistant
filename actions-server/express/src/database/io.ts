@@ -11,24 +11,24 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import Nano from 'nano';
+import * as Nano from 'nano';
 
 export abstract class Io<T> implements Nano.MaybeDocument {
 
-  public _rev: string;
+  _rev: string;
 
   private _db: Nano.DocumentScope<T>;
 
   constructor(public _id: string, db: string, dbName: string) {
 
-    this._rev = undefined;
+    this._rev = '';
 
     const n = Nano(db);
     this._db = n.db.use<T>(dbName);
 
   }
 
-  public sync(): Promise<void> {
+  sync(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.get()
         .then(() => resolve())
@@ -38,26 +38,26 @@ export abstract class Io<T> implements Nano.MaybeDocument {
     });
   }
 
-  public get json() {
+  get json() {
     const data = Object.assign({}, this);
-    data._db = undefined;
+    delete data._db;
     return data as unknown as T;
   }
 
-  public get id() {
+  get id() {
     return this._id;
   }
 
-  public async get() {
+  async get() {
     Object.assign(this, await this._db.get(this._id));
   }
 
-  public async save() {
+  async save() {
       const response = await this._db.insert(this.json);
       this.processAPIResponse(response);
   }
 
-  public async del() {
+  async del() {
     await this._db.destroy(this._id, this._rev);
   }
 

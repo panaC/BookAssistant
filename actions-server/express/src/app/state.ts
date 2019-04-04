@@ -12,6 +12,7 @@
  */
 
 import { Istate } from '../interface/state.interface';
+import { DFConv } from './app';
 
 export const state: Istate = {
   start: {
@@ -25,7 +26,7 @@ export const state: Istate = {
     return: true,
     children: {
       choice: {
-        fct: 'intent',
+        test: (conv: DFConv) => conv.intent,
         switch: {
           'start.name': 'play.listen',
           'start.age': 'play.age',
@@ -34,7 +35,6 @@ export const state: Istate = {
         },
       },
       listen: {
-        fct: 'service.media.get',
         switch: {
           default: 'start',
         },

@@ -6,11 +6,11 @@ import { Io } from './io';
 
 export class Session<T = {}> extends Io<Isession> implements Isession {
 
-  public lastSeen: Date;
-  public surfaceCapabilities: Capabilities;
-  public raw: IrawInput[];
-  public state: string;
-  public data: T;
+  lastSeen: Date = new Date();
+  surfaceCapabilities: Capabilities = {} as Capabilities;
+  raw: IrawInput[];
+  state: string;
+  data: T;
 
   constructor(id: string, db: string) {
     super(id, db, 'session');

@@ -13,7 +13,7 @@
 
 import { DFConv } from './../app/app';
 
-export interface IstateName {
+export interface Istate {
   context?: string | string[];
 
   // declare var used
@@ -45,7 +45,9 @@ export interface IstateName {
   };
   // no by default
   return?: boolean;
-  children?: IstateChildren;
+  children?: {
+    [name: string]: Istate;
+  };
 }
 
 export interface Imedia {
@@ -64,6 +66,7 @@ export interface Ihttp {
   type: string;
   body: string;
   header: string;
+  // tslint:disable-next-line:no-any
   data: (data: any, conv: DFConv) => void;
 }
 
@@ -76,13 +79,10 @@ export interface Ivar {
   };
 }
 
-export interface IstateChildren {
-  [state: string]: IstateName;
-}
-
-export interface Istate {
-  start: IstateName;
-  fallback: IstateName;
-  no_input: IstateName;
-  error: IstateName;
+export interface Igraph {
+  start: Istate;
+  [name: string]: Istate;
+  fallback: Istate;
+  no_input: Istate;
+  error: Istate;
 }
