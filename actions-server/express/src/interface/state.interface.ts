@@ -16,26 +16,17 @@ import { DFConv } from './../app/app';
 export interface Istate {
   context?: string | string[];
 
-  // declare var used
-  // var?: Ivar;
-
-  // http request if required
   http?: Ihttp | Ihttp[];
 
-  // variable to compute
-  // compute?: string | string[];
-
-  // handle multiple string for apply a map-reduce logic in fct -> return a concatenation string
-  // accept in fct : variable name or function name, type test before execution
   // add function directly but i can't use json in config file but only ts files
   test?: (conv: DFConv) => string;
   // only default switch state is required
   switch: {
-    // Option :
-    // allow to add multiple context name with string[]
-    [result: string]: string /*| string[]*/;
-    default: string;
+    // possibly add more state for more context switch
+    [state: string]: Istate /*| Istate[]*/;
+    default: Istate;
   };
+
   conv?: {
     arg?: string | string[];
     ask?: string | string[];
@@ -43,6 +34,7 @@ export interface Istate {
     media?: Imedia;
     suggestion?: string | string[];
   };
+
   // no by default
   return?: boolean;
   children?: {
@@ -68,15 +60,6 @@ export interface Ihttp {
   header: string;
   // tslint:disable-next-line:no-any
   data: (data: any, conv: DFConv) => void;
-}
-
-export interface Ivar {
-  [name: string]: {
-    // false by default for session else it's saved in userInfo
-    persistence: boolean;
-    array: boolean;
-    init: string;
-  };
 }
 
 export interface Igraph {
