@@ -14,6 +14,7 @@
 // import { IWebpub } from './../../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
 import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
 import * as Nano from 'nano';
+import { Inode } from '../../interface/node.interface';
 
 /*
 export enum Eaudiobook {
@@ -58,7 +59,6 @@ export interface Istate {
 
 export interface IrawInput {
   date: Date;
-  state: string;
   query: string;
 }
 
@@ -66,6 +66,6 @@ export interface Isession extends Nano.MaybeDocument {
   lastSeen: Date;
   surfaceCapabilities?: Capabilities;
   raw: IrawInput[];
-  state: string;
+  node: Inode;
   data: {};
 }

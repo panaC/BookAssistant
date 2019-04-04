@@ -24,6 +24,7 @@ import { Session } from './../database/session';
 import { Core, setLocale } from '../core/core';
 import { UserInfo } from './../database/userInfo';
 import { DB_URL } from './../constants';
+import { start } from './graph/start/start';
 
 const generateUUID = () =>
   Math.random().toString(36).substring(2, 15) + '-' +
@@ -66,7 +67,7 @@ app.middleware(async (conv: DFConv) => {
     conv.data.sessionId = generateUUID();
     UserInfo.update(conv.userInfo, conv);
   }
-  conv.session = new Session(conv.data.sessionId, DB_URL);
+  conv.session = new Session(conv.data.sessionId, DB_URL, start);
   await conv.session.sync();
   Session.update(conv.session, conv);
 

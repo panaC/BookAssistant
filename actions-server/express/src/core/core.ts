@@ -1,3 +1,6 @@
+import { Ihttp } from './../interface/node.interface';
+import { sprintf } from 'sprintf-js';
+import { Suggestions, MediaObject } from 'actions-on-google';
 /*
  * File: core.ts
  * Project: VoiceAssistant
@@ -11,13 +14,15 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Istate, Igraph } from '../interface/state.interface';
-import { state } from '../app/state';
 import { DFConv } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
 import { join } from 'path';
 import { debug } from './../utils/debug';
+import { error } from '../app/graph/graph';
+import Axios from 'axios';
+import { AxiosRequestConfig } from 'axios';
+import { pipe } from '../utils/pipe';
 
 i18n.configure({
   directory: join(__dirname, '../locales'),
@@ -35,127 +40,110 @@ export const translate = (str: string): string => i18n.__(str);
 
 export const setLocale = (local: string) => { i18n.setLocale(local); };
 
-export class Core {
-
-  // private _state: Istate = state;
-  /* private _currentState: IstateName = {
-    switch: {
-      default: '',
-    }
-  };*/
-  // private _currentResult = '';
-
-  constructor(public _conv: DFConv, public _graph: Igraph) {
-
-  }
-
-  set state(s: string) {
-    this._conv.session.state = s;
-  }
-
-  get state() {
-    return this._conv.session.state;
-  }
-
-  private findState(): Istate {
-    let path = this.state;
-    path = path.replace(/\./gi, '.children.');
-    if (path === '') {
-      path = 'start';
-    }
-
-    debug.core.log('path:', path);
-
-    try {
-      return eval(`this._graph.${path}`) || this._graph.error;
-    } catch {
-      return this._graph.error;
-    }
-  }
-
-  private async exec(state: Istate): Promise<string> {
-    if (state.test) {
-      if (typeof state.test === 'function') {
-        // handle if function is async
-        return state.test(this._conv);
-      }
-    }
-    return '';
-  }
-
-  private switch(state: Istate, ): void {
-    if (this._currentState.switch[this._currentResult]) {
-      this.state = this._currentState.switch[this._currentResult] as string;
+const context = async (conv: DFConv) => {
+  if (conv.session.node.context) {
+    if (typeof conv.session.node.context === 'string') {
+      conv.contexts.set(conv.session.node.context, 1);
     } else {
-      this.state = this._currentState.switch.default;
-    }
-    debug.core.log('switch:', this.state);
-  }
-
-  private convHandle(): void {
-    // handle all conv object in state
-    const conv = this._currentState.conv;
-    if (conv) {
-      if (conv.ask) {
-        this._conv.ask(translate(conv.ask as string));
-      }
-      if (conv.close) {
-        this._conv.close(translate(conv.close));
-      }
+      conv.session.node.context.map((v) => conv.contexts.set(v, 1));
     }
   }
+  return conv;
+};
 
-  private stat(): void {
-    this._conv.session.raw.push({
+const conversation = async (conv: DFConv) => {
+  const a = conv.session.node.conv;
+  let arg: string[] = [];
+
+  if (a) {
+    if (a.arg) {
+      if (typeof a.arg === 'string') {
+        arg = [ a.arg ];
+      } else {
+        arg = a.arg;
+      }
+    }
+    if (a.ask) {
+      if (typeof a.ask === 'string') {
+        conv.ask(translate(sprintf(a.ask, ...arg)));
+      } else {
+        a.ask.map((v) => conv.ask(translate(sprintf(v, ...arg))));
+      }
+    }
+    if (a.close) {
+      if (typeof a.close === 'string') {
+        conv.close(translate(sprintf(a.close, ...arg)));
+      } else {
+        a.close.map((v) => conv.close(translate(sprintf(v, ...arg))));
+      }
+    }
+    if (a.suggestion) {
+      if (typeof a.suggestion === 'string') {
+        conv.ask(new Suggestions(sprintf(a.suggestion, ...arg)));
+      } else {
+        a.suggestion.map((v) => conv.ask(new Suggestions(sprintf(v, ...arg))));
+      }
+    }
+    if (a.media) {
+      conv.ask(new MediaObject(a.media));
+    }
+  }
+  return conv;
+};
+
+const http = async (conv: DFConv) => {
+
+  const request = async (o: Ihttp, conv: DFConv) => {
+    if (o.url) {
+      try {
+        o.compute(await Axios(o.url, o), conv);
+      } catch (e) {
+        o.error(e, conv);
+      }
+    }
+  };
+
+  if (conv.session.node.http) {
+    if (conv.session.node.http instanceof Array) {
+      conv.session.node.http.map(async (v) => await request(v, conv));
+    } else {
+      await request(conv.session.node.http, conv);
+    }
+  }
+  return conv;
+};
+
+export const statistic = async (conv: DFConv) =>
+  conv.session.raw.push({
       date: new Date(Date.now()),
-      state: this.state,
-      query: this._conv.query,
+      query: conv.query,
     });
+
+export const save = async (conv: DFConv): DFConv =>
+    conv.session.save() && conv.userInfo.save() && conv;
+
+
+export const test = async (conv: DFConv) => {
+  const a = conv.session.node;
+  if (a.test && a.switch) {
+    if (!a.switch.case) {
+      a.switch.case = [];
+    }
+    conv.session.node = a.switch.case.reduce(
+      (pv, cv) =>
+        a.test && cv.value === a.test(conv) ?
+          cv.node : pv, a.switch.default);
   }
+};
 
-  async main(loop = 0): Promise<void> {
-
-    if (loop > MAE_LOOP_MAX) {
-      this._conv.close('error loop');
-      return;
-    }
-
-    // await this._conv.session.waitInit;
-
-    /*
-     * 1/ found in graph the stateName
-          logic context.context.context.name
-          a name become a context when it have at least one children
-     * 2/ exec the fcts if exists
-     * 3/ save the state name in function of string returned
-     * 4/ set the conv.ask / close / suggestion
-     * 5/ if return is set : quit recursive loop
-     *      else call main with loop increment (recursive mode)
-     * 6/ end
-     */
-
-    debug.core.log('main:start');
-
-    this.stat();
-
-    this.findState();
-    await this.execFct();
-    this.execSwitch();
-    this.convHandle();
-
-    if (!this._currentState.return) {
-      debug.core.log('main:end-loop');
-      return this.main(++loop);
-    }
-
-    if (this._currentState.context) {
-      debug.core.log('context-set:', this._currentState.context);
-      this._conv.contexts.set(this._currentState.context as string, 10);
-    }
-
-    debug.core.log('main:end');
-
-    await this._conv.session.save();
-    await this._conv.userInfo.save();
+//
+export const exec = async (conv: DFConv, loop = 0) => {
+  if (loop > MAE_LOOP_MAX) {
+    conv.session.node = error;
   }
-}
+  pipe(context, conversation, http)
+
+  if (!conv.session.node.return && loop <= MAE_LOOP_MAX) {
+    exec(conv, ++loop);
+  }
+};

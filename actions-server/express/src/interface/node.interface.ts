@@ -11,9 +11,11 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { DFConv } from './../app/app';
+import { DFConv } from '../app/app';
+import { MediaObjectOptions } from 'actions-on-google';
+import { AxiosRequestConfig } from 'axios';
 
-export interface Istate {
+export interface Inode {
   context?: string | string[];
 
   http?: Ihttp | Ihttp[];
@@ -21,51 +23,35 @@ export interface Istate {
   // add function directly but i can't use json in config file but only ts files
   test?: (conv: DFConv) => string;
   // only default switch state is required
-  switch: {
-    // possibly add more state for more context switch
-    [state: string]: Istate /*| Istate[]*/;
-    default: Istate;
-  };
 
+  // use reduce here with init = default and [] = case
+  switch?: {
+    // possibly add more state for more context switch
+    case?: Icase[];
+    default: Inode;
+  };
   conv?: {
     arg?: string | string[];
     ask?: string | string[];
-    close?: string;
-    media?: Imedia;
+    close?: string | string[];
+    media?: MediaObjectOptions;
     suggestion?: string | string[];
   };
 
   // no by default
   return?: boolean;
-  children?: {
-    [name: string]: Istate;
-  };
+  error?: Inode;
 }
 
-export interface Imedia {
-  name: string;
-  url: string;
-  description: string;
-  author: string;
-  img: {
-    url: string;
-    alt: string;
-  };
+export interface Icase {
+  value: string;
+  node: Inode;
 }
 
-export interface Ihttp {
-  url: string;
-  type: string;
-  body: string;
-  header: string;
+export interface Ihttp extends AxiosRequestConfig {
   // tslint:disable-next-line:no-any
-  data: (data: any, conv: DFConv) => void;
+  compute: (data: any, conv: DFConv) => void;
+  error: (e: string, conv: DFConv) => void;
 }
 
-export interface Igraph {
-  start: Istate;
-  [name: string]: Istate;
-  fallback: Istate;
-  no_input: Istate;
-  error: Istate;
-}
+
