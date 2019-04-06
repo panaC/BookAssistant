@@ -11,53 +11,22 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-/*
-** RM session storage replace by couchdb
-export interface IsessionStorage {
-  currentPlayingMedia: IplayingMedia;
-  chapterToPlay: number;
-  // tellByUser :
-  titleTellByUser: string;
-  // author
-  // ref
-  // yes-no
-  // choice-number
-  //
-  // don't forget to errase
-}
-*/
-
+// save sessionId for couchdb
+// https://github.com/actions-on-google/actions-on-google-nodejs/issues/256
 export interface IsessionStorage {
   sessionId: string;
 }
 
-/*
-// declare in session.interface.ts
-export interface IplayingMedia {
-  state: Eaudiobook;
-  name?: string;
-  url?: string;
-  description?: string;
-  author?: string;
-  identifier?: string;
-  img?: {
-    url: string,
-    alt: string,
-  };
-  chapter?: number;
-  numberOfChapter?: number;
-}
-*/
+export interface IsessionDataDb {
 
-//
+}
+
 // Save only userId for couchdb to get back user information
+// https://developers.google.com/actions/assistant/save-data#save_data_across_conversations
 export interface IuserStorage {
   userId: string;
 }
 
-/*
-export interface IuserStorage {
-  mediaIdentifier: ImediaId;
-  lastSeen: Date;
+export interface IuserDataDb {
+  test: string;
 }
-*/

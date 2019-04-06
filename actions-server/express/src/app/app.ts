@@ -19,7 +19,7 @@
   */
 
 import { dialogflow, DialogflowConversation, Contexts } from 'actions-on-google';
-import { IsessionStorage, IuserStorage } from '../interface/storage.interface';
+import { IsessionStorage, IuserStorage, IuserDataDb, IsessionDataDb } from '../interface/storage.interface';
 import { Session } from './../database/session';
 import { exec, setLocale } from '../core/core';
 import { UserInfo } from './../database/userInfo';
@@ -36,8 +36,8 @@ const generateUUID = () =>
 
 export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage>{
   // utils: UtilsService;
-  session: Session;
-  userInfo: UserInfo;
+  session: Session<IsessionDataDb>;
+  userInfo: UserInfo<IuserDataDb>;
   // media: MediaService;
   // ref: RefService;
   // init: (conv: DFConv) => string;
@@ -66,14 +66,14 @@ app.middleware<DFConv> (async (conv) => {
   if (!c.user.storage.userId) {
     c.user.storage.userId = generateUUID();
   }
-  c.userInfo = new UserInfo(c.user.storage.userId, DB_URL);
+  c.userInfo = new UserInfo<IuserDataDb>(c.user.storage.userId, DB_URL);
   await c.userInfo.sync();
 
   if (!c.data.sessionId) {
     c.data.sessionId = generateUUID();
     UserInfo.update(c.userInfo, c);
   }
-  c.session = new Session(c.data.sessionId, DB_URL, start);
+  c.session = new Session<IsessionDataDb>(c.data.sessionId, DB_URL, start);
   await c.session.sync();
   Session.update(c.session, c);
 
