@@ -23,6 +23,7 @@ import { error } from '../app/graph/graph';
 import Axios from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { pipe } from '../utils/pipe';
+import { compose } from '../utils/compose';
 
 i18n.configure({
   directory: join(__dirname, '../locales'),
@@ -113,14 +114,20 @@ const http = async (conv: DFConv) => {
   return conv;
 };
 
-export const statistic = async (conv: DFConv) =>
+export const statistic = async (conv: DFConv) => {
   conv.session.raw.push({
-      date: new Date(Date.now()),
-      query: conv.query,
-    });
+    date: new Date(Date.now()),
+    query: conv.query,
+  });
+  return conv;
+};
 
-export const save = async (conv: DFConv): DFConv =>
-    conv.session.save() && conv.userInfo.save() && conv;
+export const save = async (conv: DFConv) =>{
+
+    await conv.session.save();
+    await conv.userInfo.save();
+    return conv;
+};
 
 
 export const test = async (conv: DFConv) => {
@@ -134,6 +141,7 @@ export const test = async (conv: DFConv) => {
         a.test && cv.value === a.test(conv) ?
           cv.node : pv, a.switch.default);
   }
+  return conv;
 };
 
 //
@@ -141,8 +149,7 @@ export const exec = async (conv: DFConv, loop = 0) => {
   if (loop > MAE_LOOP_MAX) {
     conv.session.node = error;
   }
-  pipe(context, conversation, http)
-
+  await (await pipe(context, http, test, conversation, statistic, save))(conv);
   if (!conv.session.node.return && loop <= MAE_LOOP_MAX) {
     exec(conv, ++loop);
   }
