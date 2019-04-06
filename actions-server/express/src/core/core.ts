@@ -1,6 +1,3 @@
-import { Ihttp } from './../interface/node.interface';
-import { sprintf } from 'sprintf-js';
-import { Suggestions, MediaObject } from 'actions-on-google';
 /*
  * File: core.ts
  * Project: VoiceAssistant
@@ -14,16 +11,16 @@ import { Suggestions, MediaObject } from 'actions-on-google';
  * Use of this source code is governed by a BSD-style license
  */
 
+import { Ihttp } from './../interface/node.interface';
+import { sprintf } from 'sprintf-js';
+import { Suggestions, MediaObject } from 'actions-on-google';
 import { DFConv } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
 import { join } from 'path';
-import { debug } from './../utils/debug';
 import { error } from '../app/graph/graph';
 import Axios from 'axios';
-import { AxiosRequestConfig } from 'axios';
 import { pipe } from '../utils/pipe';
-import { compose } from '../utils/compose';
 
 i18n.configure({
   directory: join(__dirname, '../locales'),
@@ -136,9 +133,10 @@ export const test = async (conv: DFConv) => {
     if (!a.switch.case) {
       a.switch.case = [];
     }
+    const r = a.test(conv);
     conv.session.node = a.switch.case.reduce(
       (pv, cv) =>
-        a.test && cv.value === a.test(conv) ?
+        a.test && cv.value === r ?
           cv.node : pv, a.switch.default);
   }
   return conv;
@@ -149,8 +147,9 @@ export const exec = async (conv: DFConv, loop = 0) => {
   if (loop > MAE_LOOP_MAX) {
     conv.session.node = error;
   }
-  await (await pipe(context, http, test, conversation, statistic, save))(conv);
+  conv = await (await pipe(context, http, test, conversation, statistic, save))(conv);
   if (!conv.session.node.return && loop <= MAE_LOOP_MAX) {
     exec(conv, ++loop);
   }
+  conv.userInfo.data.test;
 };
