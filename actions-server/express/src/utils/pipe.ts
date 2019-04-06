@@ -1,11 +1,11 @@
 
 export const pipe = <T extends any[], R>(
-  fn1: (...args: T) => R,
-  ...fns: Array<(a: R) => R>
+  fn1: (...args: T) => Promise<R>,
+  ...fns: Array<(a: R) => Promise<R>>
 ) => {
   const piped = fns.reduce(
-    (prevFn, nextFn) => (value: R) => nextFn(prevFn(value)),
-    value => value
+    (prevFn, nextFn) => async (value: R) => nextFn(await prevFn(value)),
+    async (value: R) => await value
   );
-  return (...args: T) => piped(fn1(...args));
+  return async (...args: T) => await piped(await fn1(...args));
 };
