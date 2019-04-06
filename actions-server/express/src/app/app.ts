@@ -18,10 +18,10 @@
   *
   */
 
-import { dialogflow, DialogflowConversation } from 'actions-on-google';
+import { dialogflow, DialogflowConversation, Contexts } from 'actions-on-google';
 import { IsessionStorage, IuserStorage } from '../interface/storage.interface';
 import { Session } from './../database/session';
-import { Core, setLocale } from '../core/core';
+import { exec, setLocale } from '../core/core';
 import { UserInfo } from './../database/userInfo';
 import { DB_URL } from './../constants';
 import { start } from './graph/start/start';
@@ -34,18 +34,22 @@ const generateUUID = () =>
   Math.random().toString(36).substring(2, 15) + '-' +
   Math.random().toString(36).substring(2, 15);
 
-export class DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
+export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage>{
   // utils: UtilsService;
   session: Session;
   userInfo: UserInfo;
   // media: MediaService;
   // ref: RefService;
-  core: Core;
   // init: (conv: DFConv) => string;
 }
 
+interface context extends Contexts {
+  /* insert here all context in array used in app (in Dialogflow console in input field set the same context write in node*/
+
+};
+
 // Create an app instance
-export const app = dialogflow({
+export const app = dialogflow<IsessionStorage, IuserStorage, context, DFConv>({
   /*debug: true,*/
 });
 
@@ -54,30 +58,31 @@ export const app = dialogflow({
 // save here all my service class
 // each call is push data fct into an array
 // allow multiple call
-app.middleware(async (conv: DFConv) => {
-  // conv.utils = new UtilsService(conv);
+app.middleware<DFConv> (async (conv) => {
 
-  if (!conv.user.storage.userId) {
-    conv.user.storage.userId = generateUUID();
-  }
-  conv.userInfo = new UserInfo(conv.user.storage.userId, DB_URL);
-  await conv.userInfo.sync();
+  // the conv type is set to DialogflowConversation<{}, {}, Contexts> and not allow template Type
+  const c = (conv as DFConv);
 
-  if (!conv.data.sessionId) {
-    conv.data.sessionId = generateUUID();
-    UserInfo.update(conv.userInfo, conv);
+  if (!c.user.storage.userId) {
+    c.user.storage.userId = generateUUID();
   }
-  conv.session = new Session(conv.data.sessionId, DB_URL, start);
-  await conv.session.sync();
-  Session.update(conv.session, conv);
+  c.userInfo = new UserInfo(c.user.storage.userId, DB_URL);
+  await c.userInfo.sync();
+
+  if (!c.data.sessionId) {
+    c.data.sessionId = generateUUID();
+    UserInfo.update(c.userInfo, c);
+  }
+  c.session = new Session(c.data.sessionId, DB_URL, start);
+  await c.session.sync();
+  Session.update(c.session, c);
 
   // erase all state that don't belong to sessionId
   // use this for apply memory session in actual session, for the next feature
   // conv.user.storage.id = conv.session.id;
   // conv.media = new MediaService(conv);
   // conv.ref = new RefService(conv);
-  conv.core = new Core(conv);
-  setLocale(conv.user.locale);
+  setLocale(c.user.locale);
 });
 
 const intentName = [
@@ -92,4 +97,4 @@ const intentName = [
 // extract intentName from state.ts
 // futur feature
 // must be specified in json
-app.intent(intentName, async (conv: DFConv) => await conv.core.main());
+app.intent(intentName, async (conv: DFConv) => await exec(conv));
