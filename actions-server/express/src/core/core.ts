@@ -139,7 +139,7 @@ export const test = async (conv: DFConv) => {
   } else {
     if (a.switch) {
       conv.session.node = a.switch.default;
-    } else {
+    } else if (!a.return) {
       conv.session.node = {
         return: true,
         conv: {
@@ -163,8 +163,9 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
       }
     };
   }
+  const ret = conv.session.node.return;
   conv = await (await pipe(context, http, test, conversation, statistic, save))(conv);
-  if (!conv.session.node.return && loop <= MAE_LOOP_MAX) {
+  if (!ret && loop <= MAE_LOOP_MAX) {
     return await exec(conv, ++loop);
   }
   await conv.session.save();
