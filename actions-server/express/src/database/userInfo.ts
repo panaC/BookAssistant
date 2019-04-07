@@ -5,9 +5,9 @@ import { Io } from './io';
 
 export class UserInfo<T = {}> extends Io<Iuser> implements Iuser {
 
-  public lastSeen: Date;
+  public lastSeen!: Date;
   public sessionCount: number;
-  public locale: string;
+  public locale!: string;
   public session: IuserSession[];
   public data: T;
 
