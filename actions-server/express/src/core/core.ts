@@ -161,6 +161,7 @@ const p = async (conv: DFConv) =>
 
 //
 export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
+  debug.core.log(conv.session.node);
   if (loop > MAE_LOOP_MAX) {
     conv.session.node = {
       return: true,
