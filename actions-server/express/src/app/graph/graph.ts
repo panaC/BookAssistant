@@ -1,5 +1,6 @@
 import { Inode } from './../../interface/node.interface';
 
+// global no-input intent
 export const noInput: Inode = {
   return: true,
   conv: {
@@ -7,13 +8,7 @@ export const noInput: Inode = {
   }
 };
 
-export const error: Inode = {
-  return: true,
-  conv: {
-    close: 'Oups, erreur logiciel'
-  }
-};
-
+// cancel intent 
 export const cancel: Inode = {
   return: true,
   conv: {
@@ -21,9 +16,18 @@ export const cancel: Inode = {
   },
 };
 
+// global fallback may be used in app.ts
 export const fallback: Inode = {
   return: true,
   conv: {
     close: 'pas compris',
   },
+};
+
+// global error
+export const error: Inode = {
+  return: true,
+  conv: {
+    close: 'error.global'
+  }
 };

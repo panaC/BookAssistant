@@ -63,23 +63,23 @@ const conversation = async (conv: DFConv) => {
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
-        conv.ask(translate(sprintf(a.ask, ...arg)));
+        conv.ask(sprintf(translate(a.ask), ...arg));
       } else {
-        a.ask.map((v) => conv.ask(translate(sprintf(v, ...arg))));
+        a.ask.map((v) => conv.ask(sprintf(translate(v), ...arg)));
       }
     }
     if (a.close) {
       if (typeof a.close === 'string') {
-        conv.close(translate(sprintf(a.close, ...arg)));
+        conv.close(sprintf(translate(a.close), ...arg));
       } else {
-        a.close.map((v) => conv.close(translate(sprintf(v, ...arg))));
+        a.close.map((v) => conv.close(sprintf(translate(v), ...arg)));
       }
     }
     if (a.suggestion) {
       if (typeof a.suggestion === 'string') {
-        conv.ask(new Suggestions(sprintf(a.suggestion, ...arg)));
+        conv.ask(new Suggestions(sprintf(translate(a.suggestion), ...arg)));
       } else {
-        a.suggestion.map((v) => conv.ask(new Suggestions(sprintf(v, ...arg))));
+        a.suggestion.map((v) => conv.ask(new Suggestions(sprintf(translate(v), ...arg))));
       }
     }
     if (a.media) {
@@ -143,13 +143,19 @@ export const test = async (conv: DFConv) => {
 };
 
 //
-export const exec = async (conv: DFConv, loop = 0) => {
+export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   if (loop > MAE_LOOP_MAX) {
-    conv.session.node = error;
+    conv.session.node = {
+      return: true,
+      conv: {
+        arg: 'error.error',
+        close: 'error.global'
+      }
+    };
   }
   conv = await (await pipe(context, http, test, conversation, statistic, save))(conv);
   if (!conv.session.node.return && loop <= MAE_LOOP_MAX) {
-    exec(conv, ++loop);
+    return await exec(conv, ++loop);
   }
-  conv.userInfo.data.test;
+  return conv;
 };

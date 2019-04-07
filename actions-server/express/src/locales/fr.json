@@ -40,6 +40,7 @@
   },
   "error": {
     "global": "Oups. %s",
+    "error": "une erreur interne est survenue",
     "audiobook": {
       "network": "Une erreur réseau est survenue",
       "chapter": "Le chapitre est incorrect",
