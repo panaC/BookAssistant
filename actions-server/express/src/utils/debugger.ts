@@ -25,7 +25,7 @@ export class Debugger implements Console {
 
     public get memory(): any {
         // tslint:disable-next-line
-        return this.doIfEnabled(() => console.hasOwnProperty('memory') && console.memory);
+        return this.doIfEnabled(() => console.hasOwnProperty('memory') && (console as any).memory);
     }
 
     public assert(value: any, message?: string, ...optionalParams: any[]): void;
@@ -114,17 +114,21 @@ export class Debugger implements Console {
         return this.doIfEnabled(() => this.console.dirxml(value));
     }
 
+    
     public exception(message?: string, ...optionalParams: any[]): void {
-        return this.doIfEnabled(() => this.console.exception(this.addPrefix(message), ...optionalParams));
+        return this.doIfEnabled(() => this.console.exception(this.addPrefix(message), optionalParams));
     }
+
 
     public group(groupTitle?: string): void {
         return this.doIfEnabled(() => this.console.group(groupTitle));
     }
 
+    
     public groupCollapsed(groupTitle?: string): void {
-        return this.doIfEnabled(() => this.console.groupCollapsed(groupTitle));
+        return this.doIfEnabled(() => this.console.groupCollapsed());
     }
+    
 
     public groupEnd(): void {
         return this.doIfEnabled(() => this.console.groupEnd());
@@ -142,9 +146,11 @@ export class Debugger implements Console {
         return this.doIfEnabled(() => this.console.profileEnd());
     }
 
+    
     public table(...data: any[]): void {
-        return this.doIfEnabled(() => this.console.table(...data));
+        return this.doIfEnabled(() => this.console.table(data));
     }
+    
 
     /**
      * Throws usual error in debug mode and non-blocking otherwise
@@ -155,8 +161,5 @@ export class Debugger implements Console {
         if (this.isEnabled) {
             throw error;
         }
-        setTimeout(() => {
-            throw error;
-        });
     }
 }
