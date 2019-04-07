@@ -33,3 +33,5 @@ export class UserInfo<T = {}> extends Io<Iuser> implements Iuser {
   }
 
 }
+
+// EOF
