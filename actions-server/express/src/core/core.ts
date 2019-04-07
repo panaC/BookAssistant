@@ -18,7 +18,6 @@ import { DFConv } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
 import { join } from 'path';
-import { error } from '../app/graph/graph';
 import Axios from 'axios';
 import { pipe } from '../utils/pipe';
 
@@ -135,8 +134,7 @@ export const test = async (conv: DFConv) => {
     }
     const r = a.test(conv);
     conv.session.node = a.switch.case.reduce(
-      (pv, cv) =>
-        a.test && cv.value === r ?
+      (pv, cv) => cv.value === r ?
           cv.node : pv, a.switch.default);
   }
   return conv;
