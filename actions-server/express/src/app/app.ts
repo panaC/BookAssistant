@@ -1,3 +1,4 @@
+import { debug } from './../utils/debug';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -94,6 +95,8 @@ app.middleware<DFConv> (async (conv) => {
   Session.update(c.session, c);
 
   setLocale(c.user.locale);
+
+
 });
 
 //
@@ -109,6 +112,9 @@ const intentName = [
 
 //
 // Starting point for all incoming intent
-app.intent(intentName, async (conv: DFConv) => await exec(conv));
+app.intent(intentName, async (conv: DFConv) => { 
+  debug.app.log(conv.session.node);
+  return await exec(conv);
+});
 
 // EOF
