@@ -116,7 +116,7 @@ export class Debugger implements Console {
 
     
     public exception(message?: string, ...optionalParams: any[]): void {
-        return this.doIfEnabled(() => this.console.exception(this.addPrefix(message), optionalParams));
+        return this.doIfEnabled(() => (this.console as any).exception(this.addPrefix(message), optionalParams));
     }
 
 
