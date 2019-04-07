@@ -51,6 +51,7 @@ const context = async (conv: DFConv) => {
 
 const conversation = async (conv: DFConv) => {
   const a = conv.session.node.conv;
+  debug.core.log(a);
   let arg: string[] = [];
 
   if (a) {
