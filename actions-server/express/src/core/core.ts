@@ -152,6 +152,9 @@ export const test = async (conv: DFConv) => {
   return conv;
 };
 
+const p = async (conv: DFConv) =>
+  await (await pipe(context, http, test, conversation, statistic, save))(conv);
+
 //
 export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   if (loop > MAE_LOOP_MAX) {
@@ -163,12 +166,8 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
       }
     };
   }
-  const ret = conv.session.node.return;
-  conv = await (await pipe(context, http, test, conversation, statistic, save))(conv);
-  if (!ret && loop <= MAE_LOOP_MAX) {
-    return await exec(conv, ++loop);
+  if (conv.session.node.return && loop <= MAE_LOOP_MAX) {
+    return await p(conv);
   }
-  await conv.session.save();
-  await conv.userInfo.save();
-  return conv;
+  return await exec(await p(conv), ++loop);
 };

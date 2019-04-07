@@ -109,6 +109,10 @@ const intentName = [
 
 //
 // Starting point for all incoming intent
-app.intent(intentName, async (conv: DFConv) => await exec(conv));
+app.intent(intentName, async (conv: DFConv) => {
+  await exec(conv);
+  await conv.session.save();
+  await conv.userInfo.save();
+});
 
 // EOF
