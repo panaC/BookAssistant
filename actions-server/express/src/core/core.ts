@@ -86,7 +86,7 @@ const conversation = async (conv: DFConv) => {
       conv.ask(new MediaObject(a.media));
     }
   }
-  debug.core.log((await exec(conv)).responses);
+  debug.core.log(conv.responses);
   return conv;
 };
 
@@ -169,10 +169,8 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
     };
   }
   if (conv.session.node.return && loop <= MAE_LOOP_MAX) {
-  }
-    //debug.core.log('WHY it\'s infernal loop !');
-    console.log('test');
-    
+    debug.core.log('return');
     return await p(conv);
-  // return await exec(await p(conv), ++loop);
+  }
+  return await exec(await p(conv), ++loop);
 };
