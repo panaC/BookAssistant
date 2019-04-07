@@ -15,17 +15,14 @@ import * as Nano from 'nano';
 
 export abstract class Io<T> implements Nano.MaybeDocument {
 
-  _rev: string;
+  _rev!: string;
 
   private _db: Nano.DocumentScope<T>;
 
   constructor(public _id: string, db: string, dbName: string) {
 
-    this._rev = '';
-
     const n = Nano(db);
     this._db = n.db.use<T>(dbName);
-
   }
 
   sync(): Promise<void> {
