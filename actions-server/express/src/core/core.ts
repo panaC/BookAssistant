@@ -136,6 +136,18 @@ export const test = async (conv: DFConv) => {
     conv.session.node = a.switch.case.reduce(
       (pv, cv) => cv.value === r ?
           cv.node : pv, a.switch.default);
+  } else {
+    if (a.switch) {
+      conv.session.node = a.switch.default;
+    } else {
+      conv.session.node = {
+        return: true,
+        conv: {
+          arg: 'error.error',
+          close: 'error.global'
+        }
+      };
+    }
   }
   return conv;
 };
