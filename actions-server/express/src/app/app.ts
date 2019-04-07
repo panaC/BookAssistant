@@ -114,7 +114,7 @@ const intentName = [
 // Starting point for all incoming intent
 app.intent(intentName, async (conv: DFConv) => { 
   debug.app.log(conv.session.node);
-  return await exec(conv);
+  debug.app.log((await exec(conv)).responses);
 });
 
 // EOF
