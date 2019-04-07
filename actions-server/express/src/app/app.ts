@@ -53,7 +53,7 @@ interface context extends Contexts {
 //
 // Create an app instance
 // See actions-on-google Modules -> Dialogflow/dialogflow.ts
-const app = dialogflow<IsessionStorage, IuserStorage, context, DFConv>({
+export const app = dialogflow<IsessionStorage, IuserStorage, context, DFConv>({
   /*debug: true,*/
 });
 

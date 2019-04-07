@@ -11,9 +11,9 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import express from 'express';
 import { SERVER_NAME, ENTRY_POINT, PORT } from './constants';
 import { app } from './app/app';
+import * as express from 'express';
 
 export const server = express();
 
@@ -24,3 +24,5 @@ server.post(ENTRY_POINT, app);
 server.get('/', (req, res) => {
   res.send(SERVER_NAME);
 });
+
+// EOF
