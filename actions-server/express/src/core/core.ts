@@ -133,10 +133,13 @@ export const save = async (conv: DFConv) =>{
 
 export const test = async (conv: DFConv) => {
   const a = conv.session.node;
+  debug.core.log('test');
+  debug.core.log(conv.session.node);
   if (a.test && a.switch) {
     if (!a.switch.case) {
       a.switch.case = [];
     }
+    debug.core.log(conv.session.node.test);
     const r = a.test(conv);
     conv.session.node = a.switch.case.reduce(
       (pv, cv) => cv.value === r ?
