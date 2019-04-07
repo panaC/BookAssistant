@@ -171,7 +171,6 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   if (conv.session.node.return && loop <= MAE_LOOP_MAX) {
     debug.core.log('return');
     return await p(conv);
-  } else {
-    return await exec(await p(conv), ++loop);
   }
+  // return await exec(await p(conv), ++loop);
 };
