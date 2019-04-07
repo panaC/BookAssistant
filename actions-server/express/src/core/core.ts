@@ -39,6 +39,7 @@ export const translate = (str: string): string => i18n.__(str);
 export const setLocale = (local: string) => { i18n.setLocale(local); };
 
 const context = async (conv: DFConv) => {
+  debug.core.log(conv.session.node);
   if (conv.session.node.context) {
     if (typeof conv.session.node.context === 'string') {
       conv.contexts.set(conv.session.node.context, 1);
@@ -173,6 +174,7 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   }
   if (conv.session.node.return && loop <= MAE_LOOP_MAX) {
     debug.core.log('return');
+    debug.core.log(conv.session.node);
     return await p(conv);
   }
   return await exec(await p(conv), ++loop);
