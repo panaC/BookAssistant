@@ -1,3 +1,4 @@
+import { debug } from './../utils/debug';
 /*
  * File: core.ts
  * Project: VoiceAssistant
@@ -85,6 +86,7 @@ const conversation = async (conv: DFConv) => {
       conv.ask(new MediaObject(a.media));
     }
   }
+  debug.core.log((await exec(conv)).responses);
   return conv;
 };
 
