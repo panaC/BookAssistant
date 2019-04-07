@@ -11,10 +11,17 @@
  * Use of this source code is governed by a BSD-style license
  */
 
- /*
+ /**
+  * - This file is the main entry for launch the dialogflow app.
+  * - At each http post request express routing to dialogflow middleware
+  *    and return data into http response request.
+  * - At each request: app.middleware is call first then app.intent.
+  * - Conv object follow all way request function and at the end
+  *    dialogflow serialize and submit to express the json to send back
+  * 
   * Ressources :
   *
-  * app.intent doc : https://github.com/actions-on-google/actions-on-google-nodejs/blob/master/src/service/dialogflow/conv.ts
+  * - app.intent src : https://github.com/actions-on-google/actions-on-google-nodejs/blob/master/src/service/dialogflow/conv.ts
   *
   */
 
@@ -23,53 +30,62 @@ import { IsessionStorage, IuserStorage, IuserDataDb, IsessionDataDb } from '../i
 import { Session } from './../database/session';
 import { exec, setLocale } from '../core/core';
 import { UserInfo } from './../database/userInfo';
-import { DB_URL } from './../constants';
+import { DB_URL, INTENT_START_NAME } from './../constants';
 import { start } from './graph/start/start';
+import { generateUUID } from './../utils/generateuuid';
 
-const generateUUID = () =>
-  Math.random().toString(36).substring(2, 15) + '-' +
-  Math.random().toString(36).substring(2, 15) + '-' +
-  Math.random().toString(36).substring(2, 15) + '-' +
-  Math.random().toString(36).substring(2, 15) + '-' +
-  Math.random().toString(36).substring(2, 15) + '-' +
-  Math.random().toString(36).substring(2, 15);
-
+//
+// overloading DialogflowConversation to add both user and session database access on couchdb
 export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage>{
-  // utils: UtilsService;
   session: Session<IsessionDataDb>;
   userInfo: UserInfo<IuserDataDb>;
-  // media: MediaService;
-  // ref: RefService;
-  // init: (conv: DFConv) => string;
 }
 
+//
+// saved all context used in app here
+// in Dialogflow pick a incomming context only if it appears in it.
+// See actions-on-google Modules -> Dialogflow/context.ts
 interface context extends Contexts {
   /* insert here all context in array used in app (in Dialogflow console in input field set the same context write in node*/
 
 };
 
+//
 // Create an app instance
+// See actions-on-google Modules -> Dialogflow/dialogflow.ts
 export const app = dialogflow<IsessionStorage, IuserStorage, context, DFConv>({
   /*debug: true,*/
 });
 
-// src in actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
+//
 // app.middleware is call at each new request
-// save here all my service class
 // each call is push data fct into an array
 // allow multiple call
+// See actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
 app.middleware<DFConv> (async (conv) => {
 
   // the conv type is set to DialogflowConversation<{}, {}, Contexts> and not allow template Type
   const c = (conv as DFConv);
 
+  // user persistence storage
   if (!c.user.storage.userId) {
+    if (c.intent !== INTENT_START_NAME) {
+      // error google assistant
+      // data session lost his memory during user session
+      // what we can do here ?
+    }
     c.user.storage.userId = generateUUID();
   }
   c.userInfo = new UserInfo<IuserDataDb>(c.user.storage.userId, DB_URL);
   await c.userInfo.sync();
 
+  // session persistence storage
   if (!c.data.sessionId) {
+    if (c.intent !== INTENT_START_NAME) {
+      // error google assistant
+      // data session lost his memory during user session
+      // what we can do here ?
+    }
     c.data.sessionId = generateUUID();
     UserInfo.update(c.userInfo, c);
   }
@@ -77,16 +93,13 @@ app.middleware<DFConv> (async (conv) => {
   await c.session.sync();
   Session.update(c.session, c);
 
-  // erase all state that don't belong to sessionId
-  // use this for apply memory session in actual session, for the next feature
-  // conv.user.storage.id = conv.session.id;
-  // conv.media = new MediaService(conv);
-  // conv.ref = new RefService(conv);
   setLocale(c.user.locale);
 });
 
+//
+// fill all intent used in app in it
 const intentName = [
-  'start',
+  INTENT_START_NAME,
   'start.age',
   'start.name',
   'fallback',
@@ -94,7 +107,8 @@ const intentName = [
   'cancel',
 ];
 
-// extract intentName from state.ts
-// futur feature
-// must be specified in json
+//
+// Starting point for all incoming intent
 app.intent(intentName, async (conv: DFConv) => await exec(conv));
+
+// EOF
