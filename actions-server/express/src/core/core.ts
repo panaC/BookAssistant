@@ -63,6 +63,7 @@ const conversation = async (conv: DFConv) => {
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
+        debug.core.log(sprintf(translate(a.ask), ...arg));
         conv.ask(sprintf(translate(a.ask), ...arg));
       } else {
         a.ask.map((v) => conv.ask(sprintf(translate(v), ...arg)));
