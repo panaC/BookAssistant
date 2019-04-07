@@ -158,7 +158,7 @@ export const test = async (conv: DFConv) => {
 };
 
 const p = async (conv: DFConv) =>
-  await (await pipe(context, http, test, conversation, statistic, save))(conv);
+  await (await pipe(context, http, conversation, statistic, test, save))(conv);
 
 //
 export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
