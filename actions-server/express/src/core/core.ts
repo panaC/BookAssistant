@@ -14,25 +14,14 @@
 import { Ihttp } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
-import { DFConv, getNodeInSymbolTable } from '../app/app';
+import { DFConv, getNodeInSymbolTable, i18nConfigure } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
-import { join } from 'path';
 import Axios from 'axios';
 import { pipe } from '../utils/pipe';
 import { debug } from './../utils/debug';
 
-i18n.configure({
-  directory: join(__dirname, '../locales'),
-  objectNotation: true,
-  fallbacks: {
-    'fr-FR': 'fr',
-    'fr-CA': 'fr',
-    'en-US': 'en',
-    'en-GB': 'en',
-  },
-  defaultLocale: 'fr',
-});
+i18n.configure(i18nConfigure);
 
 export const translate = (str: string): string => i18n.__(str);
 

@@ -39,13 +39,23 @@ import { Iintent } from '../interface/intent.interface';
 import { Inode } from '../interface/node.interface';
 import { startChoice, startName, startAge } from './graph/start/children';
 import { noInput } from './graph/graph';
+import { join } from 'path';
 
-//
-// declarer class graph avec la tables des ymboles en parametre
+export const i18nConfigure = {
+  directory: join(__dirname, '../app/locales'),
+  objectNotation: true,
+  fallbacks: {
+    'fr-FR': 'fr',
+    'fr-CA': 'fr',
+    'en-US': 'en',
+    'en-GB': 'en',
+  },
+  defaultLocale: 'fr',
+}
 
 //
 // overloading DialogflowConversation to add both user and session database access on couchdb
-export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage>{
+export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
   session: Session<IsessionDataDb>;
   userInfo: UserInfo<IuserDataDb>;
   node: Inode;
@@ -85,7 +95,7 @@ const nodeTable: IsymbolTable = {
 export interface IintentTable {
   'start': Inode;
   'start.age': Inode;
-  'start.name' : Inode,
+  'start.name': Inode,
   'fallback': Inode,
   'no_input': Inode,
   'cancel': Inode,
@@ -94,7 +104,7 @@ export interface IintentTable {
 const intentTable: IintentTable = {
   'start': start,
   'start.age': start,
-  'start.name' : start,
+  'start.name': start,
   'fallback': start,
   'no_input': start,
   'cancel': start,
