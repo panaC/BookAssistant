@@ -164,7 +164,7 @@ export const test = async (conv: DFConv) => {
 };
 
 const p = async (conv: DFConv) =>
-  await (await pipe(context, http, conversation, statistic, test, save))(conv);
+  await (await pipe(context, http, conversation, test))(conv);
 
 //
 export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
@@ -180,7 +180,8 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   }
   if (conv.node.return && loop <= MAE_LOOP_MAX) {
     debug.core.log('return');
-    debug.core.log(conv.node);
+    await statistic(conv);
+    await save(conv);
     return await p(conv);
   }
   return await exec(await p(conv), ++loop);
