@@ -66,6 +66,8 @@ export interface Isession extends Nano.MaybeDocument {
   lastSeen: Date;
   surfaceCapabilities?: Capabilities;
   raw: IrawInput[];
-  node: Inode;
+  
+  // no longer used since intentName contains node instead global session state
+  //state: string;
   data: {};
 }

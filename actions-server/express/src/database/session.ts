@@ -12,9 +12,14 @@ export class Session<T = {}> extends Io<Isession> implements Isession {
   raw: IrawInput[];
   data: T;
 
-  constructor(id: string, db: string, public node: Inode) {
+  /**
+   * 
+   * @param id session unique id
+   * @param db couchdb url
+   * @param state symbol description name to init state by default
+   */
+  constructor(id: string, db: string) {
     super(id, db, 'session');
-
     this.raw = [];
     this.data = {} as T;
   }

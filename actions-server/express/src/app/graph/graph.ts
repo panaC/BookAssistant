@@ -31,3 +31,19 @@ export const error: Inode = {
     close: 'error.global'
   }
 };
+
+
+// 
+// FOr the graph,
+// make a class to get all node
+
+// one function for insert a new node in the graph
+// param : Symbol, node
+
+// one function to get a node with symbol string description
+// used to core exec to get a node in function of the state in session
+//
+
+// a getter with a symbol in param and return node
+//
+

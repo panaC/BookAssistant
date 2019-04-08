@@ -15,10 +15,10 @@ import { Inode } from '../../../interface/node.interface';
 import { startChoice } from './children';
 
 export const start: Inode = {
-  context: 'start',
-  switch: {
-    default: startChoice,
-  },
+  // context: 'start',
+  /*switch: {
+    default: 'startChoice',
+  },*/
   conv: {
     ask: 'welcome.home',
   },

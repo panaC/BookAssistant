@@ -1,4 +1,4 @@
-import { debug } from './../utils/debug';
+import { cancel, error, fallback } from './graph/graph';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -34,27 +34,91 @@ import { UserInfo } from './../database/userInfo';
 import { DB_URL, INTENT_START_NAME } from './../constants';
 import { start } from './graph/start/start';
 import { generateUUID } from './../utils/generateuuid';
+import { Isymbol } from '../interface/symbol.interface';
+import { Iintent } from '../interface/intent.interface';
+import { Inode } from '../interface/node.interface';
+import { startChoice, startName, startAge } from './graph/start/children';
+import { noInput } from './graph/graph';
+
+//
+// declarer class graph avec la tables des ymboles en parametre
 
 //
 // overloading DialogflowConversation to add both user and session database access on couchdb
 export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage>{
   session: Session<IsessionDataDb>;
   userInfo: UserInfo<IuserDataDb>;
+  node: Inode;
 }
 
 //
 // saved all context used in app here
 // in Dialogflow pick a incomming context only if it appears in it.
 // See actions-on-google Modules -> Dialogflow/context.ts
-interface context extends Contexts {
-  /* insert here all context in array used in app (in Dialogflow console in input field set the same context write in node*/
-
+export interface contextTable /*extends Contexts*/ {
 };
 
-//
+export interface IsymbolTable {
+  start: Inode;
+  startChoice: Inode;
+  startName: Inode;
+  startAge: Inode;
+  noInput: Inode;
+  cancel: Inode;
+  error: Inode;
+
+  // require
+  fallback: Inode;
+}
+
+const nodeTable: IsymbolTable = {
+  start: start,
+  startChoice: startChoice,
+  startName: startName,
+  startAge: startAge,
+  noInput: noInput,
+  cancel: cancel,
+  fallback: fallback,
+  error: error,
+}
+
+export interface IintentTable {
+  'start': Inode;
+  'start.age': Inode;
+  'start.name' : Inode,
+  'fallback': Inode,
+  'no_input': Inode,
+  'cancel': Inode,
+}
+
+const intentTable: IintentTable = {
+  'start': start,
+  'start.age': start,
+  'start.name' : start,
+  'fallback': start,
+  'no_input': start,
+  'cancel': start,
+}
+
+export const getNodeInSymbolTable = (name: keyof IsymbolTable) =>
+  Object.entries(nodeTable).reduce((p, o) => {
+    const [key, node] = o;
+    if (key === name) {
+      return node;
+    }
+    return p;
+  }, intentTable.fallback)
+
+// used only for template typing dialogflow
+// actions-server/express/node_modules/actions-on-google/src/service/dialogflow/context.ts:184
+// extends [:string]: Context
+// used this only to set context name keyof of Tcontext
+// but doesn't work with the iterator type employ
+interface myContextInterface extends Contexts { }
+
 // Create an app instance
 // See actions-on-google Modules -> Dialogflow/dialogflow.ts
-export const app = dialogflow<IsessionStorage, IuserStorage, context, DFConv>({
+export const app = dialogflow<IsessionStorage, IuserStorage, myContextInterface, DFConv>({
   /*debug: true,*/
 });
 
@@ -63,7 +127,7 @@ export const app = dialogflow<IsessionStorage, IuserStorage, context, DFConv>({
 // each call is push data fct into an array
 // allow multiple call
 // See actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
-app.middleware<DFConv> (async (conv) => {
+app.middleware<DFConv>(async (conv) => {
 
   // the conv type is set to DialogflowConversation<{}, {}, Contexts> and not allow template Type
   const c = (conv as DFConv);
@@ -90,28 +154,28 @@ app.middleware<DFConv> (async (conv) => {
     c.data.sessionId = generateUUID();
     UserInfo.update(c.userInfo, c);
   }
-  c.session = new Session<IsessionDataDb>(c.data.sessionId, DB_URL, start);
+  c.session = new Session<IsessionDataDb>(c.data.sessionId, DB_URL);
   await c.session.sync();
   Session.update(c.session, c);
 
   setLocale(c.user.locale);
-
-
 });
 
-//
-// fill all intent used in app in it
-const intentName = [
-  INTENT_START_NAME,
-  'start.age',
-  'start.name',
-  'fallback',
-  'no_input',
-  'cancel',
-];
+const getNodeInIntentTable = (name: keyof IintentTable) =>
+  Object.entries(intentTable).reduce((p, o) => {
+    const [key, node] = o;
+    if (key === name) {
+      return node;
+    }
+    return p;
+  }, intentTable.fallback)
 
 //
 // Starting point for all incoming intent
-app.intent(intentName, async (conv: DFConv) => await exec(conv));
+// start exec with Inode in intentName
+app.intent(Object.keys(intentTable), async (conv: DFConv) => {
+  conv.node = getNodeInIntentTable(conv.intent as keyof IintentTable);
+  return await exec(conv);
+});
 
 // EOF

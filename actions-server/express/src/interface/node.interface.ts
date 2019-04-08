@@ -11,12 +11,14 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { DFConv } from '../app/app';
-import { MediaObjectOptions } from 'actions-on-google';
+import { DFConv, IsymbolTable, IintentTable } from '../app/app';
+import { MediaObjectOptions, Contexts } from 'actions-on-google';
 import { AxiosRequestConfig } from 'axios';
 
 export interface Inode {
-  context?: string | string[];
+  // Symbol name
+  name?: keyof IsymbolTable;
+  context?: string | string[]/*Contexts | Contexts[]*/;
 
   http?: Ihttp | Ihttp[];
 
@@ -27,8 +29,8 @@ export interface Inode {
   // use reduce here with init = default and [] = case
   switch?: {
     // possibly add more state for more context switch
-    case?: Icase[];
-    default: Inode;
+    case?: Array<keyof IsymbolTable>;
+    default: keyof IsymbolTable;
   };
   conv?: {
     arg?: string | string[];
@@ -40,13 +42,15 @@ export interface Inode {
 
   // no by default
   return?: boolean;
-  error?: Inode;
+  error?: keyof IsymbolTable | Inode;
 }
 
+/*
 export interface Icase {
-  value: string;
+  value: keyof IsymbolTable;
   node: Inode;
 }
+*/
 
 export interface Ihttp extends AxiosRequestConfig {
   // tslint:disable-next-line:no-any

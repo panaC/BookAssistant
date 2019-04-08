@@ -1,4 +1,3 @@
-import { debug } from './../utils/debug';
 /*
  * File: core.ts
  * Project: VoiceAssistant
@@ -15,12 +14,13 @@ import { debug } from './../utils/debug';
 import { Ihttp } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
-import { DFConv } from '../app/app';
+import { DFConv, getNodeInSymbolTable } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
 import { join } from 'path';
 import Axios from 'axios';
 import { pipe } from '../utils/pipe';
+import { debug } from './../utils/debug';
 
 i18n.configure({
   directory: join(__dirname, '../locales'),
@@ -39,19 +39,19 @@ export const translate = (str: string): string => i18n.__(str);
 export const setLocale = (local: string) => { i18n.setLocale(local); };
 
 const context = async (conv: DFConv) => {
-  debug.core.log(conv.session.node);
-  if (conv.session.node.context) {
-    if (typeof conv.session.node.context === 'string') {
-      conv.contexts.set(conv.session.node.context, 1);
+  debug.core.log(conv.node);
+  if (conv.node.context) {
+    if (typeof conv.node.context === 'string') {
+      conv.contexts.set(conv.node.context, 1);
     } else {
-      conv.session.node.context.map((v) => conv.contexts.set(v, 1));
+      conv.node.context.map((v) => conv.contexts.set(v, 1));
     }
   }
   return conv;
 };
 
 const conversation = async (conv: DFConv) => {
-  const a = conv.session.node.conv;
+  const a = conv.node.conv;
   debug.core.log(a);
   let arg: string[] = [];
 
@@ -105,11 +105,11 @@ const http = async (conv: DFConv) => {
     }
   };
 
-  if (conv.session.node.http) {
-    if (conv.session.node.http instanceof Array) {
-      conv.session.node.http.map(async (v) => await request(v, conv));
+  if (conv.node.http) {
+    if (conv.node.http instanceof Array) {
+      conv.node.http.map(async (v) => await request(v, conv));
     } else {
-      await request(conv.session.node.http, conv);
+      await request(conv.node.http, conv);
     }
   }
   return conv;
@@ -125,32 +125,32 @@ export const statistic = async (conv: DFConv) => {
 
 export const save = async (conv: DFConv) =>{
 
-    await conv.session.save();
-    await conv.userInfo.save();
-    return conv;
+  await conv.session.save();
+  await conv.userInfo.save();
+  return conv;
 };
 
 
 export const test = async (conv: DFConv) => {
-  const a = conv.session.node;
+  const a = conv.node;
   debug.core.log('test');
-  debug.core.log(conv.session.node);
+  debug.core.log(conv.node);
   if (a.test && a.switch) {
     if (!a.switch.case) {
       a.switch.case = [];
     }
-    debug.core.log(conv.session.node.test);
+    debug.core.log(conv.node.test);
     debug.core.log(a.test);
     debug.core.log(typeof a.test);
     const r = a.test(conv);
-    conv.session.node = a.switch.case.reduce(
-      (pv, cv) => cv.value === r ?
-          cv.node : pv, a.switch.default);
+    conv.node = getNodeInSymbolTable(a.switch.case.reduce(
+      (pv, cv) => cv === r ?
+          cv : pv, a.switch.default));
   } else {
     if (a.switch) {
-      conv.session.node = a.switch.default;
+      conv.node = getNodeInSymbolTable(a.switch.default);
     } else if (!a.return) {
-      conv.session.node = {
+      conv.node = {
         return: true,
         conv: {
           arg: 'error.error',
@@ -166,10 +166,10 @@ const p = async (conv: DFConv) =>
   await (await pipe(context, http, conversation, statistic, test, save))(conv);
 
 //
-export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
-  debug.core.log(conv.session.node);
+export const exec = async (conv: DFConv,  loop = 0): Promise<DFConv> => {
+  debug.core.log(conv.node);
   if (loop > MAE_LOOP_MAX) {
-    conv.session.node = {
+    conv.node = {
       return: true,
       conv: {
         arg: 'error.error',
@@ -177,9 +177,9 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
       }
     };
   }
-  if (conv.session.node.return && loop <= MAE_LOOP_MAX) {
+  if (conv.node.return && loop <= MAE_LOOP_MAX) {
     debug.core.log('return');
-    debug.core.log(conv.session.node);
+    debug.core.log(conv.node);
     return await p(conv);
   }
   return await exec(await p(conv), ++loop);
