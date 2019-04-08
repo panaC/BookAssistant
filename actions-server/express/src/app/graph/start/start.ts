@@ -15,7 +15,7 @@ import { Inode } from '../../../interface/node.interface';
 import { startChoice } from './children';
 
 export const start: Inode = {
-  // context: 'start',
+  context: 'start',
   /*switch: {
     default: 'startChoice',
   },*/
