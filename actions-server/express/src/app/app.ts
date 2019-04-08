@@ -1,3 +1,4 @@
+import { Context } from './../../../../agent-dialogflow/script/src/types/dialogflow.d';
 import { debug } from './../utils/debug';
 import { cancel, error, fallback } from './graph/graph';
 /*
@@ -53,8 +54,13 @@ export interface DFConv extends DialogflowConversation<IsessionStorage, IuserSto
 // saved all context used in app here
 // in Dialogflow pick a incomming context only if it appears in it.
 // See actions-on-google Modules -> Dialogflow/context.ts
-export interface contextTable /*extends Contexts*/ {
+export interface IcontextTable /*extends Contexts*/ {
+  start: number;
 };
+
+const contextTable: IcontextTable = {
+  start: 1,
+}
 
 export interface IsymbolTable {
   start: Inode;
@@ -106,6 +112,15 @@ export const getNodeInSymbolTable = (name: keyof IsymbolTable) =>
     }
     return p;
   }, intentTable.fallback)
+
+export const getContextInTable = (name: keyof IcontextTable) =>
+  Object.entries(contextTable).reduce((p, o) => {
+    const [key, lifespan] = o;
+    if (key === name) {
+      return lifespan;
+    }
+    return p;
+  }, 5)
 
 // used only for template typing dialogflow
 // actions-server/express/node_modules/actions-on-google/src/service/dialogflow/context.ts:184

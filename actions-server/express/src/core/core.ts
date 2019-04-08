@@ -15,7 +15,7 @@
 import { Ihttp } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
-import { DFConv, getNodeInSymbolTable } from '../app/app';
+import { DFConv, getNodeInSymbolTable, getContextInTable } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
 import Axios from 'axios';
@@ -43,9 +43,9 @@ const context = async (conv: DFConv) => {
   debug.core.log(conv.node);
   if (conv.node.context) {
     if (typeof conv.node.context === 'string') {
-      conv.contexts.set(conv.node.context, 1);
+      conv.contexts.set(conv.node.context, getContextInTable(conv.node.context));
     } else {
-      conv.node.context.map((v) => conv.contexts.set(v, 1));
+      conv.node.context.map((v) => conv.contexts.set(v, getContextInTable(v)));
     }
   }
   return conv;

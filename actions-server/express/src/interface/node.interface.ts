@@ -11,14 +11,14 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { DFConv, IsymbolTable, IintentTable } from '../app/app';
+import { DFConv, IsymbolTable, IintentTable, IcontextTable } from '../app/app';
 import { MediaObjectOptions, Contexts } from 'actions-on-google';
 import { AxiosRequestConfig } from 'axios';
 
 export interface Inode {
   // Symbol name
   name?: keyof IsymbolTable;
-  context?: string | string[]/*Contexts | Contexts[]*/;
+  context?: keyof IcontextTable | Array<keyof IcontextTable>;
 
   http?: Ihttp | Ihttp[];
 
