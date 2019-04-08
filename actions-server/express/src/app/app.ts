@@ -90,11 +90,11 @@ export interface IintentTable {
 
 const intentTable: IintentTable = {
   'start': start,
-  'start.age': start,
-  'start.name': start,
-  'fallback': start,
-  'no_input': start,
-  'cancel': start,
+  'start.age': startAge,
+  'start.name': startName,
+  'fallback': fallback,
+  'no_input': noInput,
+  'cancel': cancel,
 }
 
 export const getNodeInSymbolTable = (name: keyof IsymbolTable) =>
