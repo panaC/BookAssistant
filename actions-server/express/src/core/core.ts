@@ -1,3 +1,4 @@
+
 /*
  * File: core.ts
  * Project: VoiceAssistant
@@ -14,14 +15,25 @@
 import { Ihttp } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
-import { DFConv, getNodeInSymbolTable, i18nConfigure } from '../app/app';
+import { DFConv, getNodeInSymbolTable } from '../app/app';
 import { MAE_LOOP_MAX } from './../constants';
 import * as i18n from 'i18n';
 import Axios from 'axios';
 import { pipe } from '../utils/pipe';
 import { debug } from './../utils/debug';
+import { join } from 'path';
 
-i18n.configure(i18nConfigure);
+i18n.configure({
+  directory: join(__dirname, '../app/locales'),
+  objectNotation: true,
+  fallbacks: {
+    'fr-FR': 'fr',
+    'fr-CA': 'fr',
+    'en-US': 'en',
+    'en-GB': 'en',
+  },
+  defaultLocale: 'fr',
+});
 
 export const translate = (str: string): string => i18n.__(str);
 
@@ -47,7 +59,7 @@ const conversation = async (conv: DFConv) => {
   if (a) {
     if (a.arg) {
       if (typeof a.arg === 'string') {
-        arg = [ a.arg ];
+        arg = [a.arg];
       } else {
         arg = a.arg;
       }
@@ -112,7 +124,7 @@ export const statistic = async (conv: DFConv) => {
   return conv;
 };
 
-export const save = async (conv: DFConv) =>{
+export const save = async (conv: DFConv) => {
 
   await conv.session.save();
   await conv.userInfo.save();
@@ -134,7 +146,7 @@ export const test = async (conv: DFConv) => {
     const r = a.test(conv);
     conv.node = getNodeInSymbolTable(a.switch.case.reduce(
       (pv, cv) => cv === r ?
-          cv : pv, a.switch.default));
+        cv : pv, a.switch.default));
   } else {
     if (a.switch) {
       conv.node = getNodeInSymbolTable(a.switch.default);
@@ -155,7 +167,7 @@ const p = async (conv: DFConv) =>
   await (await pipe(context, http, conversation, statistic, test, save))(conv);
 
 //
-export const exec = async (conv: DFConv,  loop = 0): Promise<DFConv> => {
+export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   debug.core.log(conv.node);
   if (loop > MAE_LOOP_MAX) {
     conv.node = {

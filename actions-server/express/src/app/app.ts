@@ -39,19 +39,6 @@ import { Iintent } from '../interface/intent.interface';
 import { Inode } from '../interface/node.interface';
 import { startChoice, startName, startAge } from './graph/start/children';
 import { noInput } from './graph/graph';
-import { join } from 'path';
-
-export const i18nConfigure = {
-  directory: join(__dirname, '../app/locales'),
-  objectNotation: true,
-  fallbacks: {
-    'fr-FR': 'fr',
-    'fr-CA': 'fr',
-    'en-US': 'en',
-    'en-GB': 'en',
-  },
-  defaultLocale: 'fr',
-}
 
 //
 // overloading DialogflowConversation to add both user and session database access on couchdb
