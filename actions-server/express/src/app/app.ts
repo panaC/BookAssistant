@@ -1,3 +1,4 @@
+import { debug } from './../utils/debug';
 import { cancel, error, fallback } from './graph/graph';
 /*
  * File: app.ts
@@ -161,6 +162,7 @@ app.middleware<DFConv>(async (conv) => {
 const getNodeInIntentTable = (name: keyof IintentTable) =>
   Object.entries(intentTable).reduce((p, o) => {
     const [key, node] = o;
+    debug.app.log(`'${key}, '${name}'`);
     if (key === name) {
       return node;
     }
