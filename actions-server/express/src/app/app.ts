@@ -59,7 +59,7 @@ export interface IcontextTable /*extends Contexts*/ {
 };
 
 const contextTable: IcontextTable = {
-  start: 1,
+  start: 88,
 }
 
 export interface IsymbolTable {
