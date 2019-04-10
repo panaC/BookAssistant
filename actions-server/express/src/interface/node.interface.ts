@@ -11,8 +11,8 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { DFConv, IsymbolTable, IintentTable, IcontextTable } from '../app/app';
-import { MediaObjectOptions, Contexts } from 'actions-on-google';
+import { DFConv, IsymbolTable, IcontextTable } from '../app/app';
+import { MediaObjectOptions } from 'actions-on-google';
 import { AxiosRequestConfig } from 'axios';
 
 export interface Inode {

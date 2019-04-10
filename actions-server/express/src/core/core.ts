@@ -1,4 +1,3 @@
-
 /*
  * File: core.ts
  * Project: VoiceAssistant

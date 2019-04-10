@@ -19,17 +19,17 @@ export class UserInfo<T = {}> extends Io<Iuser> implements Iuser {
     this.data = {} as T;
   }
 
-  static update(userInfo: UserInfo, conv: DFConv) {
+  update(conv: DFConv) {
 
     const date = new Date(Date.now());
 
-    userInfo.lastSeen = date;
-    userInfo.session.push({
+    this.lastSeen = date;
+    this.session.push({
       id: conv.data.sessionId,
       lastSeen: date,
     });
-    ++userInfo.sessionCount;
-    userInfo.locale = conv.user.locale;
+    ++this.sessionCount;
+    this.locale = conv.user.locale;
   }
 
 }

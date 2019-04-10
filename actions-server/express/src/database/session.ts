@@ -24,12 +24,12 @@ export class Session<T = {}> extends Io<Isession> implements Isession {
     this.data = {} as T;
   }
 
-  static update(session: Session, conv: DFConv) {
+  update(conv: DFConv) {
 
     const date = new Date(Date.now());
 
-    session.lastSeen = date;
-    session.surfaceCapabilities = conv.surface.capabilities;
+    this.lastSeen = date;
+    this.surfaceCapabilities = conv.surface.capabilities;
   }
 
 }

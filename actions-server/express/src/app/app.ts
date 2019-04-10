@@ -1,6 +1,3 @@
-import { Context } from './../../../../agent-dialogflow/script/src/types/dialogflow.d';
-import { debug } from './../utils/debug';
-import { cancel, error, fallback } from './graph/graph';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -28,6 +25,8 @@ import { cancel, error, fallback } from './graph/graph';
   *
   */
 
+import { debug } from './../utils/debug';
+import { cancel, error, fallback } from './graph/graph';
 import { dialogflow, DialogflowConversation, Contexts } from 'actions-on-google';
 import { IsessionStorage, IuserStorage, IuserDataDb, IsessionDataDb } from '../interface/storage.interface';
 import { Session } from './../database/session';
@@ -36,8 +35,6 @@ import { UserInfo } from './../database/userInfo';
 import { DB_URL, INTENT_START_NAME } from './../constants';
 import { start } from './graph/start/start';
 import { generateUUID } from './../utils/generateuuid';
-import { Isymbol } from '../interface/symbol.interface';
-import { Iintent } from '../interface/intent.interface';
 import { Inode } from '../interface/node.interface';
 import { startChoice, startName, startAge } from './graph/start/children';
 import { noInput } from './graph/graph';
@@ -165,14 +162,14 @@ app.middleware<DFConv>(async (conv) => {
       // what we can do here ?
     }
     c.data.sessionId = generateUUID();
-    UserInfo.update(c.userInfo, c);
+    c.userInfo.update(c);
   }
   c.session = new Session<IsessionDataDb>(c.data.sessionId, DB_URL);
   await c.session.sync();
-  Session.update(c.session, c);
-
-  setLocale(c.user.locale);
+  c.session.update(c);
 });
+
+app.middleware<DFConv>((conv) => setLocale(conv.user.locale));
 
 const getNodeInIntentTable = (name: keyof IintentTable) =>
   Object.entries(intentTable).reduce((p, o) => {
