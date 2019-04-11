@@ -1,9 +1,6 @@
-import { INTENT_START_NAME } from './../constants';
 import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
-import { Isession, IrawInput } from './interface/session.interface';
-import { DFConv } from './../app/app';
+import { Isession, IrawInput } from '../interface/session.interface';
 import { Io } from './io';
-import { Inode } from '../interface/node.interface';
 
 export class Session<T = {}> extends Io<Isession> implements Isession {
 
@@ -11,6 +8,7 @@ export class Session<T = {}> extends Io<Isession> implements Isession {
   surfaceCapabilities: Capabilities = {} as Capabilities;
   raw: IrawInput[];
   data: T;
+  lostMemory: boolean;
 
   /**
    * 
@@ -22,14 +20,6 @@ export class Session<T = {}> extends Io<Isession> implements Isession {
     super(id, db, 'session');
     this.raw = [];
     this.data = {} as T;
+    this.lostMemory = false;
   }
-
-  update(conv: DFConv) {
-
-    const date = new Date(Date.now());
-
-    this.lastSeen = date;
-    this.surfaceCapabilities = conv.surface.capabilities;
-  }
-
 }

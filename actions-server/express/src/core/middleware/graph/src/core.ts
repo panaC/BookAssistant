@@ -11,46 +11,41 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Ihttp } from './../interface/node.interface';
+import { Ihttp, Inode } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
-import { DFConv, getNodeInSymbolTable, getContextInTable } from '../app/app';
-import { MAE_LOOP_MAX } from './../constants';
-import * as i18n from 'i18n';
 import Axios from 'axios';
-import { pipe } from '../utils/pipe';
-import { debug } from './../utils/debug';
-import { join } from 'path';
+import { IDFConv } from './../../..';
+import { pipe } from './../../../utils/pipe';
+import { debug } from './../../../utils/debug';
+import { MAE_LOOP_MAX } from './../../../constants';
+import { IcontextTable, InodeTable } from '../../../../app/interface';
 
-i18n.configure({
-  directory: join(__dirname, '../app/locales'),
-  objectNotation: true,
-  fallbacks: {
-    'fr-FR': 'fr',
-    'fr-CA': 'fr',
-    'en-US': 'en',
-    'en-GB': 'en',
-  },
-  defaultLocale: 'fr',
-});
+const translate = (str: string, conv: IDFConv): string => conv.middleware.i18n.__(str);
 
-export const translate = (str: string): string => i18n.__(str);
+const getContextInTable = (conv: IDFConv, name: keyof IcontextTable) =>
+      conv.middleware.getValueWithStringKey<IcontextTable, number>(
+        conv.middleware.table.contextTable(),
+        name, 5);
 
-export const setLocale = (local: string) => { i18n.setLocale(local); };
+const getNodeInNodeTable = (conv: IDFConv, name: keyof InodeTable) =>
+      conv.middleware.getValueWithStringKey<InodeTable, Inode>(
+        conv.middleware.table.nodeTable(),
+        name, conv.middleware.table.nodeTable().fallback);
 
-const context = async (conv: DFConv) => {
+const context = async (conv: IDFConv) => {
   debug.core.log(conv.node);
   if (conv.node.context) {
     if (typeof conv.node.context === 'string') {
-      conv.contexts.set(conv.node.context, getContextInTable(conv.node.context));
+      conv.contexts.set(conv.node.context, getContextInTable(conv, conv.node.context));
     } else {
-      conv.node.context.map((v) => conv.contexts.set(v, getContextInTable(v)));
+      conv.node.context.map((v) => conv.contexts.set(v, getContextInTable(conv, v)));
     }
   }
   return conv;
 };
 
-const conversation = async (conv: DFConv) => {
+const conversation = async (conv: IDFConv) => {
   const a = conv.node.conv;
   debug.core.log(a);
   let arg: string[] = [];
@@ -65,24 +60,24 @@ const conversation = async (conv: DFConv) => {
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
-        debug.core.log(sprintf(translate(a.ask), ...arg));
-        conv.ask(sprintf(translate(a.ask), ...arg));
+        debug.core.log(sprintf(translate(a.ask, conv), ...arg));
+        conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
-        a.ask.map((v) => conv.ask(sprintf(translate(v), ...arg)));
+        a.ask.map((v) => conv.ask(sprintf(translate(v, conv), ...arg)));
       }
     }
     if (a.close) {
       if (typeof a.close === 'string') {
-        conv.close(sprintf(translate(a.close), ...arg));
+        conv.close(sprintf(translate(a.close, conv), ...arg));
       } else {
-        a.close.map((v) => conv.close(sprintf(translate(v), ...arg)));
+        a.close.map((v) => conv.close(sprintf(translate(v, conv), ...arg)));
       }
     }
     if (a.suggestion) {
       if (typeof a.suggestion === 'string') {
-        conv.ask(new Suggestions(sprintf(translate(a.suggestion), ...arg)));
+        conv.ask(new Suggestions(sprintf(translate(a.suggestion, conv), ...arg)));
       } else {
-        a.suggestion.map((v) => conv.ask(new Suggestions(sprintf(translate(v), ...arg))));
+        a.suggestion.map((v) => conv.ask(new Suggestions(sprintf(translate(v, conv), ...arg))));
       }
     }
     if (a.media) {
@@ -93,9 +88,9 @@ const conversation = async (conv: DFConv) => {
   return conv;
 };
 
-const http = async (conv: DFConv) => {
+const http = async (conv: IDFConv) => {
 
-  const request = async (o: Ihttp, conv: DFConv) => {
+  const request = async (o: Ihttp, conv: IDFConv) => {
     if (o.url) {
       try {
         o.compute(await Axios(o.url, o), conv);
@@ -115,23 +110,23 @@ const http = async (conv: DFConv) => {
   return conv;
 };
 
-export const statistic = async (conv: DFConv) => {
-  conv.session.raw.push({
+const statistic = async (conv: IDFConv) => {
+  conv.middleware.db.session.raw.push({
     date: new Date(Date.now()),
     query: conv.query,
   });
   return conv;
 };
 
-export const save = async (conv: DFConv) => {
+const save = async (conv: IDFConv) => {
 
-  await conv.session.save();
-  await conv.userInfo.save();
+  await conv.middleware.db.session.save();
+  await conv.middleware.db.session.save();
   return conv;
 };
 
 
-export const test = async (conv: DFConv) => {
+const test = async (conv: IDFConv) => {
   const a = conv.node;
   debug.core.log('test');
   debug.core.log(conv.node);
@@ -143,12 +138,12 @@ export const test = async (conv: DFConv) => {
     debug.core.log(a.test);
     debug.core.log(typeof a.test);
     const r = a.test(conv);
-    conv.node = getNodeInSymbolTable(a.switch.case.reduce(
+    conv.node = getNodeInNodeTable(conv, a.switch.case.reduce(
       (pv, cv) => cv === r ?
         cv : pv, a.switch.default));
   } else {
     if (a.switch) {
-      conv.node = getNodeInSymbolTable(a.switch.default);
+      conv.node = getNodeInNodeTable(conv, a.switch.default);
     } else if (!a.return) {
       conv.node = {
         return: true,
@@ -162,11 +157,11 @@ export const test = async (conv: DFConv) => {
   return conv;
 };
 
-const p = async (conv: DFConv) =>
+const p = async (conv: IDFConv) =>
   await (await pipe(context, http, conversation, test))(conv);
 
 //
-export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
+export const exec = async (conv: IDFConv, loop = 0): Promise<IDFConv> => {
   debug.core.log(conv.node);
   if (loop > MAE_LOOP_MAX) {
     conv.node = {
@@ -185,3 +180,5 @@ export const exec = async (conv: DFConv, loop = 0): Promise<DFConv> => {
   }
   return await exec(await p(conv), ++loop);
 };
+
+export type graphExec = (conv: IDFConv, loop?: number) => Promise<IDFConv>;

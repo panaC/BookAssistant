@@ -17,9 +17,6 @@ export interface IsessionStorage {
   sessionId: string;
 }
 
-export interface IsessionDataDb {
-
-}
 
 // Save only userId for couchdb to get back user information
 // https://developers.google.com/actions/assistant/save-data#save_data_across_conversations
@@ -27,6 +24,4 @@ export interface IuserStorage {
   userId: string;
 }
 
-export interface IuserDataDb {
-  test: string;
-}
+

@@ -11,26 +11,27 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { DFConv, IsymbolTable, IcontextTable } from '../app/app';
 import { MediaObjectOptions } from 'actions-on-google';
 import { AxiosRequestConfig } from 'axios';
+import { IcontextTable, InodeTable } from './../../../../app/interface';
+import { IDFConv } from './../../../';
 
 export interface Inode {
   // Symbol name
-  name?: keyof IsymbolTable;
+  name?: keyof InodeTable;
   context?: keyof IcontextTable | Array<keyof IcontextTable>;
 
   http?: Ihttp | Ihttp[];
 
   // add function directly but i can't use json in config file but only ts files
-  test?: (conv: DFConv) => string;
+  test?: (conv: IDFConv) => string;
   // only default switch state is required
 
   // use reduce here with init = default and [] = case
   switch?: {
     // possibly add more state for more context switch
-    case?: Array<keyof IsymbolTable>;
-    default: keyof IsymbolTable;
+    case?: Array<keyof InodeTable>;
+    default: keyof InodeTable;
   };
   conv?: {
     arg?: string | string[];
@@ -42,7 +43,7 @@ export interface Inode {
 
   // no by default
   return?: boolean;
-  error?: keyof IsymbolTable | Inode;
+  error?: keyof InodeTable | Inode;
 }
 
 /*
@@ -52,10 +53,11 @@ export interface Icase {
 }
 */
 
+// WILL BE REPLACED BY API MIDDLEWARE
 export interface Ihttp extends AxiosRequestConfig {
   // tslint:disable-next-line:no-any
-  compute: (data: any, conv: DFConv) => void;
-  error: (e: string, conv: DFConv) => void;
+  compute: (data: any, conv: IDFConv) => void;
+  error: (e: string, conv: IDFConv) => void;
 }
 
 

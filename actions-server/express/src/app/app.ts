@@ -25,168 +25,98 @@
   *
   */
 
-import { debug } from './../utils/debug';
-import { cancel, error, fallback } from './graph/graph';
-import { dialogflow, DialogflowConversation, Contexts } from 'actions-on-google';
-import { IsessionStorage, IuserStorage, IuserDataDb, IsessionDataDb } from '../interface/storage.interface';
-import { Session } from './../database/session';
-import { exec, setLocale } from '../core/core';
-import { UserInfo } from './../database/userInfo';
-import { DB_URL, INTENT_START_NAME } from './../constants';
-import { start } from './graph/start/start';
-import { generateUUID } from './../utils/generateuuid';
-import { Inode } from '../interface/node.interface';
-import { startChoice, startName, startAge } from './graph/start/children';
-import { noInput } from './graph/graph';
+import { IDFConv } from './../core/';
+import { dialogflow, Contexts } from 'actions-on-google';
+import { TmiddlewareFactory } from './middleware';
+import { IintentTable, InodeTable } from './interface';
+import { join } from 'path';
+import { generateUUID } from '../core/utils/generateuuid';
+import { IsessionStorage, IuserStorage } from './../core';
+import { START_DEFAULT_INTENT } from './table/intentTable';
+import { Inode } from '../core/middleware/graph';
 
-//
-// overloading DialogflowConversation to add both user and session database access on couchdb
-export interface DFConv extends DialogflowConversation<IsessionStorage, IuserStorage> {
-  session: Session<IsessionDataDb>;
-  userInfo: UserInfo<IuserDataDb>;
-  node: Inode;
-}
-
-//
-// saved all context used in app here
-// in Dialogflow pick a incomming context only if it appears in it.
-// See actions-on-google Modules -> Dialogflow/context.ts
-export interface IcontextTable /*extends Contexts*/ {
-  start: number;
-};
-
-const contextTable: IcontextTable = {
-  start: 1,
-}
-
-export interface IsymbolTable {
-  start: Inode;
-  startChoice: Inode;
-  startName: Inode;
-  startAge: Inode;
-  noInput: Inode;
-  cancel: Inode;
-  error: Inode;
-
-  // require
-  fallback: Inode;
-}
-
-const nodeTable: IsymbolTable = {
-  start: start,
-  startChoice: startChoice,
-  startName: startName,
-  startAge: startAge,
-  noInput: noInput,
-  cancel: cancel,
-  fallback: fallback,
-  error: error,
-}
-
-export interface IintentTable {
-  'start': Inode;
-  'start.age': Inode;
-  'start.name': Inode,
-  'fallback': Inode,
-  'no_input': Inode,
-  'cancel': Inode,
-}
-
-const intentTable: IintentTable = {
-  'start': start,
-  'start.age': startAge,
-  'start.name': startName,
-  'fallback': fallback,
-  'no_input': noInput,
-  'cancel': cancel,
-}
-
-export const getNodeInSymbolTable = (name: keyof IsymbolTable) =>
-  Object.entries(nodeTable).reduce((p, o) => {
-    const [key, node] = o;
-    if (key === name) {
-      return node;
-    }
-    return p;
-  }, intentTable.fallback)
-
-export const getContextInTable = (name: keyof IcontextTable) =>
-  Object.entries(contextTable).reduce((p, o) => {
-    const [key, lifespan] = o;
-    if (key === name) {
-      return lifespan;
-    }
-    return p;
-  }, 5)
 
 // used only for template typing dialogflow
 // actions-server/express/node_modules/actions-on-google/src/service/dialogflow/context.ts:184
 // extends [:string]: Context
 // used this only to set context name keyof of Tcontext
 // but doesn't work with the iterator type employ
-interface myContextInterface extends Contexts { }
+interface ImyContextInterface extends Contexts { }
 
-// Create an app instance
-// See actions-on-google Modules -> Dialogflow/dialogflow.ts
-export const app = dialogflow<IsessionStorage, IuserStorage, myContextInterface, DFConv>({
-  /*debug: true,*/
-});
+export const appFactory = (intentTable: IintentTable, middlewareFactory: TmiddlewareFactory) => {
 
-//
-// app.middleware is call at each new request
-// each call is push data fct into an array
-// allow multiple call
-// See actions-server/express/node_modules/actions-on-google/src/service/dialogflow/dialogflow.ts:500
-app.middleware<DFConv>(async (conv) => {
+  /**
+   * Create a DialogFlow app instance
+   * See actions-on-google Modules -> Dialogflow/dialogflow.ts
+   */
+  const app = dialogflow<IsessionStorage, IuserStorage, ImyContextInterface, IDFConv>({
+    /*debug: true,*/
+  });
 
-  // the conv type is set to DialogflowConversation<{}, {}, Contexts> and not allow template Type
-  const c = (conv as DFConv);
+  /**
+   * Middleware
+   */
+  //app.middleware<IDFConv>(async (conv) =>
+  //  Object.assign<IDFConv, Imiddleware>(conv as IDFConv, await middlewareFactory(conv as IDFConv)));
+  app.middleware<IDFConv>(async (conv) => {
+    
+    let newSession = false;
+    let lostUserMemory = false;
+    let lostSessionMemory = false;
 
-  // user persistence storage
-  if (!c.user.storage.userId) {
-    if (c.intent !== INTENT_START_NAME) {
-      // error google assistant
-      // data session lost his memory during user session
-      // what we can do here ?
+    // user persistence storage
+    if (!(conv as IDFConv).user.storage.userId) {
+      if (conv.intent !== START_DEFAULT_INTENT) {
+        lostUserMemory = true;
+      }
+      (conv as IDFConv).user.storage.userId = generateUUID();
     }
-    c.user.storage.userId = generateUUID();
-  }
-  c.userInfo = new UserInfo<IuserDataDb>(c.user.storage.userId, DB_URL);
-  await c.userInfo.sync();
-
-  // session persistence storage
-  if (!c.data.sessionId) {
-    if (c.intent !== INTENT_START_NAME) {
-      // error google assistant
-      // data session lost his memory during user session
-      // what we can do here ?
+    // session persistence storage
+    if (!(conv as IDFConv).data.sessionId) {
+      if (conv.intent !== START_DEFAULT_INTENT) {
+        lostSessionMemory = true;
+      }
+      (conv as IDFConv).data.sessionId = generateUUID();
+      newSession = true;
     }
-    c.data.sessionId = generateUUID();
-    c.userInfo.update(c);
-  }
-  c.session = new Session<IsessionDataDb>(c.data.sessionId, DB_URL);
-  await c.session.sync();
-  c.session.update(c);
-});
 
-app.middleware<DFConv>((conv) => setLocale(conv.user.locale));
-
-const getNodeInIntentTable = (name: keyof IintentTable) =>
-  Object.entries(intentTable).reduce((p, o) => {
-    const [key, node] = o;
-    debug.app.log(`'${key}, '${name}'`);
-    if (key === name) {
-      return node;
+    // middleware
+    (conv as IDFConv).middleware = await middlewareFactory(conv as IDFConv);
+    (conv as IDFConv).middleware.i18n.configure({
+      directory: join(__dirname, '../locales'),
+      objectNotation: true,
+      fallbacks: {
+        'fr-FR': 'fr',
+        'fr-CA': 'fr',
+        'en-US': 'en',
+        'en-GB': 'en',
+      },
+      defaultLocale: 'fr',
+    });
+    (conv as IDFConv).middleware.i18n.setLocale(conv.user.locale);
+    if (newSession) {
+      (conv as IDFConv).middleware.db.user.update(conv as IDFConv);
     }
-    return p;
-  }, intentTable.fallback)
+    (conv as IDFConv).middleware.db.user.lostMemory = lostUserMemory;
+    (conv as IDFConv).middleware.db.session.lostMemory = lostSessionMemory;
+  });
 
-//
-// Starting point for all incoming intent
-// start exec with Inode in intentName
-app.intent(Object.keys(intentTable), async (conv: DFConv) => {
-  conv.node = getNodeInIntentTable(conv.intent as keyof IintentTable);
-  return await exec(conv);
-});
+  /**
+   * Intent declaration
+   * Starting point for all incoming inten
+   */
+
+  app.intent(Object.keys(intentTable), async (conv) => {
+    const getNodeInIntentTable = (conv: IDFConv, name: keyof IintentTable) =>
+      conv.middleware.getValueWithStringKey<IintentTable, Inode>(
+        conv.middleware.table.intentTable(),
+        name, conv.middleware.table.intentTable().fallback);
+
+    conv.node = getNodeInIntentTable(conv, conv.intent as keyof IintentTable);
+    return await conv.middleware.graph(conv);
+  });
+
+  return app;
+};
 
 // EOF

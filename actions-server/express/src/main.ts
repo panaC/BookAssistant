@@ -11,8 +11,8 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { SERVER_NAME, ENTRY_POINT } from './constants';
-import { server } from './server';
+import { SERVER_NAME, ENTRY_POINT } from './core/constants';
+import { server } from './core/server';
 
 if (typeof require !== 'undefined' && require.main === module) {
   server.listen(server.get('port'), () => {
