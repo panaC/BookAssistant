@@ -1,3 +1,4 @@
+import { debug } from './../core/utils/debug';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -66,6 +67,7 @@ export const appFactory = (intentTable: IintentTable, middlewareFactory: Tmiddle
 
     // user persistence storage
     if (!(conv as IDFConv).user.storage.userId) {
+      debug.app.log((conv as IDFConv).user.storage);
       if (conv.intent !== START_DEFAULT_INTENT) {
         lostUserMemory = true;
       }
