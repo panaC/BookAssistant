@@ -83,7 +83,7 @@ export const appFactory = (intentTable: IintentTable, middlewareFactory: Tmiddle
     // middleware
     (conv as IDFConv).middleware = await middlewareFactory(conv as IDFConv);
     (conv as IDFConv).middleware.i18n.configure({
-      directory: join(__dirname, '../locales'),
+      directory: join(__dirname, 'locales'),
       objectNotation: true,
       fallbacks: {
         'fr-FR': 'fr',
