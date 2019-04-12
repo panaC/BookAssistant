@@ -120,7 +120,7 @@ const statistic = async (conv: IDFConv) => {
 
 const save = async (conv: IDFConv) => {
 
-  await conv.middleware.db.session.save();
+  await conv.middleware.db.user.save();
   await conv.middleware.db.session.save();
   return conv;
 };
