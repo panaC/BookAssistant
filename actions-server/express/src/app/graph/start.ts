@@ -11,8 +11,7 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Inode } from '../../../interface/node.interface';
-import { startChoice } from './children';
+import { Inode } from './../../core/middleware/graph';
 
 export const start: Inode = {
   context: 'start',

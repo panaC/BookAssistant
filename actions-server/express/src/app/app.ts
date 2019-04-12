@@ -103,9 +103,8 @@ export const appFactory = (intentTable: IintentTable, middlewareFactory: Tmiddle
 
   /**
    * Intent declaration
-   * Starting point for all incoming inten
+   * Starting point for all incoming intent
    */
-
   app.intent(Object.keys(intentTable), async (conv) => {
     const getNodeInIntentTable = (conv: IDFConv, name: keyof IintentTable) =>
       conv.middleware.getValueWithStringKey<IintentTable, Inode>(

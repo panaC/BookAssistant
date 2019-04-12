@@ -14,6 +14,3 @@ export const nodeTable = (): InodeTable => (
     fallback: node.fallback,
     error: node.error,
   });
-
-export const getNodeInSymbolTable = (name: keyof InodeTable) =>
-  getValueWithStringKey<InodeTable, Inode>(nodeTable, name, nodeTable.fallback);

@@ -1,4 +1,4 @@
-import { Inode } from './../../interface/node.interface';
+import { Inode } from './../../core/middleware/graph';
 
 // global no-input intent
 export const noInput: Inode = {

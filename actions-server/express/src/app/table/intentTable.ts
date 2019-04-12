@@ -13,6 +13,3 @@ export const intentTable = (): IintentTable => ({
   'no_input': node.noInput,
   'cancel': node.cancel,
 });
-
-export const getNodeInIntentTable = (name: keyof IintentTable) =>
-  getValueWithStringKey<IintentTable, Inode>(intentTable, name, intentTable.fallback);

@@ -1,7 +1,5 @@
-import { DFConv } from './../../app';
-import { Inode } from '../../../interface/node.interface';
-import { start } from './start';
-import { cancel, fallback, noInput } from '../graph';
+import { IDFConv } from './../../../core';
+import { Inode } from './../../../core/middleware/graph';
 
 export const startName: Inode = {
   switch: {
@@ -23,7 +21,7 @@ export const startAge: Inode = {
 
 // no longer used since intent catch it's own node
 export const startChoice: Inode = {
-  test: (conv: DFConv) => conv.intent,
+  test: (conv: IDFConv) => conv.intent,
   switch: {
     case: [
       'startName',

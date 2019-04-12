@@ -12,15 +12,17 @@
  */
 
 import { SERVER_NAME, ENTRY_POINT, PORT } from './constants';
-import { app } from './app/app';
 import * as express from 'express';
+import { appFactory } from '../app/app';
+import { intentTable } from '../app/table/intentTable';
+import { middlewareFactory } from '../app/middleware';
 
 export const server = express();
 
 server.set('port', PORT);
 server.set('trust proxy', 'loopback');
 server.use(express.json({}));
-server.post(ENTRY_POINT, app);
+server.post(ENTRY_POINT, appFactory(intentTable(), middlewareFactory));
 server.get('/', (req, res) => {
   res.send(SERVER_NAME);
 });
