@@ -12,16 +12,18 @@
  */
 
 import { MediaObjectOptions } from 'actions-on-google';
-import { AxiosRequestConfig } from 'axios';
 import { IcontextTable, InodeTable } from './../../../../app/interface';
 import { IDFConv } from './../../../';
+import { Iapi } from '../../../../app/interface/api.interface';
+
+type Tapi = (f: Iapi) => void;
 
 export interface Inode {
   // Symbol name
   name?: keyof InodeTable;
   context?: keyof IcontextTable | Array<keyof IcontextTable>;
 
-  http?: Ihttp | Ihttp[];
+  api?: Tapi[] | Tapi;
 
   // add function directly but i can't use json in config file but only ts files
   test?: (conv: IDFConv) => string;
@@ -54,10 +56,10 @@ export interface Icase {
 */
 
 // WILL BE REPLACED BY API MIDDLEWARE
+/*
 export interface Ihttp extends AxiosRequestConfig {
   // tslint:disable-next-line:no-any
   compute: (data: any, conv: IDFConv) => void;
   error: (e: string, conv: IDFConv) => void;
 }
-
-
+*/

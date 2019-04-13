@@ -11,7 +11,7 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Ihttp, Inode } from './../interface/node.interface';
+import { Inode } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
 import Axios from 'axios';
@@ -88,23 +88,12 @@ const conversation = async (conv: IDFConv) => {
   return conv;
 };
 
-const http = async (conv: IDFConv) => {
-
-  const request = async (o: Ihttp, conv: IDFConv) => {
-    if (o.url) {
-      try {
-        o.compute(await Axios(o.url, o), conv);
-      } catch (e) {
-        o.error(e, conv);
-      }
-    }
-  };
-
-  if (conv.node.http) {
-    if (conv.node.http instanceof Array) {
-      conv.node.http.map(async (v) => await request(v, conv));
+const api = async (conv: IDFConv) => {
+  if (conv.node.api) {
+    if (conv.node.api instanceof Array) {
+      conv.node.api.map(async (v) => await v(conv.middleware.api));
     } else {
-      await request(conv.node.http, conv);
+      await conv.node.api(conv.middleware.api);
     }
   }
   return conv;
@@ -124,7 +113,6 @@ const save = async (conv: IDFConv) => {
   await conv.middleware.db.session.save();
   return conv;
 };
-
 
 const test = async (conv: IDFConv) => {
   const a = conv.node;
@@ -158,7 +146,7 @@ const test = async (conv: IDFConv) => {
 };
 
 const p = async (conv: IDFConv) =>
-  await (await pipe(context, http, conversation, test))(conv);
+  await (await pipe(context, api, conversation, test))(conv);
 
 //
 export const exec = async (conv: IDFConv, loop = 0): Promise<IDFConv> => {
@@ -181,4 +169,4 @@ export const exec = async (conv: IDFConv, loop = 0): Promise<IDFConv> => {
   return await exec(await p(conv), ++loop);
 };
 
-export type graphExec = (conv: IDFConv, loop?: number) => Promise<IDFConv>;
+export type TgraphExec = (conv: IDFConv, loop?: number) => Promise<IDFConv>;

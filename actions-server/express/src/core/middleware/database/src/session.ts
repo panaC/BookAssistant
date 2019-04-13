@@ -2,12 +2,13 @@ import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
 import { Isession, IrawInput } from '../interface/session.interface';
 import { Io } from './io';
 
-export class Session<T = {}> extends Io<Isession> implements Isession {
+export class Session<T = {}, R = {}> extends Io<Isession> implements Isession {
 
   lastSeen: Date = new Date();
   surfaceCapabilities: Capabilities = {} as Capabilities;
   raw: IrawInput[];
   data: T;
+  api: R;
   lostMemory: boolean;
 
   /**
@@ -20,6 +21,7 @@ export class Session<T = {}> extends Io<Isession> implements Isession {
     super(id, db, 'session');
     this.raw = [];
     this.data = {} as T;
+    this.api = {} as R;
     this.lostMemory = false;
   }
 }

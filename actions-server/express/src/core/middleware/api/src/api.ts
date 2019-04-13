@@ -23,3 +23,9 @@
  * - whatever
  * 
  */
+
+import axios from 'axios';
+
+export const get = async <T>(url: string) => new Promise<T>((resolve, reject) => {
+  axios.get<T>(url).then((data) => resolve(data.data)).catch((e) => reject(e));
+});

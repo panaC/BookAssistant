@@ -1,3 +1,5 @@
+import { search } from './api/src/search.api';
+import { get } from './../core/middleware/api/src/api';
 import { sessionFactory } from './../core/middleware/database';
 import { userFactory } from './../core/middleware/database';
 import { intentTable } from './table/intentTable';
@@ -7,6 +9,7 @@ import { Imiddleware, IDFConv } from '../core/';
 import * as i18n from 'i18n';
 import { exec } from '../core/middleware/graph/src/core';
 import { getValueWithStringKey } from '../core/utils/getValueWithStringKey';
+import { discovery } from './api/src/discovery.api';
 
 export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
 
@@ -29,5 +32,10 @@ export const middlewareFactory: TmiddlewareFactory = async (conv: IDFConv): Prom
     intentTable,
   },
   getValueWithStringKey,
+  get,
+  api: {
+    discovery,
+    search,
+  },
 });
 
