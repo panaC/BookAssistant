@@ -10,6 +10,7 @@ import * as i18n from 'i18n';
 import { exec } from '../core/middleware/graph/src/core';
 import { getValueWithStringKey } from '../core/utils/getValueWithStringKey';
 import { discovery } from './api/src/discovery.api';
+import { Iopds, Iwebpub } from './api';
 
 export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
 
@@ -21,7 +22,10 @@ export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
  */
 export const middlewareFactory: TmiddlewareFactory = async (conv: IDFConv): Promise<Imiddleware> => ({
   db: {
-    session: await sessionFactory(conv),
+    session: await sessionFactory(conv, {}, {
+    discovery: {} as Iopds,
+    search: [] as Iwebpub[],
+  }),
     user: await userFactory(conv),
   },
   graph: exec,

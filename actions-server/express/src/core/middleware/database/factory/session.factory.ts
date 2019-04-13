@@ -4,11 +4,8 @@ import { Session } from "../src/session";
 import { IsessionDataDb, IsessionApiDb } from "../../../../app/interface";
 import { Iopds, Iwebpub } from '../../../../app/api';
 
-export const sessionFactory = async (conv: IDFConv): Promise<Session<IsessionDataDb, IsessionApiDb>> => {
-  const session = new Session<IsessionDataDb, IsessionApiDb>(conv.data.sessionId, DB_URL, {}, {
-    discovery: {} as Iopds,
-    search: [] as Iwebpub[],
-  });
+export const sessionFactory = async (conv: IDFConv, data: IsessionDataDb, api: IsessionApiDb): Promise<Session<IsessionDataDb, IsessionApiDb>> => {
+  const session = new Session<IsessionDataDb, IsessionApiDb>(conv.data.sessionId, DB_URL, data, api);
   await session.sync();
   session.lastSeen = new Date(Date.now());
   session.surfaceCapabilities = conv.surface.capabilities;
