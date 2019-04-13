@@ -94,8 +94,6 @@ const api = async (conv: IDFConv) => {
       conv.node.api.map(async (v) => await v(conv, conv.middleware.api));
     } else {
       await conv.node.api(conv, conv.middleware.api);
-      debug.core.log('api');
-      debug.core.log(conv.middleware.db.session.api);
     }
   }
   return conv;
@@ -111,8 +109,6 @@ const statistic = async (conv: IDFConv) => {
 
 const save = async (conv: IDFConv) => {
 
-  debug.core.log('save');
-  debug.core.log(conv.middleware.db.session.api);
   await conv.middleware.db.user.save();
   await conv.middleware.db.session.save();
   return conv;
@@ -166,9 +162,10 @@ export const exec = async (conv: IDFConv, loop = 0): Promise<IDFConv> => {
   }
   if (conv.node.return && loop <= MAE_LOOP_MAX) {
     debug.core.log('return');
+    const ret = await p(conv);
     await statistic(conv);
     await save(conv);
-    return await p(conv);
+    return ret;
   }
   return await exec(await p(conv), ++loop);
 };
