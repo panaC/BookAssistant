@@ -16,7 +16,7 @@ import { IcontextTable, InodeTable } from './../../../../app/interface';
 import { IDFConv } from './../../../';
 import { Iapi } from '../../../../app/interface/api.interface';
 
-type Tapi = (f: Iapi) => void;
+type Tapi = (conv: IDFConv, f: Iapi) => void;
 
 export interface Inode {
   // Symbol name

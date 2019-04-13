@@ -91,9 +91,9 @@ const conversation = async (conv: IDFConv) => {
 const api = async (conv: IDFConv) => {
   if (conv.node.api) {
     if (conv.node.api instanceof Array) {
-      conv.node.api.map(async (v) => await v(conv.middleware.api));
+      conv.node.api.map(async (v) => await v(conv, conv.middleware.api));
     } else {
-      await conv.node.api(conv.middleware.api);
+      await conv.node.api(conv, conv.middleware.api);
     }
   }
   return conv;

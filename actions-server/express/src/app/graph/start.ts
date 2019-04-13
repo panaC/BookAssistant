@@ -15,6 +15,7 @@ import { Inode } from './../../core/middleware/graph';
 
 export const start: Inode = {
   context: 'start',
+  api: (conv, f) => f.discovery(conv),
   /*switch: {
     default: 'startChoice',
   },*/

@@ -1,4 +1,3 @@
-import { debug } from './../core/utils/debug';
 /*
  * File: app.ts
  * Project: VoiceAssistant
@@ -29,7 +28,7 @@ import { debug } from './../core/utils/debug';
 import { IDFConv } from './../core/';
 import { dialogflow, Contexts } from 'actions-on-google';
 import { TmiddlewareFactory } from './middleware';
-import { IintentTable, InodeTable } from './interface';
+import { IintentTable } from './interface';
 import { join } from 'path';
 import { generateUUID } from '../core/utils/generateuuid';
 import { IsessionStorage, IuserStorage } from './../core';
