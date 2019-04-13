@@ -111,6 +111,8 @@ const statistic = async (conv: IDFConv) => {
 
 const save = async (conv: IDFConv) => {
 
+  debug.core.log('save');
+  debug.core.log(conv.middleware.db.session.api);
   await conv.middleware.db.user.save();
   await conv.middleware.db.session.save();
   return conv;
