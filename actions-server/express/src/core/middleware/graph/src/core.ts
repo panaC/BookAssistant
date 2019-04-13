@@ -94,6 +94,8 @@ const api = async (conv: IDFConv) => {
       conv.node.api.map(async (v) => await v(conv, conv.middleware.api));
     } else {
       await conv.node.api(conv, conv.middleware.api);
+      debug.core.log('api');
+      debug.core.log(conv.middleware.db.session.api);
     }
   }
   return conv;
