@@ -17,11 +17,11 @@ export class Session<T = {}, R = {}> extends Io<Isession> implements Isession {
    * @param db couchdb url
    * @param state symbol description name to init state by default
    */
-  constructor(id: string, db: string) {
+  constructor(id: string, db: string, data: T, api: R) {
     super(id, db, 'session');
     this.raw = [];
-    this.data = {} as T;
-    this.api = {} as R;
+    this.data = data;
+    this.api = api;
     this.lostMemory = false;
   }
 }
