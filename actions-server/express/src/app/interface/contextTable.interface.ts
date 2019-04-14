@@ -5,4 +5,5 @@
 // See actions-on-google Modules -> Dialogflow/context.ts
 export interface IcontextTable /*extends Contexts*/ {
   start: number;
+  listen: number;
 }

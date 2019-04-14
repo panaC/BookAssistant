@@ -1,17 +1,18 @@
 {
   "welcome": {
-    "home": "Que voulez-vous écouter ?"
+    "home": "Que voulez-vous faire ?"
+  },
+  "help": {
+    "1": "Vous pouvez",
+    "2": "découvrir les nouveautés",
+    "3": "écouter un livre"
   },
   "instruction": {
     "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
     "want_listen": "Je veux écouter"
   },
-  "service": {
-    "get_audiobook": {
-      "error": "aucun livre ne correspond"
-    }
-  },
-  "play": {
+  "listen": {
+    "home": "Que voulez-vous écouter ?",
     "first": "Voici l'audiobook %s",
     "suggestion": {
       "next": "Chapitre suivant",
@@ -22,10 +23,13 @@
     "ref_empty": "Vous n'avez pas dit le nom de la référence",
     "numberOfChapter": "Il y a %s chapitres dans le livres",
     "chapter": "Vous écouter le chapitre %s",
-    "author": "L'auteur de ce livre est %s"
+    "author": "L'auteur de ce livre est %s",
+    "already_listen": {
+      "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
+    }
   },
-  "already_listen": {
-    "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
+  "newBooks": {
+    "home": "Voici les nouveautés"
   },
   "yes_no": {
     "yes": "oui",
@@ -34,9 +38,10 @@
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },
-  "default": {
-    "no_input": "Que voulez-vous faire ?",
-    "goodbye": "Reviens vite !"
+  "global": {
+    "no_input": "Je ne vous entend pas !",
+    "goodbye": "Reviens vite !",
+    "fallback": "Je crois que je ne vous suis pas"
   },
   "error": {
     "global": "Oups. %s",
