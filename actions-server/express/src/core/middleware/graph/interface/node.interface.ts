@@ -36,6 +36,7 @@ export interface Inode {
     default: keyof InodeTable;
   };
   conv?: {
+    // at most two 'simple_responses' are supported
     arg?: string | string[];
     ask?: string | string[];
     close?: string | string[];

@@ -3,9 +3,7 @@
     "home": "Que voulez-vous faire ?"
   },
   "help": {
-    "1": "Vous pouvez",
-    "2": "découvrir les nouveautés",
-    "3": "écouter un livre"
+    "1": "Vous pouvez ... découvrir les nouveautés ... écouter un livre"
   },
   "instruction": {
     "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
