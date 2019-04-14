@@ -5,7 +5,6 @@ export const help: Inode = {
   conv: {
     ask: [
       'help.1',
-      'welcome.home'
     ]
   },
   switch: {
