@@ -6,10 +6,6 @@ import { Session, User } from '../middleware/database';
 import { TgraphExec } from '../middleware/graph/src/core';
 import { Iapi } from '../../app/interface/api.interface';
 
-export type Tdiscovery = (conv: IDFConv) => void;
-export type Tsearch = (conv: IDFConv, title: string, author?: string) => void;
-export type TnodeApi = Tdiscovery | Tsearch;
-
 export interface Imiddleware {
   db: {
     session: Session<IsessionDataDb, IsessionApiDb>;
