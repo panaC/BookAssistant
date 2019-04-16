@@ -14,10 +14,10 @@
 import { Inode } from './../../core/middleware/graph';
 
 export const start: Inode = {
+  return: true,
   context: 'start',
   conv: {
     ask: 'welcome.home',
   },
-  return: true,
 };
 

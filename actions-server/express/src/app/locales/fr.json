@@ -11,19 +11,24 @@
   },
   "listen": {
     "home": "Que voulez-vous écouter ?",
-    "first": "Voici l'audiobook %s",
+    "book_found": "Voici l'audiobook %s",
     "suggestion": {
       "next": "Chapitre suivant",
       "prev": "Chapitre précédent"
     },
     "follow": " ",
-    "finish": "Le livre est finis. Que voulez-vous écouté de nouveau ?",
+    "finish": "Le livre est finis",
     "ref_empty": "Vous n'avez pas dit le nom de la référence",
     "numberOfChapter": "Il y a %s chapitres dans le livres",
     "chapter": "Vous écouter le chapitre %s",
     "author": "L'auteur de ce livre est %s",
     "already_listen": {
       "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
+    },
+    "control": {
+      "no_input": "Demandez-moi qu'elle livre lire ?",
+      "cancel": "Tu n'a pas eu le temps de lire un livre",
+      "fallback": "Quel livre t'intéresse ?"
     }
   },
   "newBooks": {

@@ -1,4 +1,4 @@
-import { Inode } from "../../../../core/middleware/graph";
+import { Inode } from './../..';
 
 export const play: Inode = {
   return: false,
@@ -7,6 +7,6 @@ export const play: Inode = {
     default: 'start',
   },
   conv: {
-    ask: 'listen.first'
+    ask: 'listen.book_found'
   }
 };
