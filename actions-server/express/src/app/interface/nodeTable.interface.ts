@@ -10,5 +10,6 @@ export interface InodeTable {
   listenPlay: Inode;
   listenError: Inode;
 
+  fallback: Inode;
   error: Inode;
 }

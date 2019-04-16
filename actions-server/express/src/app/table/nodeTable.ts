@@ -15,5 +15,6 @@ export const nodeTable = (): InodeTable => (
     listenPlay: listen.play,
     listenError: listen.error,
 
+    fallback: node.fallback,
     error: node.error,
   });
