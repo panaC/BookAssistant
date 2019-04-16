@@ -21,7 +21,7 @@ export const cancel: Inode = {
 };
 
 export const fallback: Inode = {
-  return: true,
+  return: false,
   conv: {
     close: 'listen.control.fallback',
   },
