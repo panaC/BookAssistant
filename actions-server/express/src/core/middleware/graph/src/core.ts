@@ -143,7 +143,7 @@ const test = async (conv: IDFConv) => {
       conv.node = {
         return: true,
         conv: {
-          arg: 'error.error',
+          arg: () => 'error.error',
           close: 'error.global'
         }
       };
@@ -162,7 +162,7 @@ export const exec = async (conv: IDFConv, loop = 0): Promise<IDFConv> => {
     conv.node = {
       return: true,
       conv: {
-        arg: 'error.error',
+        arg: () => 'error.error',
         close: 'error.global'
       }
     };
