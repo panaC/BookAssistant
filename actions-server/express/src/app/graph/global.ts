@@ -2,9 +2,12 @@ import { Inode } from '../../core/middleware/graph';
 
 // global no-input intent
 export const noInput: Inode = {
-  return: true,
+  return: false,
   conv: {
     ask: 'global.no_input'
+  },
+  switch: {
+    default: 'start',
   }
 };
 

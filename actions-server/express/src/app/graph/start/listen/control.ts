@@ -1,7 +1,7 @@
 import { Inode } from './../..';
 
 export const noInput: Inode = {
-  return: true,
+  return: false,
   conv: {
     ask: 'listen.control.no_input',
   },
