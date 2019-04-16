@@ -14,7 +14,6 @@
 import { Inode } from './../interface/node.interface';
 import { sprintf } from 'sprintf-js';
 import { Suggestions, MediaObject } from 'actions-on-google';
-import Axios from 'axios';
 import { IDFConv } from './../../..';
 import { pipe } from './../../../utils/pipe';
 import { debug } from './../../../utils/debug';
@@ -63,14 +62,21 @@ const conversation = async (conv: IDFConv) => {
         debug.core.log(sprintf(translate(a.ask, conv), ...arg));
         conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
-        a.ask.map((v) => conv.ask(sprintf(translate(v, conv), ...arg)));
+        /* disable array map */
+        //a.ask.map((v) => conv.ask(sprintf(translate(v, conv), ...arg)));
+        /* enable random ask in array */
+        conv.ask(sprintf(translate(a.ask[(Math.random() * a.ask.length) | 0], conv), ...arg));
       }
     }
     if (a.close) {
       if (typeof a.close === 'string') {
+        debug.core.log(sprintf(translate(a.close, conv), ...arg));
         conv.close(sprintf(translate(a.close, conv), ...arg));
       } else {
-        a.close.map((v) => conv.close(sprintf(translate(v, conv), ...arg)));
+        /* disable array map */
+        // a.close.map((v) => conv.close(sprintf(translate(v, conv), ...arg)));
+        /* enable random ask in array */
+        conv.close(sprintf(translate(a.close[(Math.random() * a.close.length) | 0], conv), ...arg));
       }
     }
     if (a.suggestion) {
