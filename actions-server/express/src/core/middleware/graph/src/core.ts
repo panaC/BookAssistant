@@ -51,10 +51,11 @@ const conversation = async (conv: IDFConv) => {
 
   if (a) {
     if (a.arg) {
-      if (typeof a.arg === 'string') {
-        arg = [a.arg];
+      const _arg = a.arg(conv);
+      if (typeof _arg === 'string') {
+        arg = [_arg];
       } else {
-        arg = a.arg;
+        arg = _arg;
       }
     }
     if (a.ask) {

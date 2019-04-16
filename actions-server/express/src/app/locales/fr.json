@@ -11,7 +11,7 @@
   },
   "listen": {
     "home": "Que voulez-vous écouter ?",
-    "book_found": "Voici l'audiobook %s",
+    "book": "Voici l'audiobook %s de %s à %s",
     "suggestion": {
       "next": "Chapitre suivant",
       "prev": "Chapitre précédent"

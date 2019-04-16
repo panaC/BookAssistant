@@ -37,7 +37,7 @@ export interface Inode {
   };
   conv?: {
     // at most two 'simple_responses' are supported
-    arg?: string | string[];
+    arg?: (conv: IDFConv) => string | string[];
     ask?: string | string[];
     close?: string | string[];
     media?: MediaObjectOptions;
