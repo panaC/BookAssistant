@@ -7,7 +7,6 @@ export interface InodeTable {
   startHelp: Inode;
   startListen: Inode;
 
-  listenPlay: Inode;
   listenError: Inode;
 
   fallback: Inode;

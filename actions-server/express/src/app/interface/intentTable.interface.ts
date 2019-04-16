@@ -8,7 +8,7 @@ export interface IintentTable {
   'start.listen': Inode;
 
 
-  'listen.play': Inode;
+  'listen.nextChapter': Inode;
   'listen.fallback': Inode;
   'listen.no_input': Inode;
   'listen.cancel': Inode;

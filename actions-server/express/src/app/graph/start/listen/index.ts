@@ -1,3 +1,3 @@
 
-export * from './play';
+export * from './nextChapter';
 export * from './control';

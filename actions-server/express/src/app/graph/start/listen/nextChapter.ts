@@ -1,6 +1,6 @@
-import { Inode } from './../..';
+import { Inode } from '../..';
 
-export const play: Inode = {
+export const nextChapter: Inode = {
   return: false,
   context: 'start',
   switch: {

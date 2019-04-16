@@ -14,7 +14,7 @@ export const intentTable = (): IintentTable => ({
   'start.newBooks': start.newBooks,
 
 
-  'listen.play': listen.play,
+  'listen.nextChapter': listen.nextChapter,
   'listen.fallback': listen.fallback,
   'listen.cancel': listen.cancel,
   'listen.no_input': listen.noInput,

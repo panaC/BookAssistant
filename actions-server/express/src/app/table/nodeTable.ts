@@ -11,8 +11,6 @@ export const nodeTable = (): InodeTable => (
     startListen: start.listen,
     startNewBooks: start.newBooks,
 
-
-    listenPlay: listen.play,
     listenError: listen.error,
 
     fallback: node.fallback,

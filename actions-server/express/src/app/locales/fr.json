@@ -26,7 +26,7 @@
       "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
     },
     "control": {
-      "no_input": "Demandez-moi qu'elle livre lire ?",
+      "no_input": "Demandez-moi qu'elle livre écouter",
       "cancel": "Tu n'a pas eu le temps de lire un livre",
       "fallback": "Quel livre t'intéresse ?"
     }
