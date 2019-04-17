@@ -11,8 +11,9 @@ interface Iparam extends Parameters {
 }
 
 export const listen: Inode = {
-  return: true,
   context: 'listen',
+  name: 'start.listen_intent',
+  intent: true,
   test: async (conv: IDFConv): Promise<keyof InodeTable> => {
     const {title, author, reference, chapter}: Iparam = conv.parameters as Iparam;
     await conv.middleware.api.search(conv, title, author);
@@ -24,20 +25,30 @@ export const listen: Inode = {
       /**
        * redirect to select num of book in the list
        */
+      return 'listen.selectBook';
     } else if (conv.middleware.db.session.api.search.length === 1) {
       /**
-       * saved url and timecode and redirect to play
+       * redirect to play ref
        */
+      conv.middleware.db.session.data.trackIndex = 0;
+      return 'listen.RefPlay';
     }
     /**
      * redirect to fallback
      */
-    return 'fallback';
+    return 'listen.error';
   },
-  conv: {
+  switch: {
+    case: [
+      'listen.selectBook',
+      'listen.RefPlay',
+    ],
+    default: 'listen.error',
+  },
+  /*conv: {
     arg: (conv: IDFConv): string[] =>
       [conv.parameters.title as string, conv.parameters.author as string,
          conv.parameters.reference as string],
     ask: 'listen.book',
-  }
+  }*/
 };

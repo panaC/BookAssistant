@@ -4,14 +4,23 @@ import * as listen from './../graph/start/listen/index';
 import {InodeTable} from './../interface/nodeTable.interface';
 
 export const nodeTable = (): InodeTable => ({
-  start: node.start,
+  'start_intent': node.start,
 
-  startHelp: start.help,
-  startListen: start.listen,
-  startNewBooks: start.newBooks,
+  'start.newBooks_intent': start.newBooks,
+  'start.help_intent': start.help,
+  'start.listen_intent': start.listen,
 
-  listenError: listen.error,
+  'listen.error': listen.error,
+  'listen.selectBook':,
+  'listen.RefPlay':,
+  'listen.Play':,
+  'listen.nextChapter_intent':,
+  'listen.fallback_intent':,
+  'listen.noInput_intent':,
+  'listen.cancel_intent':,
 
-  fallback: node.fallback,
-  error: node.error,
+  'fallback_intent': node.fallback,
+  'noInput_intent': node.noInput,
+  'cancel_intent': node.cancel,
+  'error': node.error,
 });
