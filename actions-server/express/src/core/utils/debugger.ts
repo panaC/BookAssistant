@@ -1,3 +1,4 @@
+/* tslint:disable */
 export class Debugger implements Console {
     public Console: any;
     protected console: Console;

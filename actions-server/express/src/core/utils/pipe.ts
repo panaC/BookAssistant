@@ -1,4 +1,5 @@
 
+// tslint:disable-next-line:no-any
 export const pipe = <T extends any[], R>(
   fn1: (...args: T) => Promise<R>,
   ...fns: Array<(a: R) => Promise<R>>
