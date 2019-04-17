@@ -11,7 +11,7 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import Nano from 'nano';
+import * as Nano from 'nano';
 
 export interface IuserSession {
   id: string;

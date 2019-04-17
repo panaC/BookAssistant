@@ -8,3 +8,18 @@ export const getHrefWithRef = (toc: Ilinks[], ref: string): string | null =>
     link.title === ref ? link.href :
       (link.children ? getHrefWithRef(link.children, ref) : null))
     .reduce((a, c) => c, null);
+
+export const getRefWithTimecode = (toc: Ilinks[], href: string, timecode: number): string | null => {
+  return toc.map((link) => {
+    if (link.href.split('#')[0] === href &&
+    (link.href.split('#t=').length === 1 ||
+    // tslint:disable-next-line:ban
+    timecode >= parseInt(link.href.split('#t=')[1], 10) )) {
+      if (link.children) {
+        return getRefWithTimecode(link.children, href, timecode);
+      }
+      return link.title;
+    }
+    return null;
+  }).reduce((a, c) => c, null);
+};

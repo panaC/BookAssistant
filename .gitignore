@@ -1,8 +1,10 @@
 **/dist
+**/build
 **/*.cert
 **/*.key
 # Credential json file DNT
 **/*.credential.json
+
 
 # Logs
 logs
