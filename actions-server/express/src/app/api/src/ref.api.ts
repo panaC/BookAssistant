@@ -16,7 +16,7 @@ export const getRefWithTimecode = (toc: Ilinks[], href: string, timecode: number
     // tslint:disable-next-line:ban
     timecode >= parseInt(link.href.split('#t=')[1], 10) )) {
       if (link.children) {
-        return getRefWithTimecode(link.children, href, timecode);
+        return getRefWithTimecode(link.children, href, timecode) || link.title;
       }
       return link.title;
     }

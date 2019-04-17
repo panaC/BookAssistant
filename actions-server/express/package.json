@@ -4,7 +4,7 @@
   "description": "diagflow - actions server that purpose the app intent",
   "main": "main.ts",
   "scripts": {
-    "test": "jest src/",
+    "test": "jest --rootDir build/",
     "build": "tsc",
     "launch": "node dist/main.js",
     "start": "ts-node src/main.ts",
