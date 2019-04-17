@@ -11,12 +11,13 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { SERVER_NAME, ENTRY_POINT } from './core/constants';
-import { server } from './core/server';
+import {ENTRY_POINT, SERVER_NAME} from './core/constants';
+import {server} from './core/server';
 
 if (typeof require !== 'undefined' && require.main === module) {
   server.listen(server.get('port'), () => {
     // tslint:disable-next-line:no-console
-    console.log(`${SERVER_NAME} is running at http://localhost:${server.get('port')}${ENTRY_POINT}`);
+    console.log(`${SERVER_NAME} is running at http://localhost:${
+        server.get('port')}${ENTRY_POINT}`);
   });
 }

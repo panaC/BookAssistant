@@ -1,21 +1,20 @@
-import { IDFConv } from './dfconv.interface';
-import { IsessionApiDb } from './../../app/interface/sessiondb.interface';
-import { InodeTable, IintentTable, IsessionDataDb, IuserDataDb } from './../../app/interface';
-import { IcontextTable } from '../../app/interface';
-import { Session, User } from '../middleware/database';
-import { TgraphExec } from '../middleware/graph/src/core';
-import { Iapi } from '../../app/interface/api.interface';
+import {IcontextTable} from '../../app/interface';
+import {Iapi} from '../../app/interface/api.interface';
+import {Session, User} from '../middleware/database';
+import {TgraphExec} from '../middleware/graph/src/core';
+
+import {IintentTable, InodeTable, IsessionDataDb, IuserDataDb} from './../../app/interface';
+import {IsessionApiDb} from './../../app/interface/sessiondb.interface';
+import {IDFConv} from './dfconv.interface';
 
 export interface Imiddleware {
   db: {
-    session: Session<IsessionDataDb, IsessionApiDb>;
-    user: User<IuserDataDb>;
+    session: Session<IsessionDataDb, IsessionApiDb>; user: User<IuserDataDb>;
   };
   graph: TgraphExec;
   i18n: typeof i18n;
   table: {
-    nodeTable: () => InodeTable;
-    contextTable: () => IcontextTable;
+    nodeTable: () => InodeTable; contextTable: () => IcontextTable;
     intentTable: () => IintentTable;
   };
   getValueWithStringKey: <T, R>(obj: T, name: keyof T, fallback: R) => R;
@@ -24,9 +23,9 @@ export interface Imiddleware {
 }
 
 // parsing - check if intent is ok
-  // like arg
-  // then set new node to obj graph
-  // it's a preprocessing of new intent
+// like arg
+// then set new node to obj graph
+// it's a preprocessing of new intent
 
 // then launch graph machine
-  // and exec and parse graph node that you want
+// and exec and parse graph node that you want

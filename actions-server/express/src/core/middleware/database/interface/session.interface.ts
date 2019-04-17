@@ -11,8 +11,9 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-// import { IWebpub } from './../../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
-import { Capabilities } from 'actions-on-google/dist/service/actionssdk';
+// import { IWebpub } from
+// './../../../../../../opds-server/src/webpub/interfaces/webpub.inteface';
+import {Capabilities} from 'actions-on-google/dist/service/actionssdk';
 import * as Nano from 'nano';
 
 /*
@@ -65,8 +66,8 @@ export interface Isession extends Nano.MaybeDocument {
   lastSeen: Date;
   surfaceCapabilities?: Capabilities;
   raw: IrawInput[];
-  
+
   // no longer used since intentName contains node instead global session state
-  //state: string;
+  // state: string;
   data: {};
 }

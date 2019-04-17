@@ -17,7 +17,8 @@ export const SERVER_NAME = process.env.NAME_ACTIONS_SERVER || 'Actions-Server';
 
 export const ENTRY_POINT = '/fulfillment';
 
-export const SERVER_URL = process.env.OPDS_SERVER_URL || 'http://127.0.0.1:3000/webpub';
+export const SERVER_URL =
+    process.env.OPDS_SERVER_URL || 'http://127.0.0.1:3000/webpub';
 export const DB_URL = process.env.COUCHDB_URL || 'http://127.0.0.1:5984';
 
 export const MAE_LOOP_MAX = 100;

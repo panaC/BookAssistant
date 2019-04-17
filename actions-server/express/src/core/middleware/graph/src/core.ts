@@ -11,34 +11,38 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Inode } from './../interface/node.interface';
-import { sprintf } from 'sprintf-js';
-import { Suggestions, MediaObject } from 'actions-on-google';
-import { IDFConv } from './../../..';
-import { pipe } from './../../../utils/pipe';
-import { debug } from './../../../utils/debug';
-import { MAE_LOOP_MAX } from './../../../constants';
-import { IcontextTable, InodeTable } from '../../../../app/interface';
+import {MediaObject, Suggestions} from 'actions-on-google';
+import {sprintf} from 'sprintf-js';
 
-const translate = (str: string, conv: IDFConv): string => conv.middleware.i18n.__(str);
+import {IcontextTable, InodeTable} from '../../../../app/interface';
+
+import {IDFConv} from './../../..';
+import {MAE_LOOP_MAX} from './../../../constants';
+import {debug} from './../../../utils/debug';
+import {pipe} from './../../../utils/pipe';
+import {Inode} from './../interface/node.interface';
+
+const translate = (str: string, conv: IDFConv): string =>
+    conv.middleware.i18n.__(str);
 
 const getContextInTable = (conv: IDFConv, name: keyof IcontextTable) =>
-      conv.middleware.getValueWithStringKey<IcontextTable, number>(
-        conv.middleware.table.contextTable(),
-        name, 5);
+    conv.middleware.getValueWithStringKey<IcontextTable, number>(
+        conv.middleware.table.contextTable(), name, 5);
 
 const getNodeInNodeTable = (conv: IDFConv, name: keyof InodeTable) =>
-      conv.middleware.getValueWithStringKey<InodeTable, Inode>(
-        conv.middleware.table.nodeTable(),
-        name, conv.middleware.table.nodeTable().fallback);
+    conv.middleware.getValueWithStringKey<InodeTable, Inode>(
+        conv.middleware.table.nodeTable(), name,
+        conv.middleware.table.nodeTable().fallback);
 
 const context = async (conv: IDFConv) => {
   debug.core.log(conv.node);
   if (conv.node.context) {
     if (typeof conv.node.context === 'string') {
-      conv.contexts.set(conv.node.context, getContextInTable(conv, conv.node.context));
+      conv.contexts.set(
+          conv.node.context, getContextInTable(conv, conv.node.context));
     } else {
-      conv.node.context.map((v) => conv.contexts.set(v, getContextInTable(conv, v)));
+      conv.node.context.map(
+          (v) => conv.contexts.set(v, getContextInTable(conv, v)));
     }
   }
   return conv;
@@ -64,9 +68,11 @@ const conversation = async (conv: IDFConv) => {
         conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
         /* disable array map */
-        //a.ask.map((v) => conv.ask(sprintf(translate(v, conv), ...arg)));
+        // a.ask.map((v) => conv.ask(sprintf(translate(v, conv), ...arg)));
         /* enable random ask in array */
-        conv.ask(sprintf(translate(a.ask[(Math.random() * a.ask.length) | 0], conv), ...arg));
+        conv.ask(sprintf(
+            translate(a.ask[(Math.random() * a.ask.length) | 0], conv),
+            ...arg));
       }
     }
     if (a.close) {
@@ -77,14 +83,19 @@ const conversation = async (conv: IDFConv) => {
         /* disable array map */
         // a.close.map((v) => conv.close(sprintf(translate(v, conv), ...arg)));
         /* enable random ask in array */
-        conv.close(sprintf(translate(a.close[(Math.random() * a.close.length) | 0], conv), ...arg));
+        conv.close(sprintf(
+            translate(a.close[(Math.random() * a.close.length) | 0], conv),
+            ...arg));
       }
     }
     if (a.suggestion) {
       if (typeof a.suggestion === 'string') {
-        conv.ask(new Suggestions(sprintf(translate(a.suggestion, conv), ...arg)));
+        conv.ask(
+            new Suggestions(sprintf(translate(a.suggestion, conv), ...arg)));
       } else {
-        a.suggestion.map((v) => conv.ask(new Suggestions(sprintf(translate(v, conv), ...arg))));
+        a.suggestion.map(
+            (v) =>
+                conv.ask(new Suggestions(sprintf(translate(v, conv), ...arg))));
       }
     }
     if (a.media) {
@@ -115,7 +126,6 @@ const statistic = async (conv: IDFConv) => {
 };
 
 const save = async (conv: IDFConv) => {
-
   await conv.middleware.db.user.save();
   await conv.middleware.db.session.save();
   return conv;
@@ -133,19 +143,15 @@ const test = async (conv: IDFConv) => {
     debug.core.log(a.test);
     debug.core.log(typeof a.test);
     const r = a.test(conv);
-    conv.node = getNodeInNodeTable(conv, a.switch.case.reduce(
-      (pv, cv) => cv === r ?
-        cv : pv, a.switch.default));
+    conv.node = getNodeInNodeTable(
+        conv,
+        a.switch.case.reduce((pv, cv) => cv === r ? cv : pv, a.switch.default));
   } else {
     if (a.switch) {
       conv.node = getNodeInNodeTable(conv, a.switch.default);
-    } else if (!a.return) {
+    } else if (!a.return ) {
       conv.node = {
-        return: true,
-        conv: {
-          arg: () => 'error.error',
-          close: 'error.global'
-        }
+        return: true, conv: {arg: () => 'error.error', close: 'error.global'}
       };
     }
   }
@@ -153,18 +159,14 @@ const test = async (conv: IDFConv) => {
 };
 
 const p = async (conv: IDFConv) =>
-  await (await pipe(context, api, conversation, test))(conv);
+    await (await pipe(context, api, conversation, test))(conv);
 
 //
-export const exec = async (conv: IDFConv, loop = 0): Promise<IDFConv> => {
+export const exec = async(conv: IDFConv, loop = 0): Promise<IDFConv> => {
   debug.core.log(conv.node);
   if (loop > MAE_LOOP_MAX) {
     conv.node = {
-      return: true,
-      conv: {
-        arg: () => 'error.error',
-        close: 'error.global'
-      }
+      return: true, conv: {arg: () => 'error.error', close: 'error.global'}
     };
   }
   if (conv.node.return && loop <= MAE_LOOP_MAX) {

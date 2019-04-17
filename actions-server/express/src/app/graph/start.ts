@@ -11,13 +11,10 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Inode } from './../../core/middleware/graph';
+import {Inode} from './../../core/middleware/graph';
 
 export const start: Inode = {
-  return: true,
-  context: 'start',
-  conv: {
+  return: true, context: 'start', conv: {
     ask: 'welcome.home',
   },
 };
-

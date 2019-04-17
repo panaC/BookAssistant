@@ -23,5 +23,3 @@ export interface IsessionStorage {
 export interface IuserStorage {
   userId: string;
 }
-
-

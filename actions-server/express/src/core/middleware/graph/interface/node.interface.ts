@@ -11,19 +11,21 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { MediaObjectOptions } from 'actions-on-google';
-import { IcontextTable, InodeTable } from './../../../../app/interface';
-import { IDFConv } from './../../../';
-import { Iapi } from '../../../../app/interface/api.interface';
+import {MediaObjectOptions} from 'actions-on-google';
+
+import {Iapi} from '../../../../app/interface/api.interface';
+
+import {IDFConv} from './../../../';
+import {IcontextTable, InodeTable} from './../../../../app/interface';
 
 type Tapi = (conv: IDFConv, f: Iapi) => Promise<void>;
 
 export interface Inode {
   // Symbol name
   name?: keyof InodeTable;
-  context?: keyof IcontextTable | Array<keyof IcontextTable>;
+  context?: keyof IcontextTable|Array<keyof IcontextTable>;
 
-  api?: Tapi[] | Tapi;
+  api?: Tapi[]|Tapi;
 
   // add function directly but i can't use json in config file but only ts files
   test?: (conv: IDFConv) => string;
@@ -32,8 +34,7 @@ export interface Inode {
   // use reduce here with init = default and [] = case
   switch?: {
     // possibly add more state for more context switch
-    case?: Array<keyof InodeTable>;
-    default: keyof InodeTable;
+    case?: Array<keyof InodeTable>; default: keyof InodeTable;
   };
   conv?: {
     // at most two 'simple_responses' are supported
@@ -46,7 +47,7 @@ export interface Inode {
 
   // no by default
   return?: boolean;
-  error?: keyof InodeTable | Inode;
+  error?: keyof InodeTable|Inode;
 }
 
 /*

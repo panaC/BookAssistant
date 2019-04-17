@@ -1,18 +1,20 @@
-import { get } from './../core/middleware/api/src/api';
-import { sessionFactory } from './../core/middleware/database';
-import { userFactory } from './../core/middleware/database';
-import { intentTable } from './table/intentTable';
-import { contextTable } from './table/contextTable';
-import { nodeTable } from './table/nodeTable';
-import { Imiddleware, IDFConv } from '../core/';
 import * as i18n from 'i18n';
-import { exec } from '../core/middleware/graph/src/core';
-import { getValueWithStringKey } from '../core/utils/getValueWithStringKey';
-import { discovery } from './api/src/discovery.api';
-import { search } from './api/src/search.api';
-import { fuse } from './api/src/fuse.api';
-import { Iopds, Iwebpub } from './api';
-import { getHrefWithRef, getTrackWithHref } from './api/src/ref.api';
+
+import {IDFConv, Imiddleware} from '../core/';
+import {exec} from '../core/middleware/graph/src/core';
+import {getValueWithStringKey} from '../core/utils/getValueWithStringKey';
+
+import {get} from './../core/middleware/api/src/api';
+import {sessionFactory} from './../core/middleware/database';
+import {userFactory} from './../core/middleware/database';
+import {Iopds, Iwebpub} from './api';
+import {discovery} from './api/src/discovery.api';
+import {fuse} from './api/src/fuse.api';
+import {getHrefWithRef, getTrackWithHref} from './api/src/ref.api';
+import {search} from './api/src/search.api';
+import {contextTable} from './table/contextTable';
+import {intentTable} from './table/intentTable';
+import {nodeTable} from './table/nodeTable';
 
 export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
 
@@ -22,12 +24,13 @@ export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
  * it can see like a top factory
  * it's here you can choose middleware that will be imported
  */
-export const middlewareFactory: TmiddlewareFactory = async (conv: IDFConv): Promise<Imiddleware> => ({
+export const middlewareFactory: TmiddlewareFactory =
+    async(conv: IDFConv): Promise<Imiddleware> => ({
   db: {
     session: await sessionFactory(conv, {}, {
-    discovery: {} as Iopds,
-    search: [] as Iwebpub[],
-  }),
+      discovery: {} as Iopds,
+      search: [] as Iwebpub[],
+    }),
     user: await userFactory(conv),
   },
   graph: exec,
@@ -47,4 +50,3 @@ export const middlewareFactory: TmiddlewareFactory = async (conv: IDFConv): Prom
     refGetTrackWithRef: getTrackWithHref,
   },
 });
-

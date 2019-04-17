@@ -1,4 +1,4 @@
-import { Inode } from "../../../core/middleware/graph";
+import {Inode} from '../../../core/middleware/graph';
 
 export const newBooks: Inode = {
   api: async (conv, f) => await f.discovery(conv),

@@ -1,8 +1,8 @@
-import { help } from './../graph/start/help';
-import { IintentTable } from './../interface';
 import * as node from './../graph';
+import {help} from './../graph/start/help';
 import * as start from './../graph/start/index';
 import * as listen from './../graph/start/listen/index';
+import {IintentTable} from './../interface';
 
 export const START_DEFAULT_INTENT = 'start';
 

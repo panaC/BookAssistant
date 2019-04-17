@@ -1,4 +1,4 @@
-import { Inode } from "../../../core/middleware/graph";
+import {Inode} from '../../../core/middleware/graph';
 
 export const help: Inode = {
   conv: {
@@ -10,4 +10,3 @@ export const help: Inode = {
     default: 'start',
   },
 };
-

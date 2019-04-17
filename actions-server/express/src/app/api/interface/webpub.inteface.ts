@@ -1,5 +1,5 @@
-import { Ilinks } from './links.interface';
-import { Imetadata } from './metadata.interface';
+import {Ilinks} from './links.interface';
+import {Imetadata} from './metadata.interface';
 
 export interface Iwebpub {
   readonly context: string;

@@ -1,4 +1,4 @@
-import { Inode } from './../../core/middleware/graph';
+import {Inode} from './../../core/middleware/graph';
 
 export interface IintentTable {
   'start': Inode;

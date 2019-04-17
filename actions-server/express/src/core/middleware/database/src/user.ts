@@ -1,10 +1,10 @@
-import { IDFConv } from './../../../interface/dfconv.interface';
-import { Iuser } from '../interface/user.interface';
-import { IuserSession } from '../interface/user.interface';
-import { Io } from './io';
+import {Iuser} from '../interface/user.interface';
+import {IuserSession} from '../interface/user.interface';
+
+import {IDFConv} from './../../../interface/dfconv.interface';
+import {Io} from './io';
 
 export class User<T = {}> extends Io<Iuser> implements Iuser {
-
   lastSeen!: Date;
   sessionCount: number;
   locale!: string;
@@ -22,7 +22,6 @@ export class User<T = {}> extends Io<Iuser> implements Iuser {
   }
 
   update(conv: IDFConv) {
-
     const date = new Date(Date.now());
 
     this.lastSeen = date;
@@ -33,7 +32,6 @@ export class User<T = {}> extends Io<Iuser> implements Iuser {
     ++this.sessionCount;
     this.locale = conv.user.locale;
   }
-
 }
 
 // EOF

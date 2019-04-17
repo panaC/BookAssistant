@@ -11,7 +11,7 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { Debugger } from './debugger';
+import {Debugger} from './debugger';
 
 const isEnabled = process.env.NODE_ENV !== 'production';
 

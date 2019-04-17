@@ -26,5 +26,4 @@ export interface Imetadata {
   readonly version: string;
   readonly url: string;
   readonly corpus: string;
-
 }

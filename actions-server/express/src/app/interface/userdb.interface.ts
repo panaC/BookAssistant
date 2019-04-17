@@ -1,5 +1,2 @@
 
-export interface IuserDataDb {
-
-}
-
+export interface IuserDataDb {}

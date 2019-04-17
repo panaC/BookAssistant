@@ -14,13 +14,11 @@
 import * as Nano from 'nano';
 
 export abstract class Io<T> implements Nano.MaybeDocument {
-
   _rev!: string;
 
   private _db: Nano.DocumentScope<T>;
 
   constructor(public _id: string, db: string, dbName: string) {
-
     const n = Nano(db);
     this._db = n.db.use<T>(dbName);
   }
@@ -28,10 +26,10 @@ export abstract class Io<T> implements Nano.MaybeDocument {
   sync(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.get()
-        .then(() => resolve())
-        .catch((e) => this.save()
           .then(() => resolve())
-          .catch((e2) => reject(e2)));
+          .catch(
+              (e) =>
+                  this.save().then(() => resolve()).catch((e2) => reject(e2)));
     });
   }
 
@@ -50,8 +48,8 @@ export abstract class Io<T> implements Nano.MaybeDocument {
   }
 
   async save() {
-      const response = await this._db.insert(this.json);
-      this.processAPIResponse(response);
+    const response = await this._db.insert(this.json);
+    this.processAPIResponse(response);
   }
 
   async del() {
@@ -66,5 +64,4 @@ export abstract class Io<T> implements Nano.MaybeDocument {
       throw new Error('[Io]: Nano sync response');
     }
   }
-
 }

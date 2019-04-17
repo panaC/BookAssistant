@@ -11,11 +11,13 @@
  * Use of this source code is governed by a BSD-style license
  */
 
-import { SERVER_NAME, ENTRY_POINT, PORT } from './constants';
 import * as express from 'express';
-import { appFactory } from '../app/app';
-import { intentTable } from '../app/table/intentTable';
-import { middlewareFactory } from '../app/middleware';
+
+import {appFactory} from '../app/app';
+import {middlewareFactory} from '../app/middleware';
+import {intentTable} from '../app/table/intentTable';
+
+import {ENTRY_POINT, PORT, SERVER_NAME} from './constants';
 
 export const server = express();
 
