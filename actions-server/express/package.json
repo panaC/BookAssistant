@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "diagflow - actions server that purpose the app intent",
   "main": "main.ts",
-  "scripts": {
-    "test": "jest --rootDir build/",
+  "scripts":  {
+    "test": "jest --rootDir build/ --verbose",
     "build": "tsc",
     "launch": "node dist/main.js",
     "start": "ts-node src/main.ts",

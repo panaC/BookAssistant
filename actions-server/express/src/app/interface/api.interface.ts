@@ -1,8 +1,8 @@
 import {IDFConv} from './../../core/interface/dfconv.interface';
 import {Ilinks} from './../api/interface/links.interface';
 
-export type Tdiscovery = (conv: IDFConv) => void;
-export type Tsearch = (conv: IDFConv, title: string, author?: string) => void;
+export type Tdiscovery = (conv: IDFConv) => Promise<void>;
+export type Tsearch = (conv: IDFConv, title: string, author?: string) => Promise<void>;
 export type TnodeApi = Tdiscovery|Tsearch;
 export type Tfuse = (search: string) => (array: string[]) => string[];
 export type TgetTrackWithRef = (readingOrder: Ilinks[], href: string) => number;

@@ -27,7 +27,14 @@ export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
 export const middlewareFactory: TmiddlewareFactory =
     async(conv: IDFConv): Promise<Imiddleware> => ({
   db: {
-    session: await sessionFactory(conv, {}, {
+    session: await sessionFactory(conv, {
+      timecode: 0,
+      trackIndex: 0,
+      titleTellByUser: '',
+      chapterTellByUser: '',
+      authorTellByUser: '',
+      refTellByUser: '',
+    }, {
       discovery: {} as Iopds,
       search: [] as Iwebpub[],
     }),

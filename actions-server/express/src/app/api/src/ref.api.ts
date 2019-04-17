@@ -32,11 +32,11 @@ export const getRefWithTimecode =
     };
 
 export const flattenToc = (toc: Ilinks[]): string[] => {
-  const ret: string[] = [];
+  let ret: string[] = [];
   toc.map((link) => {
     ret.push(link.title);
     if (link.children) {
-      flattenToc(link.children);
+      ret = [...ret, ...flattenToc(link.children)];
     }
   });
   return ret;
