@@ -28,5 +28,25 @@ export const getRefWithTimecode =
             }
             return null;
           })
-          .reduce((a, c) => c, null);
+          .reduce((_a, c) => c, null);
     };
+
+export const flattenToc = (toc: Ilinks[]): string[] => {
+  const ret: string[] = [];
+  toc.map((link) => {
+    ret.push(link.title);
+    if (link.children) {
+      flattenToc(link.children);
+    }
+  });
+  return ret;
+};
+
+export const getNextRefWithRef = (toc: Ilinks[], ref: string): string|null => {
+  const array = flattenToc(toc);
+  const index = array.indexOf(ref) + 1;
+  if (index <= 0 || index >= array.length) {
+    return null;
+  }
+  return array[index];
+};
