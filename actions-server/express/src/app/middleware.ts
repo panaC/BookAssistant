@@ -12,6 +12,7 @@ import { discovery } from './api/src/discovery.api';
 import { search } from './api/src/search.api';
 import { fuse } from './api/src/fuse.api';
 import { Iopds, Iwebpub } from './api';
+import { getHrefWithRef, getTrackWithHref } from './api/src/ref.api';
 
 export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
 
@@ -42,6 +43,8 @@ export const middlewareFactory: TmiddlewareFactory = async (conv: IDFConv): Prom
     discovery,
     search,
     fuse,
+    refGetHrefWithRef: getHrefWithRef,
+    refGetTrackWithRef: getTrackWithHref,
   },
 });
 
