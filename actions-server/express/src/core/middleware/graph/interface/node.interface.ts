@@ -19,6 +19,8 @@ import {IDFConv} from './../../../';
 import {IcontextTable, InodeTable} from './../../../../app/interface';
 
 type Tapi = (conv: IDFConv, f: Iapi) => Promise<void>;
+type Ttest = (conv: IDFConv) => string;
+type TtestPromise = (conv: IDFConv) => Promise<string>;
 
 export interface Inode {
   // Symbol name
@@ -28,7 +30,7 @@ export interface Inode {
   api?: Tapi[]|Tapi;
 
   // add function directly but i can't use json in config file but only ts files
-  test?: (conv: IDFConv) => string;
+  test?: Ttest | TtestPromise;
   // only default switch state is required
 
   // use reduce here with init = default and [] = case

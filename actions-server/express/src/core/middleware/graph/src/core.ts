@@ -142,7 +142,7 @@ const test = async (conv: IDFConv) => {
     debug.core.log(conv.node.test);
     debug.core.log(a.test);
     debug.core.log(typeof a.test);
-    const r = a.test(conv);
+    const r = await Promise.resolve(a.test(conv));
     conv.node = getNodeInNodeTable(
         conv,
         a.switch.case.reduce((pv, cv) => cv === r ? cv : pv, a.switch.default));
