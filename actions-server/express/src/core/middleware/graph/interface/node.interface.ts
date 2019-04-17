@@ -18,9 +18,9 @@ import {Iapi} from '../../../../app/interface/api.interface';
 import {IDFConv} from './../../../';
 import {IcontextTable, InodeTable} from './../../../../app/interface';
 
-type Tapi = (conv: IDFConv, f: Iapi) => Promise<void>;
-type Ttest = (conv: IDFConv) => string;
-type TtestPromise = (conv: IDFConv) => Promise<string>;
+export type Tapi = (conv: IDFConv, f: Iapi) => Promise<void>;
+export type Ttest = (conv: IDFConv) => keyof InodeTable;
+export type TtestPromise = (conv: IDFConv) => Promise<keyof InodeTable>;
 
 export interface Inode {
   // Symbol name
