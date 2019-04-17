@@ -8,6 +8,9 @@ export interface InodeTable {
   startListen: Inode;
 
   listenError: Inode;
+  listenSelectBook: Inode;
+  listenRefPlay: Inode;
+  listenPlay: Inode;
 
   fallback: Inode;
   error: Inode;

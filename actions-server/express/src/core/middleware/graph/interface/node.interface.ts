@@ -25,6 +25,7 @@ export type TtestPromise = (conv: IDFConv) => Promise<keyof InodeTable>;
 export interface Inode {
   // Symbol name
   name?: keyof InodeTable;
+  intent?: boolean;
   context?: keyof IcontextTable|Array<keyof IcontextTable>;
 
   api?: Tapi[]|Tapi;

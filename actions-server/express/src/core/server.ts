@@ -15,7 +15,7 @@ import * as express from 'express';
 
 import {appFactory} from '../app/app';
 import {middlewareFactory} from '../app/middleware';
-import {intentTable} from '../app/table/intentTable';
+import {nodeTable} from '../app/table/nodeTable';
 
 import {ENTRY_POINT, PORT, SERVER_NAME} from './constants';
 
@@ -24,7 +24,7 @@ export const server = express();
 server.set('port', PORT);
 server.set('trust proxy', 'loopback');
 server.use(express.json({}));
-server.post(ENTRY_POINT, appFactory(intentTable(), middlewareFactory));
+server.post(ENTRY_POINT, appFactory(nodeTable(), middlewareFactory));
 server.get('/', (req, res) => {
   res.send(SERVER_NAME);
 });

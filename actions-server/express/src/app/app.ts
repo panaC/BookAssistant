@@ -34,7 +34,7 @@ import {generateUUID} from '../core/utils/generateuuid';
 
 import {IsessionStorage, IuserStorage} from './../core';
 import {IDFConv} from './../core/';
-import {IintentTable} from './interface';
+import {IintentTable, InodeTable} from './interface';
 import {TmiddlewareFactory} from './middleware';
 import {START_DEFAULT_INTENT} from './table/intentTable';
 
@@ -47,7 +47,7 @@ import {START_DEFAULT_INTENT} from './table/intentTable';
 interface ImyContextInterface extends Contexts {}
 
 export const appFactory =
-    (intentTable: IintentTable, middlewareFactory: TmiddlewareFactory) => {
+    (nodeTable: InodeTable, middlewareFactory: TmiddlewareFactory) => {
       /**
        * Create a DialogFlow app instance
        * See actions-on-google Modules -> Dialogflow/dialogflow.ts
@@ -109,15 +109,15 @@ export const appFactory =
        * Intent declaration
        * Starting point for all incoming intent
        */
-      app.intent(Object.keys(intentTable), async (conv) => {
-        const getNodeInIntentTable =
-            (conv: IDFConv, name: keyof IintentTable) =>
-                conv.middleware.getValueWithStringKey<IintentTable, Inode>(
-                    conv.middleware.table.intentTable(), name,
-                    conv.middleware.table.intentTable().fallback);
+      app.intent(Object.keys(nodeTable), async (conv) => {
+        const getNodeInNodeTable =
+            (conv: IDFConv, name: keyof InodeTable) =>
+                conv.middleware.getValueWithStringKey<InodeTable, Inode>(
+                    conv.middleware.table.nodeTable(), name,
+                    conv.middleware.table.nodeTable().fallback);
 
         conv.node =
-            getNodeInIntentTable(conv, conv.intent as keyof IintentTable);
+            getNodeInNodeTable(conv, conv.intent as keyof InodeTable);
         return await conv.middleware.graph(conv);
       });
 
