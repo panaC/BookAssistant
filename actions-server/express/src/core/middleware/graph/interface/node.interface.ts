@@ -38,16 +38,19 @@ export interface Inode {
   // only default switch state is required
 
   // use reduce here with init = default and [] = case
+  /*
+  // Disable implemented in test
   switch?: {
     // possibly add more state for more context switch
     case?: Array<keyof InodeTable>; default: keyof InodeTable;
   };
+  */
   conv?: {
     // at most two 'simple_responses' are supported
     arg?: (conv: IDFConv) => string | string[];
     ask?: string | string[];
     close?: string | string[];
-    media?: MediaObjectOptions;
+    media?: (conv: IDFConv) => MediaObjectOptions;
     suggestion?: string | string[];
   };
 

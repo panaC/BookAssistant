@@ -104,7 +104,7 @@ const conversation = async (conv: IDFConv) => {
       }
     }
     if (a.media) {
-      conv.ask(new MediaObject(a.media));
+      conv.ask(new MediaObject(a.media(conv)));
     }
   }
   debug.core.log(conv.responses);
@@ -140,25 +140,14 @@ const test = async (conv: IDFConv) => {
   const a = conv.node;
   debug.core.log('test');
   debug.core.log(conv.node);
-  if (a.test && a.switch) {
-    if (!a.switch.case) {
-      a.switch.case = [];
-    }
+  if (a.test) {
     debug.core.log(conv.node.test);
     debug.core.log(a.test);
     debug.core.log(typeof a.test);
     const r = await Promise.resolve(a.test(conv));
     conv.node = getNodeInNodeTable(
         conv,
-        a.switch.case.reduce((pv, cv) => cv === r ? cv : pv, a.switch.default));
-  } else {
-    if (a.switch) {
-      conv.node = getNodeInNodeTable(conv, a.switch.default);
-    } else if (!a.return ) {
-      conv.node = {
-        return: true, conv: {arg: () => 'error.error', close: 'error.global'}
-      };
-    }
+        r);
   }
   return conv;
 };
