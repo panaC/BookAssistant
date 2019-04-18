@@ -26,7 +26,10 @@ export interface Inode {
   // Symbol name
   name?: keyof InodeTable;
   intent?: boolean;
-  context?: keyof IcontextTable|Array<keyof IcontextTable>;
+  context?: {
+    name: keyof IcontextTable;
+    return? : keyof InodeTable;
+  };
 
   api?: Tapi[]|Tapi;
 

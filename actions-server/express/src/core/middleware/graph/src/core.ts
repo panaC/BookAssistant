@@ -37,12 +37,17 @@ const getNodeInNodeTable = (conv: IDFConv, name: keyof InodeTable) =>
 const context = async (conv: IDFConv) => {
   debug.core.log(conv.node);
   if (conv.node.context) {
-    if (typeof conv.node.context === 'string') {
+    if (typeof conv.node.context.name === 'string') {
       conv.contexts.set(
-          conv.node.context, getContextInTable(conv, conv.node.context));
+          conv.node.context.name, getContextInTable(conv, conv.node.context.name), conv.node.context);
     } else {
+      /**
+       * Disable array context
+       */
+      /*
       conv.node.context.map(
           (v) => conv.contexts.set(v, getContextInTable(conv, v)));
+      */
     }
   }
   return conv;
