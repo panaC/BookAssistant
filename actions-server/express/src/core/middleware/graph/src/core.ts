@@ -32,7 +32,7 @@ const getContextInTable = (conv: IDFConv, name: keyof IcontextTable) =>
 const getNodeInNodeTable = (conv: IDFConv, name: keyof InodeTable) =>
     conv.middleware.getValueWithStringKey<InodeTable, Inode>(
         conv.middleware.table.nodeTable(), name,
-        conv.middleware.table.nodeTable().fallback);
+        conv.middleware.table.nodeTable().fallback_intent);
 
 const context = async (conv: IDFConv) => {
   debug.core.log(conv.node);
