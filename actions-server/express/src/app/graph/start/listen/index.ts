@@ -1,13 +1,9 @@
 import { Inode } from './../../../../core/middleware/graph/interface/node.interface';
 
-export * from './control';
+export * from './intent/control';
+export * from './intent/intent';
+export * from './flow/flow';
+export * from './listen';
 
-
-export const nextChapter: Inode = {
-  return: false,
-          context: 'start',
-          switch: {
-            default: 'start',
-          },
-          conv: {ask: 'listen.book_found'}
-};
+// apply all node intern flow in a file and
+// all intent entry point in an another file with listen context

@@ -34,11 +34,18 @@ export const middlewareFactory: TmiddlewareFactory =
       chapterTellByUser: '',
       authorTellByUser: '',
       refTellByUser: '',
+      bookIndex: 0,
+      context: {
+        choice: 0,
+        yes_no: false,
+      }
     }, {
       discovery: {} as Iopds,
       search: [] as Iwebpub[],
     }),
-    user: await userFactory(conv),
+    user: await userFactory(conv, {
+      bookAlreadyListen: {},
+    }),
   },
   graph: exec,
   i18n,

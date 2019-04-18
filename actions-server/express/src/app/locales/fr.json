@@ -9,6 +9,9 @@
     "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
     "want_listen": "Je veux écouter"
   },
+  "choice": {
+    "select_book": "Voici la liste des livres correspondant à votre recherche, lequel choisissez-vous ? %s %s %s %s %s"
+  },
   "listen": {
     "home": "Que voulez-vous écouter ?",
     "book": "Voici l'audiobook %s de %s %s",

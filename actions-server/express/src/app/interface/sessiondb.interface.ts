@@ -3,6 +3,14 @@ import {Iopds} from '../api';
 import {Iwebpub} from './../api';
 
 export interface IsessionDataDb {
+  context: {
+    choice: number;
+    yes_no: boolean;
+  };
+  /**
+   * bookIndex
+   */
+  bookIndex: number;
   /**
    * array index from reading-order in webpub
    */

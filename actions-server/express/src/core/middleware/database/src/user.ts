@@ -12,12 +12,12 @@ export class User<T = {}> extends Io<Iuser> implements Iuser {
   data: T;
   lostMemory: boolean;
 
-  constructor(id: string, db: string) {
+  constructor(id: string, db: string, data: T) {
     super(id, db, 'user');
 
     this.sessionCount = 0;
     this.session = [];
-    this.data = {} as T;
+    this.data = data;
     this.lostMemory = false;
   }
 

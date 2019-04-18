@@ -1,4 +1,4 @@
 
-export * from './help';
+export * from './help/intent/help';
 export * from './listen';
-export * from './newBooks';
+export * from './discovery/intent/newBooks';

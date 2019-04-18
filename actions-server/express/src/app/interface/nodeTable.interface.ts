@@ -8,14 +8,21 @@ export interface InodeTable {
   'start.listen_intent': Inode;
 
   'listen.error': Inode;
+  'listen.getBook': Inode;
   'listen.selectBook': Inode;
+  'listen.checkSelectBook': Inode;
+  'listen.IsRefPlay': Inode;
   'listen.RefPlay': Inode;
-  'listen.Play': Inode;
+  'listen.checkAlreadyListen': Inode;
+  'listen.alreadyListen': Inode;
+  'listen.returnAlreadyListen': Inode;
+  'listen.play': Inode;
   'listen.nextChapter_intent': Inode;
   'listen.fallback_intent': Inode;
   'listen.noInput_intent': Inode;
   'listen.cancel_intent': Inode;
 
+  // require
   'fallback_intent': Inode;
   'noInput_intent': Inode;
   'cancel_intent': Inode;
