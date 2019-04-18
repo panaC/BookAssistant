@@ -10,10 +10,9 @@ import {userFactory} from './../core/middleware/database';
 import {Iopds, Iwebpub} from './api';
 import {discovery} from './api/src/discovery.api';
 import {fuse} from './api/src/fuse.api';
-import {getHrefWithRef, getTrackWithHref} from './api/src/ref.api';
+import {getHrefWithRef, getTrackWithHref, flattenToc} from './api/src/ref.api';
 import {search} from './api/src/search.api';
 import {contextTable} from './table/contextTable';
-import {intentTable} from './table/intentTable';
 import {nodeTable} from './table/nodeTable';
 
 export type TmiddlewareFactory = (conv: IDFConv) => Promise<Imiddleware>;
@@ -52,7 +51,6 @@ export const middlewareFactory: TmiddlewareFactory =
   table: {
     nodeTable,
     contextTable,
-    intentTable,
   },
   getValueWithStringKey,
   get,
@@ -62,5 +60,6 @@ export const middlewareFactory: TmiddlewareFactory =
     fuse,
     refGetHrefWithRef: getHrefWithRef,
     refGetTrackWithRef: getTrackWithHref,
+    flattenToc,
   },
 });

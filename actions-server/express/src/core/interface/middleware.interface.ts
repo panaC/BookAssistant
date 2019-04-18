@@ -3,7 +3,7 @@ import {Iapi} from '../../app/interface/api.interface';
 import {Session, User} from '../middleware/database';
 import {TgraphExec} from '../middleware/graph/src/core';
 
-import {IintentTable, InodeTable, IsessionDataDb, IuserDataDb} from './../../app/interface';
+import {InodeTable, IsessionDataDb, IuserDataDb} from './../../app/interface';
 import {IsessionApiDb} from './../../app/interface/sessiondb.interface';
 import {IDFConv} from './dfconv.interface';
 
@@ -15,7 +15,6 @@ export interface Imiddleware {
   i18n: typeof i18n;
   table: {
     nodeTable: () => InodeTable; contextTable: () => IcontextTable;
-    intentTable: () => IintentTable;
   };
   getValueWithStringKey: <T, R>(obj: T, name: keyof T, fallback: R) => R;
   get: <T>(url: string) => Promise<T>;

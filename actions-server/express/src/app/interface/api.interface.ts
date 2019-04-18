@@ -7,6 +7,7 @@ export type TnodeApi = Tdiscovery|Tsearch;
 export type Tfuse = (search: string) => (array: string[]) => string[];
 export type TgetTrackWithRef = (readingOrder: Ilinks[], href: string) => number;
 export type TgetHrefWithRef = (toc: Ilinks[], ref: string) => string|null;
+export type TflattenToc = (toc: Ilinks[]) => string[];
 
 export interface Iapi {
   discovery: Tdiscovery;
@@ -14,4 +15,5 @@ export interface Iapi {
   fuse: Tfuse;
   refGetTrackWithRef: TgetTrackWithRef;
   refGetHrefWithRef: TgetHrefWithRef;
+  flattenToc: TflattenToc;
 }
