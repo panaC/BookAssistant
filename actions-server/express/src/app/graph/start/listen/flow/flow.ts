@@ -125,7 +125,9 @@ export const returnAlreadyListen: Inode = {
   return: false,
   test: (conv: IDFConv): keyof InodeTable => {
     if (conv.middleware.db.session.data.context.yes_no) {
-      conv.middleware.db.session.data.trackIndex = conv.middleware.db.user.data.bookAlreadyListen[conv.middleware.db.session.data.bookIndex].chapter;
+      conv.middleware.db.session.data.trackIndex = 
+        conv.middleware.db.user.data.bookAlreadyListen
+          [conv.middleware.db.session.data.bookIndex].chapter;
     }
     return 'listen.play';
   }
@@ -135,12 +137,26 @@ export const play: Inode = {
   intent: false,
   name: 'listen.play',
   return: true,
+  test: (conv) => {
+    // trig the timer to save time elapsed
+    return 'listen.play';
+  },
   conv: {
     media: (conv: IDFConv): MediaObjectOptions => ({
-      url: conv.middleware.db.session.api.search
+      url: `${conv.middleware.db.session.api.search
         [conv.middleware.db.session.data.bookIndex].readingOrder
-          [conv.middleware.db.session.data.trackIndex].href,
+          [conv.middleware.db.session.data.trackIndex].href}#t=${conv.middleware.db.session.data.timecode.toString()}`,
       /* set description, name and image in the future */
     })
+  }
+};
+
+export const endOfBook: Inode = {
+  intent: false,
+  name: 'listen.endOfBook',
+  return: false,
+  test: () => 'start_intent',
+  conv: {
+    ask: 'listen.end_of_book',
   }
 };

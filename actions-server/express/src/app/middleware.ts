@@ -10,7 +10,7 @@ import {userFactory} from './../core/middleware/database';
 import {Iopds, Iwebpub} from './api';
 import {discovery} from './api/src/discovery.api';
 import {fuse} from './api/src/fuse.api';
-import {getHrefWithRef, getTrackWithHref, flattenToc} from './api/src/ref.api';
+import {getHrefWithRef, getTrackWithHref, flattenToc, getRefWithTimecode, getPrevNextRefWithRef} from './api/src/ref.api';
 import {search} from './api/src/search.api';
 import {contextTable} from './table/contextTable';
 import {nodeTable} from './table/nodeTable';
@@ -27,8 +27,12 @@ export const middlewareFactory: TmiddlewareFactory =
     async(conv: IDFConv): Promise<Imiddleware> => ({
   db: {
     session: await sessionFactory(conv, {
+      timer: {
+        time: 0,
+      },
       timecode: 0,
       trackIndex: 0,
+      reference: '',
       titleTellByUser: '',
       chapterTellByUser: '',
       authorTellByUser: '',
@@ -59,7 +63,9 @@ export const middlewareFactory: TmiddlewareFactory =
     search,
     fuse,
     refGetHrefWithRef: getHrefWithRef,
-    refGetTrackWithRef: getTrackWithHref,
+    refGetTrackWithHref: getTrackWithHref,
+    refGetRefWithTimecode: getRefWithTimecode,
+    refGetPrevNextRefWithRef: getPrevNextRefWithRef,
     flattenToc,
   },
 });

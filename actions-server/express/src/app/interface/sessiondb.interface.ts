@@ -3,6 +3,9 @@ import {Iopds} from '../api';
 import {Iwebpub} from './../api';
 
 export interface IsessionDataDb {
+  timer: {
+    time: number;
+  };
   context: {
     choice: number;
     yes_no: boolean;
@@ -20,6 +23,10 @@ export interface IsessionDataDb {
    * update at each interaction during media playing
    */
   timecode: number;
+  /**
+   * string ref that correspond to refTellByUser
+   */
+  reference: string;
   /**
    * Title tell by user
    */

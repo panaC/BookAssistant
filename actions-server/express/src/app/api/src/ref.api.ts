@@ -42,9 +42,9 @@ export const flattenToc = (toc: Ilinks[]): string[] => {
   return ret;
 };
 
-export const getNextRefWithRef = (toc: Ilinks[], ref: string): string|null => {
+export const getPrevNextRefWithRef = (toc: Ilinks[], ref: string, nb: number): string|null => {
   const array = flattenToc(toc);
-  const index = array.indexOf(ref) + 1;
+  const index = array.indexOf(ref) + nb;
   if (index <= 0 || index >= array.length) {
     return null;
   }

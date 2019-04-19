@@ -5,15 +5,19 @@ export type Tdiscovery = (conv: IDFConv) => Promise<void>;
 export type Tsearch = (conv: IDFConv, title: string, author?: string) => Promise<void>;
 export type TnodeApi = Tdiscovery|Tsearch;
 export type Tfuse = (search: string) => (array: string[]) => string[];
-export type TgetTrackWithRef = (readingOrder: Ilinks[], href: string) => number;
+export type TgetTrackWithHref = (readingOrder: Ilinks[], href: string) => number;
 export type TgetHrefWithRef = (toc: Ilinks[], ref: string) => string|null;
+export type TgetPrevNextWithRef = (toc: Ilinks[], ref: string, nb: number) => string|null;
 export type TflattenToc = (toc: Ilinks[]) => string[];
+export type TgetRefWithTimecode = (toc: Ilinks[], href: string, timecode: number) => string|null;
 
 export interface Iapi {
   discovery: Tdiscovery;
   search: Tsearch;
   fuse: Tfuse;
-  refGetTrackWithRef: TgetTrackWithRef;
+  refGetTrackWithHref: TgetTrackWithHref;
   refGetHrefWithRef: TgetHrefWithRef;
+  refGetRefWithTimecode: TgetRefWithTimecode;
+  refGetPrevNextRefWithRef : TgetPrevNextWithRef;
   flattenToc: TflattenToc;
 }

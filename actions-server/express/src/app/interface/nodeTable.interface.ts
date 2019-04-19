@@ -20,7 +20,11 @@ export interface InodeTable {
   'listen.alreadyListen': Inode;
   'listen.returnAlreadyListen': Inode;
   'listen.play': Inode;
+  'listen.endOfBook': Inode;
+  'listen.mediaStatus_intent': Inode;
+  'listen.pausePlay_intent': Inode;
   'listen.nextChapter_intent': Inode;
+  'listen.prevChapter_intent': Inode;
   'listen.fallback_intent': Inode;
   'listen.noInput_intent': Inode;
   'listen.cancel_intent': Inode;

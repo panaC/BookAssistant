@@ -10,11 +10,13 @@
     "want_listen": "Je veux écouter"
   },
   "choice": {
-    "select_book": "Voici la liste des livres correspondant à votre recherche, lequel choisissez-vous ? %s %s %s %s %s"
+    "select_book": "Voici la liste des livres correspondant à votre recherche, lequel choisissez-vous ? %s %s %s %s %s",
+    "select_ref": "Qu'elle référence choisissez-vous ? %s %s %s %s %s"
   },
   "listen": {
     "home": "Que voulez-vous écouter ?",
     "book": "Voici l'audiobook %s de %s %s",
+    "end_of_book": "Votre livre est finis",
     "suggestion": {
       "next": "Chapitre suivant",
       "prev": "Chapitre précédent"
