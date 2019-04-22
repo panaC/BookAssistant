@@ -72,8 +72,11 @@ export const pausePlayIntent: Inode = {
   name: 'listen.pausePlay_intent',
   return: true,
   test: (conv) => {
-    conv.middleware.db.session.data.timecode =
-      (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
+    if (!conv.middleware.db.session.data.IsItInPause) {
+      conv.middleware.db.session.data.timecode =
+        (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
+    }
+    conv.middleware.db.session.data.IsItInPause = true;
     return 'listen.pausePlay_intent';
   },
   conv: {
@@ -86,12 +89,12 @@ export const pausePlayIntent: Inode = {
 export const mediaStatusIntent: Inode = {
   intent: true,
   name: 'listen.mediaStatus_intent',
-  return: true,
+  return: false,
   test: (conv) => {
-    ///
-    // warning here handle media status in pause play mode
-    //
-
+    if (conv.middleware.db.session.data.IsItInPause) {
+      // re-playing silent sound
+      return 'listen.pausePlay_intent';
+    }
     const mediaStatus = conv.arguments.get('MEDIA_STATUS');
     const data = conv.middleware.db.session.data;
     const ro = conv.middleware.db.session.api.search

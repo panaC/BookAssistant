@@ -27,6 +27,7 @@ export const middlewareFactory: TmiddlewareFactory =
     async(conv: IDFConv): Promise<Imiddleware> => ({
   db: {
     session: await sessionFactory(conv, {
+      IsItInPause: false,
       timer: {
         time: 0,
       },

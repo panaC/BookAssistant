@@ -3,9 +3,20 @@ import {Iopds} from '../api';
 import {Iwebpub} from './../api';
 
 export interface IsessionDataDb {
+  /**
+   * True if listen is it in pause playing mode
+   */
+  IsItInPause: boolean;
+  /**
+   * Timer object contains
+   * Timestamp from beginning of book playing
+   */
   timer: {
     time: number;
   };
+  /**
+   * Sub-context call by discovery or listen
+   */
   context: {
     choice: number;
     yes_no: boolean;
