@@ -52,21 +52,23 @@
   "listen": {
     "home": "Que voulez-vous écouter ?",
       "control": {
-      "no_input": "Demandez-moi qu'elle livre écouter",
-      "cancel": "Tu n'a pas eu le temps de lire un livre",
-      "fallback": "Quel livre t'intéresse ?"
-    }
-  },
-  "newBooks": {
-    "home": "Voici les nouveautés"
-  },
+        "no_input": "Demandez-moi qu'elle livre écouter",
+        "cancel": "Tu n'a pas eu le temps de lire un livre",
+        "fallback": "Quel livre t'intéresse ?"
+      }
+    },
+    "newBooks": {
+      "home": "Voici les nouveautés"
+    },
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },
-  "global": {
-    "no_input": "Je ne vous entend pas !",
-    "goodbye": "Reviens vite !",
-    "fallback": "Je crois que je ne vous suis pas"
+  "start": {
+    "control": {
+      "no_input": "Faite un choix",
+      "goodbye": "Reviens vite !",
+      "fallback": "Je crois que je ne vous suis pas"
+    }
   },
   "error": {
     "global": "Oups. %s",

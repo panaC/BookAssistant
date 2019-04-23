@@ -14,7 +14,13 @@
 import {Inode} from './../../core/middleware/graph';
 
 export const start: Inode = {
-  return: true, context: 'start', conv: {
+  intent: true,
+  name: 'start_intent',
+  return: true,
+  context: {
+    name: 'start',
+  },
+  conv: {
     ask: 'welcome.home',
   },
 };

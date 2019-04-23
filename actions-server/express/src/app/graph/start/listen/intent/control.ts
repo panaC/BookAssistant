@@ -4,11 +4,14 @@ export const noInput: Inode = {
   return: false,
   name: 'listen.control.noInput_intent',
   intent: true,
+  test: () => 'start.listen_intent',
   conv: {
     ask: 'listen.control.no_input',
   },
 };
 
+// When audiobook isn't already started
+// cancel quit the application
 export const cancel: Inode = {
   intent: true,
   name: 'listen.control.cancel_intent',
@@ -22,8 +25,9 @@ export const fallback: Inode = {
   intent: true,
   name: 'listen.control.fallback_intent',
   return: false,
+  test: () => 'start.listen_intent',
   conv: {
-    close: 'listen.control.fallback',
+    ask: 'listen.control.fallback',
   },
 };
 

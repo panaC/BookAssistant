@@ -1,9 +1,10 @@
+import { InodeTable } from './../../../../interface/nodeTable.interface';
 import {Inode} from '../../..';
 
 export const noInputIntent: Inode = {
-  return: true,
-  name: 'yesno.control.noInput_intent',
   intent: true,
+  name: 'yesno.control.noInput_intent',
+  return: true,
   conv: {
     ask: 'yesno.control.no_input',
   },
@@ -13,8 +14,16 @@ export const cancelIntent: Inode = {
   intent: true,
   name: 'yesno.control.cancel_intent',
   return: true,
+  test: (conv) => {
+    const param = conv.contexts.get('yesno');
+    if (param) {
+      // add check if param return is not corrupted
+      return param.parameters.return as keyof InodeTable;
+    }
+    return "yesno.control.error";
+  },
   conv: {
-    close: 'yesno.control.cancel',
+    ask: 'yesno.control.cancel',
   },
 };
 
@@ -23,7 +32,7 @@ export const fallbackIntent: Inode = {
   name: 'yesno.control.fallback_intent',
   return: true,
   conv: {
-    close: 'yesno.control.fallback',
+    ask: 'yesno.control.fallback',
   },
 };
 
