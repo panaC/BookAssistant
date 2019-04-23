@@ -1,6 +1,6 @@
 import {Inode} from '../../..';
 
-export const listenNextChapterIntent: Inode = {
+export const nextChapterIntent: Inode = {
   intent: true,
   name: 'play.nextChapter_intent',
   return: false,

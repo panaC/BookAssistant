@@ -12,7 +12,7 @@ export const noInputIntent: Inode = {
 };
 
 // cancel intent
-export const cancel: Inode = {
+export const cancelIntent: Inode = {
   intent: true,
   name: 'cancel_intent',
   return: true,
@@ -22,7 +22,7 @@ export const cancel: Inode = {
 };
 
 // global fallback may be used in app.ts
-export const fallback: Inode = {
+export const fallbackIntent: Inode = {
   intent: true,
   name: 'fallback_intent',
   return: false,
