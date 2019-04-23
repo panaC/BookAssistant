@@ -24,10 +24,13 @@
       "no_input": "Répondez oui ou non",
       "cancel": "Vous ne voulez pas me dire oui ou non",
       "fallback": "Cela ne répond pas à la question, dite oui on non"
+    },
+    "suggestion": {
+      "yes": "Oui",
+      "no": "Nom"
     }
   },
-  "listen": {
-    "home": "Que voulez-vous écouter ?",
+  "play": {
     "book": "Voici l'audiobook %s de %s %s",
     "end_of_book": "Votre livre est finis",
     "suggestion": {
@@ -41,6 +44,14 @@
     "chapter": "Vous écouter le chapitre %s",
     "author": "L'auteur de ce livre est %s",
     "control": {
+      "no_input": " ",
+      "cancel": "Très bien, je retourne à la lecture",
+      "fallback": "J'apprends de nouvelle commande tous les jours"
+    }
+  },
+  "listen": {
+    "home": "Que voulez-vous écouter ?",
+      "control": {
       "no_input": "Demandez-moi qu'elle livre écouter",
       "cancel": "Tu n'a pas eu le temps de lire un livre",
       "fallback": "Quel livre t'intéresse ?"
@@ -48,10 +59,6 @@
   },
   "newBooks": {
     "home": "Voici les nouveautés"
-  },
-  "yes_no": {
-    "yes": "oui",
-    "no": "non"
   },
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"

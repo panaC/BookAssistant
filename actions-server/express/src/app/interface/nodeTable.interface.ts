@@ -19,17 +19,25 @@ export interface InodeTable {
   'listen.checkAlreadyListen': Inode;
   'listen.alreadyListen': Inode;
   'listen.returnAlreadyListen': Inode;
-  'listen.play': Inode;
-  'listen.endOfBook': Inode;
-  'listen.rePlay_intent': Inode;
-  'listen.stopPlay_intent': Inode;
-  'listen.mediaStatus_intent': Inode;
-  'listen.pausePlay_intent': Inode;
-  'listen.nextChapter_intent': Inode;
-  'listen.prevChapter_intent': Inode;
-  'listen.fallback_intent': Inode;
-  'listen.noInput_intent': Inode;
-  'listen.cancel_intent': Inode;
+
+  'listen.control.fallback_intent': Inode;
+  'listen.control.noInput_intent': Inode;
+  'listen.control.cancel_intent': Inode;
+  'listen.control.error': Inode;
+
+  'play.play': Inode;
+  'play.endOfBook': Inode;
+  'play.rePlay_intent': Inode;
+  'play.stopPlay_intent': Inode;
+  'play.mediaStatus_intent': Inode;
+  'play.pausePlay_intent': Inode;
+  'play.nextChapter_intent': Inode;
+  'play.prevChapter_intent': Inode;
+
+  'play.control.fallback_intent': Inode;
+  'play.control.noInput_intent': Inode;
+  'play.control.cancel_intent': Inode;
+  'play.control.error': Inode;
 
   'choice.getNumber_intent': Inode;
 

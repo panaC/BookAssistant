@@ -81,6 +81,6 @@ export const refSetPlay: Inode = {
         conv.middleware.db.session.data.timecode = 0;
       }
     }
-    return 'listen.play';
+    return 'play.play';
   }
 };

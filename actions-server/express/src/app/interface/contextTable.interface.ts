@@ -8,4 +8,5 @@ export interface IcontextTable /*extends Contexts*/ {
   listen: number;
   choice: number;
   yesno: number;
+  play: number;
 }

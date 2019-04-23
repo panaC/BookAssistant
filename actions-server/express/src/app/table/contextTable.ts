@@ -7,5 +7,6 @@ export const contextTable = (): IcontextTable => ({
   start: 1,
   listen: 5,
   choice: 1,
-  yes_no: 1,
+  yesno: 1,
+  play: 5,
 });
