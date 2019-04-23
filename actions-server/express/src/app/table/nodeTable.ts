@@ -24,6 +24,8 @@ export const nodeTable = (): InodeTable => ({
   'listen.returnAlreadyListen': listen.returnAlreadyListen,
   'listen.play': listen.play,
   'listen.endOfBook':,
+  'listen.rePlay_intent':,
+  'listen.stopPlay_intent':,
   'listen.mediaStatus_intent': listen.mediaStatus,
   'listen.pausePlay_intent':,
   'listen.nextChapter_intent':,
@@ -31,6 +33,13 @@ export const nodeTable = (): InodeTable => ({
   'listen.fallback_intent': listen.fallback,
   'listen.noInput_intent': listen.noInput,
   'listen.cancel_intent': listen.cancel,
+
+  'choice.getNumber_intent':,
+
+  'choice.control.noInput_intent':,
+  'choice.control.cancel_intent':,
+  'choice.control.fallback_intent':,
+  'choice.control.error':,
 
   'fallback_intent': node.fallback,
   'noInput_intent': node.noInput,

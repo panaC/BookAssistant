@@ -113,3 +113,35 @@ export const mediaStatusIntent: Inode = {
     return 'listen.error';
   }
 };
+
+export const rePlayIntent: Inode = {
+  intent: true,
+  name: 'listen.rePlay_intent',
+  return: false,
+  test: () => 'listen.play',
+};
+
+export const stopPlayIntent: Inode = {
+  intent: true,
+  name: 'listen.stopPlay_intent',
+  return: false,
+  test: (conv) => {
+    // stop playing book and return
+
+    // saved timocode reference in user storage
+    // return to "what do you want to do ?"
+    // reset all session storage
+    const rst = conv.middleware.db.session.data;
+    rst.IsItInPause = false;
+    rst.authorTellByUser = '';
+    rst.bookIndex = 0;
+    rst.chapterTellByUser = '';
+    rst.refTellByUser = '';
+    rst.reference = '';
+    rst.timecode = 0;
+    rst.timer.time = 0;
+    rst.titleTellByUser = '';
+    rst.trackIndex = 0;
+    return 'start_intent';
+  }
+}

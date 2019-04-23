@@ -22,7 +22,7 @@ export const refPlay: Inode = {
 export const refAskPlay: Inode = {
   intent: false,
   name: 'listen.refAskPlay',
-  return: false,
+  return: true,
   context: {
     name: 'choice',
     return: 'listen.refResponsePlay',
@@ -73,7 +73,7 @@ export const refSetPlay: Inode = {
     const ref = conv.middleware.db.session.data.reference;
     const href = conv.middleware.api.refGetHrefWithRef(toc, ref);
     if (href) {
-      conv.middleware.db.session.data.trackIndex = conv.middleware.api.refGetTrackWithRef(ro, href);
+      conv.middleware.db.session.data.trackIndex = conv.middleware.api.refGetTrackWithHref(ro, href);
       try {
         // tslint:disable-next-line:ban
         conv.middleware.db.session.data.timecode = parseInt(href.split('#t=')[1], 10) || 0;

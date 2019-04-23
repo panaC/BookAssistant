@@ -11,7 +11,12 @@
   },
   "choice": {
     "select_book": "Voici la liste des livres correspondant à votre recherche, lequel choisissez-vous ? %s %s %s %s %s",
-    "select_ref": "Qu'elle référence choisissez-vous ? %s %s %s %s %s"
+    "select_ref": "Qu'elle référence choisissez-vous ? %s %s %s %s %s",
+    "control": {
+      "no_input": "Je n'est pas entendu de numéro, choissisez-en un",
+      "cancel": "Vous ne voulez pas me donner un numéro",
+      "fallback": "Attention, il faut me donner uniquement un numéro"
+    }
   },
   "listen": {
     "home": "Que voulez-vous écouter ?",

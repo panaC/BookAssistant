@@ -21,6 +21,8 @@ export interface InodeTable {
   'listen.returnAlreadyListen': Inode;
   'listen.play': Inode;
   'listen.endOfBook': Inode;
+  'listen.rePlay_intent': Inode;
+  'listen.stopPlay_intent': Inode;
   'listen.mediaStatus_intent': Inode;
   'listen.pausePlay_intent': Inode;
   'listen.nextChapter_intent': Inode;
@@ -28,6 +30,13 @@ export interface InodeTable {
   'listen.fallback_intent': Inode;
   'listen.noInput_intent': Inode;
   'listen.cancel_intent': Inode;
+
+  'choice.getNumber_intent': Inode;
+
+  'choice.control.noInput_intent': Inode;
+  'choice.control.cancel_intent': Inode;
+  'choice.control.fallback_intent': Inode;
+  'choice.control.error': Inode;
 
   // require
   'fallback_intent': Inode;
