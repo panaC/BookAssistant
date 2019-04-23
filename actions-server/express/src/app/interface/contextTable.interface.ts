@@ -7,5 +7,5 @@ export interface IcontextTable /*extends Contexts*/ {
   start: number;
   listen: number;
   choice: number;
-  yes_no: number;
+  yesno: number;
 }

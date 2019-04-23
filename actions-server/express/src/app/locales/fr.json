@@ -18,6 +18,14 @@
       "fallback": "Attention, il faut me donner uniquement un numéro"
     }
   },
+  "yesno": {
+    "already_listen": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?",
+    "control": {
+      "no_input": "Répondez oui ou non",
+      "cancel": "Vous ne voulez pas me dire oui ou non",
+      "fallback": "Cela ne répond pas à la question, dite oui on non"
+    }
+  },
   "listen": {
     "home": "Que voulez-vous écouter ?",
     "book": "Voici l'audiobook %s de %s %s",
@@ -32,9 +40,6 @@
     "numberOfChapter": "Il y a %s chapitres dans le livres",
     "chapter": "Vous écouter le chapitre %s",
     "author": "L'auteur de ce livre est %s",
-    "already_listen": {
-      "answer": "Dans le livre audio %s, vous êtes rendu au chapitre %s. Voulez-vous continuez ?"
-    },
     "control": {
       "no_input": "Demandez-moi qu'elle livre écouter",
       "cancel": "Tu n'a pas eu le temps de lire un livre",

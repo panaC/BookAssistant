@@ -1,4 +1,4 @@
-import {Inode} from './../../core/middleware/graph';
+import { Inode } from './../../core/middleware/graph';
 
 export interface InodeTable {
   'start_intent': Inode;
@@ -37,6 +37,13 @@ export interface InodeTable {
   'choice.control.cancel_intent': Inode;
   'choice.control.fallback_intent': Inode;
   'choice.control.error': Inode;
+
+  'yesno.get_intent': Inode;
+
+  'yesno.control.noInput_intent': Inode;
+  'yesno.control.cancel_intent': Inode;
+  'yesno.control.fallback_intent': Inode;
+  'yesno.control.error': Inode;
 
   // require
   'fallback_intent': Inode;

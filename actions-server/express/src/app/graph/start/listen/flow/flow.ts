@@ -115,7 +115,7 @@ export const alreadyListen: Inode = {
     arg: (conv: IDFConv) => 
     [conv.middleware.db.session.api.search[conv.middleware.db.session.data.bookIndex].metadata.title,
       (conv.middleware.db.session.data.trackIndex + 1).toString()],
-    ask: 'listen.already_listen.answer',
+    ask: 'yesno.already_listen',
   }
 };
 

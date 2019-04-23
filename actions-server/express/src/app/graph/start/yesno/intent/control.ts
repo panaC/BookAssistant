@@ -2,35 +2,35 @@ import {Inode} from '../../..';
 
 export const noInputIntent: Inode = {
   return: true,
+  name: 'yesno.control.noInput_intent',
   intent: true,
-  name: 'choice.control.noInput_intent',
   conv: {
-    ask: 'choice.control.no_input',
+    ask: 'yesno.control.no_input',
   },
 };
 
 export const cancelIntent: Inode = {
   intent: true,
-  name: 'choice.control.cancel_intent',
+  name: 'yesno.control.cancel_intent',
   return: true,
   conv: {
-    close: 'choice.control.cancel',
+    close: 'yesno.control.cancel',
   },
 };
 
 export const fallbackIntent: Inode = {
   intent: true,
-  name: 'choice.control.fallback_intent',
+  name: 'yesno.control.fallback_intent',
   return: true,
   conv: {
-    close: 'choice.control.fallback',
+    close: 'yesno.control.fallback',
   },
 };
 
 export const error: Inode = {
-  return: true,
-  name: 'choice.control.error',
   intent: false,
+  name: 'yesno.control.error',
+  return: true,
   conv: {
     close: [
       'error.global',

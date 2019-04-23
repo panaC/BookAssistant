@@ -1,7 +1,7 @@
 import * as node from './../graph';
 import * as start from './../graph/start/index';
 import * as listen from './../graph/start/listen/index';
-import {InodeTable} from './../interface/nodeTable.interface';
+import { InodeTable } from './../interface/nodeTable.interface';
 
 export const nodeTable = (): InodeTable => ({
   'start_intent': node.start,
@@ -40,6 +40,13 @@ export const nodeTable = (): InodeTable => ({
   'choice.control.cancel_intent':,
   'choice.control.fallback_intent':,
   'choice.control.error':,
+
+  'yesno.get_intent':,
+
+  'yesno.control.noInput_intent':,
+  'yesno.control.cancel_intent':,
+  'yesno.control.fallback_intent':,
+  'yesno.control.error':,
 
   'fallback_intent': node.fallback,
   'noInput_intent': node.noInput,
