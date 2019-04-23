@@ -67,7 +67,6 @@ export const prevChapterIntent: Inode = {
 };
 
 export const pausePlayIntent: Inode = {
-
   intent: true,
   name: 'play.pausePlay_intent',
   return: true,
@@ -75,6 +74,7 @@ export const pausePlayIntent: Inode = {
     if (!conv.middleware.db.session.data.IsItInPause) {
       conv.middleware.db.session.data.timecode =
         (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
+      conv.middleware.db.session.data.timer.time = 0;
     }
     conv.middleware.db.session.data.IsItInPause = true;
     return 'play.pausePlay_intent';
@@ -118,7 +118,14 @@ export const rePlayIntent: Inode = {
   intent: true,
   name: 'play.rePlay_intent',
   return: false,
-  test: () => 'play.play',
+  test: (conv) => {
+    if (!conv.middleware.db.session.data.IsItInPause) {
+      conv.middleware.db.session.data.timecode =
+        (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
+      conv.middleware.db.session.data.timer.time = 0;
+    }
+    return 'play.play';
+  }
 };
 
 export const stopPlayIntent: Inode = {
@@ -127,11 +134,16 @@ export const stopPlayIntent: Inode = {
   return: false,
   test: (conv) => {
     // stop playing book and return
-
+    const rst = conv.middleware.db.session.data;
     // saved timocode reference in user storage
+    const o = conv.middleware.db.user.data.bookAlreadyListen
+          [conv.middleware.db.session.data.bookIndex];
+    o.timecode = rst.timecode;
+    o.track = rst.trackIndex;
+    o.lastListen = new Date();
+
     // return to "what do you want to do ?"
     // reset all session storage
-    const rst = conv.middleware.db.session.data;
     rst.IsItInPause = false;
     rst.authorTellByUser = '';
     rst.bookIndex = 0;

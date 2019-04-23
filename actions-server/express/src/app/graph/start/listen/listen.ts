@@ -2,8 +2,8 @@ import {Inode} from '../../../../core/middleware/graph';
 
 // starting point for listen
 export const start: Inode = {
-  name: 'start.listen_intent',
   intent: true,
+  name: 'start.listen_intent',
   return: false,
   test: () => 'listen.getBook'
 };

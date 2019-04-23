@@ -4,7 +4,7 @@ import {Ilinks} from './../api/interface/links.interface';
 export type Tdiscovery = (conv: IDFConv) => Promise<void>;
 export type Tsearch = (conv: IDFConv, title: string, author?: string) => Promise<void>;
 export type TnodeApi = Tdiscovery|Tsearch;
-export type Tfuse = (search: string) => (array: string[]) => string[];
+export type Tfuse = (array: string[]) => (search: string) => string[];
 export type TgetTrackWithHref = (readingOrder: Ilinks[], href: string) => number;
 export type TgetHrefWithRef = (toc: Ilinks[], ref: string) => string|null;
 export type TgetPrevNextWithRef = (toc: Ilinks[], ref: string, nb: number) => string|null;

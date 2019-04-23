@@ -2,7 +2,8 @@
 export interface IuserDataDb {
   bookAlreadyListen: {
     [id: string]: {
-      chapter: number,
+      track: number,
+      timecode: number,
       lastListen: Date,
     },
   };

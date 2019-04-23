@@ -8,7 +8,7 @@ export const refPlay: Inode = {
     const re = conv.middleware.db.session.data.refTellByUser;
     const api = conv.middleware.db.session.api;
     const toc = api.search[conv.middleware.db.session.data.bookIndex].toc;
-    const ref = conv.middleware.api.fuse(re)(conv.middleware.api.flattenToc(toc));
+    const ref = conv.middleware.api.fuse(conv.middleware.api.flattenToc(toc))(re);
 
     if (ref.length > 1) {
       return 'listen.refAskPlay';
@@ -32,7 +32,7 @@ export const refAskPlay: Inode = {
     const re = conv.middleware.db.session.data.refTellByUser;
     const api = conv.middleware.db.session.api;
     const toc = api.search[conv.middleware.db.session.data.bookIndex].toc;
-    const ref = conv.middleware.api.fuse(re)(conv.middleware.api.flattenToc(toc));
+    const ref = conv.middleware.api.fuse(conv.middleware.api.flattenToc(toc))(re);
       return ref.map(
         (r, index) =>
           `numero ${index + 1} ${r}`);
@@ -50,10 +50,10 @@ export const refResponsePlay: Inode = {
     const re = conv.middleware.db.session.data.refTellByUser;
     const api = conv.middleware.db.session.api;
     const toc = api.search[conv.middleware.db.session.data.bookIndex].toc;
-    const ref = conv.middleware.api.fuse(re)(conv.middleware.api.flattenToc(toc));
+    const ref = conv.middleware.api.fuse(conv.middleware.api.flattenToc(toc))(re);
     const l = ref.length;
     if (c > 0 && c <= l) {
-      conv.middleware.db.session.data.reference = ref[c];
+      conv.middleware.db.session.data.reference = ref[c - 1];
       return 'listen.refSetPlay';
     } else {
       // error wrong choice selectBook

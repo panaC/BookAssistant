@@ -1,7 +1,7 @@
 import { InodeTable } from '../../../../interface/nodeTable.interface';
 import { IDFConv } from '../../../../../core/interface/dfconv.interface';
 import { Inode } from "../../../../../core/middleware/graph";
-import { Parameters, MediaObjectOptions } from 'actions-on-google';
+import { Parameters } from 'actions-on-google';
 
 interface Iparam extends Parameters {
   title: string;
@@ -13,6 +13,7 @@ interface Iparam extends Parameters {
 export const getBook: Inode = {
   intent: false,
   name: 'listen.getBook',
+  return: false,
   test: async (conv: IDFConv): Promise<keyof InodeTable> => {
     const { title, author, reference, chapter }: Iparam = conv.parameters as Iparam;
     await conv.middleware.api.search(conv, title, author);
@@ -43,11 +44,11 @@ export const getBook: Inode = {
 export const selectBook: Inode = {
   intent: false,
   name: 'listen.selectBook',
+  return: true,
   context: {
     name: 'choice',
     return: 'listen.checkSelectBook',
   },
-  return: true,
   conv: {
     arg: (conv: IDFConv): string[] =>
       conv.middleware.db.session.api.search.map(
@@ -65,7 +66,7 @@ export const checkSelectBook: Inode = {
     const c = conv.middleware.db.session.data.context.choice;
     const l = conv.middleware.db.session.api.search.length;
     if (c > 0 && c <= l) {
-      conv.middleware.db.session.data.bookIndex = c;
+      conv.middleware.db.session.data.bookIndex = c - 1;
       return 'listen.IsRefPlay';
     } else {
       // error wrong choice selectBook
@@ -125,9 +126,11 @@ export const returnAlreadyListen: Inode = {
   return: false,
   test: (conv: IDFConv): keyof InodeTable => {
     if (conv.middleware.db.session.data.context.yes_no) {
-      conv.middleware.db.session.data.trackIndex = 
-        conv.middleware.db.user.data.bookAlreadyListen
-          [conv.middleware.db.session.data.bookIndex].chapter;
+      const data = conv.middleware.db.session.data;
+      const o = conv.middleware.db.user.data.bookAlreadyListen
+          [conv.middleware.db.session.data.bookIndex];
+      data.trackIndex = o.track;
+      data.timecode = o.timecode;
     }
     return 'play.play';
   }

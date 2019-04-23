@@ -10,6 +10,7 @@ export const play: Inode = {
   },
   test: (conv) => {
     // trig the timer to save time elapsed
+    conv.middleware.db.session.data.timer.time = new Date().getTime();
     return 'play.play';
   },
   conv: {

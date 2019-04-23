@@ -1,6 +1,6 @@
 import * as Fuse from 'fuse.js';
 
-export const fuse = (search: string) => (array: string[]) =>
+export const fuse = (array: string[]) => (search: string) =>
     new Fuse(array, {
       caseSensitive: true,
       shouldSort: true,
