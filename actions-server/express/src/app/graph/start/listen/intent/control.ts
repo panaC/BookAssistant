@@ -33,7 +33,7 @@ export const fallback: Inode = {
 
 export const error: Inode = {
   intent: false,
-  name: 'listen.error',
+  name: 'listen.control.error',
   return: true,
   conv: {
     close: [
