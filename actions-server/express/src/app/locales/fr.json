@@ -62,9 +62,11 @@
         "no_input": "Demandez-moi qu'elle livre écouter",
         "cancel": "Tu n'a pas eu le temps de lire un livre",
         "fallback": "Quel livre t'intéresse ?"
-      }
-    },
-
+      },
+    "error": {
+      "not_found": "Le livre %s est inconnu dans la base"
+    }
+  },
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },

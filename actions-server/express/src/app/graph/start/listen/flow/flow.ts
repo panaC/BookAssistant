@@ -36,7 +36,17 @@ export const getBook: Inode = {
     /**
      * redirect to fallback
      */
-    return 'listen.error';
+    return 'listen.bookNotFound';
+  },
+};
+
+export const bookNotFound: Inode = {
+  intent: false,
+  name: 'listen.bookNotFound',
+  return: true,
+  conv: {
+    arg: (conv) => conv.parameters.title as string,
+    ask: 'listen.error.not_found'
   },
 };
 

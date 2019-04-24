@@ -7,8 +7,8 @@ export interface InodeTable {
   'start.help_intent': Inode;
   'start.listen_intent': Inode;
 
-  'listen.error': Inode;
   'listen.getBook': Inode;
+  'listen.bookNotFound': Inode;
   'listen.selectBook': Inode;
   'listen.checkSelectBook': Inode;
   'listen.IsRefPlay': Inode;

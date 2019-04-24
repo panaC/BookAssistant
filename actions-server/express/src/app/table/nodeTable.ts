@@ -15,8 +15,8 @@ export const nodeTable = (): InodeTable => ({
   'start.help_intent': start.help, // ok
   'start.listen_intent': listen.start, // ok
 
-  'listen.error': listen.error, // ok
   'listen.getBook': listen.getBook,
+  'listen.bookNotFound': listen.bookNotFound,
   'listen.selectBook': listen.selectBook,
   'listen.checkSelectBook': listen.checkSelectBook,
   'listen.IsRefPlay': listen.isRefToPlay,
