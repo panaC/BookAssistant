@@ -7,7 +7,7 @@ export const newBooks: Inode = {
   api: async (conv, f) => await f.discovery(conv),
   conv: {
     ask: [
-      'newBook.home',
+      'discovery.newBooks.home',
     ],
   },
 };
