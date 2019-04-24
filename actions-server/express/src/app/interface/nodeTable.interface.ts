@@ -46,7 +46,8 @@ export interface InodeTable {
   'choice.control.fallback_intent': Inode;
   'choice.control.error': Inode;
 
-  'yesno.get_intent': Inode;
+  'yesno.getYes_intent': Inode;
+  'yesno.getNo_intent': Inode;
 
   'yesno.control.noInput_intent': Inode;
   'yesno.control.cancel_intent': Inode;

@@ -7,13 +7,13 @@ import * as yesno from './../graph/start/yesno/index';
 import { InodeTable } from './../interface/nodeTable.interface';
 
 export const nodeTable = (): InodeTable => ({
-  'start_intent': node.start,
+  'start_intent': node.start, // ok
 
-  'start.newBooks_intent': start.newBooks,
-  'start.help_intent': start.help,
-  'start.listen_intent': listen.start,
+  'start.newBooks_intent': start.newBooks, // ok
+  'start.help_intent': start.help, // ok
+  'start.listen_intent': listen.start, // ok
 
-  'listen.error': listen.error,
+  'listen.error': listen.error, // ok
   'listen.getBook': listen.getBook,
   'listen.selectBook': listen.selectBook,
   'listen.checkSelectBook': listen.checkSelectBook,
@@ -45,22 +45,23 @@ export const nodeTable = (): InodeTable => ({
   'play.control.cancel_intent': play.cancel,
   'play.control.error': play.error,
 
-  'choice.getNumber_intent': choice.getNumberIntent,
+  'choice.getNumber_intent': choice.getNumberIntent, // ok
 
-  'choice.control.noInput_intent': choice.noInputIntent,
-  'choice.control.cancel_intent': choice.cancelIntent,
-  'choice.control.fallback_intent': choice.fallbackIntent,
+  'choice.control.noInput_intent': choice.noInputIntent, // ok
+  'choice.control.cancel_intent': choice.cancelIntent, // ok
+  'choice.control.fallback_intent': choice.fallbackIntent, // ok
   'choice.control.error': choice.error,
 
-  'yesno.get_intent': yesno.get,
+  'yesno.getYes_intent': yesno.getYesIntent,
+  'yesno.getNo_intent': yesno.getNoIntent,
 
   'yesno.control.noInput_intent': yesno.noInputIntent,
   'yesno.control.cancel_intent': yesno.cancelIntent,
   'yesno.control.fallback_intent': yesno.fallbackIntent,
   'yesno.control.error': yesno.error,
 
-  'fallback_intent': node.fallbackIntent,
-  'noInput_intent': node.noInputIntent,
-  'cancel_intent': node.cancelIntent,
+  'fallback_intent': node.fallbackIntent, // ok
+  'noInput_intent': node.noInputIntent, // ok
+  'cancel_intent': node.cancelIntent, // ok
   'error': node.error,
 });

@@ -1,9 +1,9 @@
 import {Inode} from '../../..';
 
 export const noInput: Inode = {
-  return: false,
-  name: 'listen.control.noInput_intent',
   intent: true,
+  name: 'listen.control.noInput_intent',
+  return: false,
   test: () => 'start.listen_intent',
   conv: {
     ask: 'listen.control.no_input',
