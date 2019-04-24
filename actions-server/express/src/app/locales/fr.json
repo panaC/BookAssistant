@@ -42,7 +42,8 @@
     "end_of_book": "Votre livre est finis",
     "suggestion": {
       "next": "Chapitre suivant",
-      "prev": "Chapitre précédent"
+      "prev": "Chapitre précédent",
+      "pause": "Reprendre la lecture"
     },
     "follow": " ",
     "finish": "Le livre est finis",

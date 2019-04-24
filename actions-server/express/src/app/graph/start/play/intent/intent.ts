@@ -80,9 +80,11 @@ export const pausePlayIntent: Inode = {
     return 'play.pausePlay_intent';
   },
   conv: {
+    ask: 'play.follow',
     media: (conv) => ({
       url: 'https://raw.githubusercontent.com/anars/blank-audio/master/1-hour-of-silence.mp3',
     }),
+    suggestion: 'play.pause'
   },
 };
 
