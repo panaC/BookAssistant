@@ -14,6 +14,7 @@ export const play: Inode = {
     return 'play.play';
   },
   conv: {
+    ask: 'play.follow',
     media: (conv): MediaObjectOptions => ({
       url: `${conv.middleware.db.session.api.search
         [conv.middleware.db.session.data.bookIndex].readingOrder
