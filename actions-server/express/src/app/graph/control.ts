@@ -7,7 +7,7 @@ export const noInputIntent: Inode = {
   return: false,
   test: () => 'start_intent',
   conv: {
-    ask: 'start.no_input'
+    ask: 'start.control.no_input'
   }
 };
 
@@ -17,7 +17,7 @@ export const cancelIntent: Inode = {
   name: 'cancel_intent',
   return: true,
   conv: {
-    close: 'start.goodbye',
+    close: 'start.control.goodbye',
   },
 };
 
@@ -28,7 +28,7 @@ export const fallbackIntent: Inode = {
   return: false,
   test: () => 'start_intent',
   conv: {
-    ask: 'start.fallback',
+    ask: 'start.control.fallback',
   },
 };
 
