@@ -35,12 +35,12 @@ export const nodeTable = (): InodeTable => ({
 
   'play.play': play.play,
   'play.endOfBook': play.endOfBook,
-  'play.rePlay_intent': play.rePlayIntent,
-  'play.stopPlay_intent': play.stopPlayIntent,
-  'play.mediaStatus_intent': play.mediaStatusIntent,
-  'play.pausePlay_intent': play.pausePlayIntent,
-  'play.nextChapter_intent': play.nextChapterIntent,
-  'play.prevChapter_intent': play.prevChapterIntent,
+  'play.rePlay_intent': play.rePlayIntent, // ok
+  'play.stopPlay_intent': play.stopPlayIntent, // ok
+  'play.mediaStatus_intent': play.mediaStatusIntent, // ok
+  'play.pausePlay_intent': play.pausePlayIntent, // ok
+  'play.nextChapter_intent': play.nextChapterIntent, // ok
+  'play.prevChapter_intent': play.prevChapterIntent, // ok
 
   'play.control.fallback_intent': play.fallback,
   'play.control.noInput_intent': play.noInput,

@@ -44,6 +44,9 @@ export const bookNotFound: Inode = {
   intent: false,
   name: 'listen.bookNotFound',
   return: true,
+  context: {
+    name: 'start',
+  },
   conv: {
     arg: (conv) => conv.parameters.title as string,
     ask: 'listen.error.not_found'
