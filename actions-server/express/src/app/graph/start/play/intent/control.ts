@@ -6,7 +6,7 @@ export const noInput: Inode = {
   return: false,
   test: () => 'play.play',
   conv: {
-    ask: 'listen.control.no_input',
+    ask: 'play.control.no_input',
   },
 };
 
@@ -21,7 +21,7 @@ export const cancel: Inode = {
   return: false,
   test: () => 'play.play',
   conv: {
-    ask: 'listen.control.cancel',
+    ask: 'play.control.cancel',
   },
 };
 
@@ -31,7 +31,7 @@ export const fallback: Inode = {
   return: false,
   test: () => 'play.play',
   conv: {
-    ask: 'listen.control.fallback',
+    ask: 'play.control.fallback',
   },
 };
 
