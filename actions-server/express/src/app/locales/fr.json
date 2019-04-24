@@ -9,6 +9,11 @@
     "play_book": "Dites: \"je veux écouter\" suivi du titre du livres",
     "want_listen": "Je veux écouter"
   },
+  "discovery": {
+    "newBooks": {
+      "home": "Voici les nouveautés"
+    }
+  },
   "choice": {
     "select_book_num": "numéro %s %s de %s",
     "select_book": "Voici la liste des livres correspondant à votre recherche, lequel choisissez-vous ? %s %s %s %s %s",
@@ -59,9 +64,7 @@
         "fallback": "Quel livre t'intéresse ?"
       }
     },
-    "newBooks": {
-      "home": "Voici les nouveautés"
-    },
+
   "utils": {
     "playing_is_compatible": "Désolé, cet appareil ne supporte pas la lecture audio"
   },
