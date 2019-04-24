@@ -34,10 +34,9 @@ import {generateUUID} from '../core/utils/generateuuid';
 
 import {IsessionStorage, IuserStorage} from './../core';
 import {IDFConv} from './../core/';
-import {IintentTable, InodeTable} from './interface';
+import {InodeTable} from './interface';
 import {TmiddlewareFactory} from './middleware';
-import {START_DEFAULT_INTENT} from './table/intentTable';
-
+import { START_DEFAULT_INTENT } from './table/nodeTable';
 
 // used only for template typing dialogflow
 // actions-server/express/node_modules/actions-on-google/src/service/dialogflow/context.ts:184
@@ -114,7 +113,7 @@ export const appFactory =
             (conv: IDFConv, name: keyof InodeTable) =>
                 conv.middleware.getValueWithStringKey<InodeTable, Inode>(
                     conv.middleware.table.nodeTable(), name,
-                    conv.middleware.table.nodeTable().fallback);
+                    conv.middleware.table.nodeTable().fallback_intent);
 
         conv.node =
             getNodeInNodeTable(conv, conv.intent as keyof InodeTable);

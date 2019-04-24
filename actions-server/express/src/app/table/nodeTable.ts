@@ -6,6 +6,8 @@ import * as choice from './../graph/start/choice/index';
 import * as yesno from './../graph/start/yesno/index';
 import { InodeTable } from './../interface/nodeTable.interface';
 
+export const START_DEFAULT_INTENT: keyof InodeTable = 'start_intent';
+
 export const nodeTable = (): InodeTable => ({
   'start_intent': node.start, // ok
 
