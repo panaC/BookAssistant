@@ -176,7 +176,6 @@ export const exec = async(conv: IDFConv, loop = 0): Promise<IDFConv> => {
     await save(conv);
     debug.core.log('RETURN');
     delete ret.middleware;
-    debug.core.log(ret);
     return ret;
   }
   return await exec(await p(conv), ++loop);

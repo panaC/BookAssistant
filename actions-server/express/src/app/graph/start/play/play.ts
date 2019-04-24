@@ -20,6 +20,10 @@ export const play: Inode = {
         [conv.middleware.db.session.data.bookIndex].readingOrder
           [conv.middleware.db.session.data.trackIndex].href}#t=${conv.middleware.db.session.data.timecode.toString()}`,
       /* set description, name and image in the future */
-    })
+    }),
+    suggestion: [
+      'play.suggestion.next',
+      'play.suggestion.prev'
+    ]
   }
 };
