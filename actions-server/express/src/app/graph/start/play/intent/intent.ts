@@ -70,6 +70,9 @@ export const pausePlayIntent: Inode = {
   intent: true,
   name: 'play.pausePlay_intent',
   return: true,
+  context: {
+    name: 'play',
+  },
   test: (conv) => {
     if (!conv.middleware.db.session.data.IsItInPause) {
       conv.middleware.db.session.data.timecode =
