@@ -144,10 +144,16 @@ const test = async (conv: IDFConv) => {
     debug.core.log(conv.node.test);
     debug.core.log(a.test);
     debug.core.log(typeof a.test);
-    const r = await Promise.resolve(a.test(conv));
-    conv.node = getNodeInNodeTable(
+    try {
+      const r = await Promise.resolve(a.test(conv));
+      conv.node = getNodeInNodeTable(
         conv,
         r);
+    } catch (e) {
+      conv.node = {
+        return: true, conv: { arg: () => e, close: 'error.global' }
+      };
+    }
   }
   return conv;
 };
