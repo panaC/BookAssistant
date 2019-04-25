@@ -1,3 +1,4 @@
+import { debug } from './../../core/utils/debug';
 import {Inode} from '../../core/middleware/graph';
 
 // global no-input intent
@@ -27,6 +28,8 @@ export const cancelIntent: Inode = {
         track: rst.trackIndex,
         lastListen: new Date(),
       };
+      debug.app.log('global cancel');
+      debug.app.log('user data', conv.middleware.db.user.data.bookAlreadyListen);
     } catch(e) {}
     return 'cancel_intent';
   },
