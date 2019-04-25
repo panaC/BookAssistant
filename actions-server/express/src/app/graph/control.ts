@@ -20,6 +20,8 @@ export const cancelIntent: Inode = {
   test: (conv) => {
     // saved user info
     try {
+      debug.app.log('global cancel');
+      debug.app.log(conv.middleware.db.session.data);
       const rst = conv.middleware.db.session.data;
       if (conv.middleware.db.user.data.bookAlreadyListen) {
         conv.middleware.db.user.data.bookAlreadyListen = {};
@@ -31,10 +33,8 @@ export const cancelIntent: Inode = {
         track: rst.trackIndex,
         lastListen: new Date(),
       };
-      debug.app.log('global cancel');
       debug.app.log('user data', conv.middleware.db.user.data.bookAlreadyListen);
     } catch(e) {
-      debug.app.log('global cancel');
       debug.app.log(e);
     }
     return 'cancel_intent';
