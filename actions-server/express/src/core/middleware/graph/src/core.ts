@@ -74,6 +74,7 @@ const conversation = async (conv: IDFConv) => {
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
+        debug.core.log(a);
         conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
         /* disable array map */
