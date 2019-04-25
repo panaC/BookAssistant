@@ -142,7 +142,8 @@ export const stopPlayIntent: Inode = {
     const rst = conv.middleware.db.session.data;
     // saved timocode reference in user storage
     const o = conv.middleware.db.user.data.bookAlreadyListen
-          [conv.middleware.db.session.data.bookIndex];
+        [conv.middleware.db.session.api.search
+          [conv.middleware.db.session.data.bookIndex].metadata.identifier];
     o.timecode = rst.timecode;
     o.track = rst.trackIndex;
     o.lastListen = new Date();

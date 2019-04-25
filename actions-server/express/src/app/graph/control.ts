@@ -16,6 +16,19 @@ export const cancelIntent: Inode = {
   intent: true,
   name: 'cancel_intent',
   return: true,
+  test: (conv) => {
+    // saved user info
+    try {
+      const rst = conv.middleware.db.session.data;
+      const o = conv.middleware.db.user.data.bookAlreadyListen
+        [conv.middleware.db.session.api.search
+          [conv.middleware.db.session.data.bookIndex].metadata.identifier];
+      o.timecode = rst.timecode;
+      o.track = rst.trackIndex;
+      o.lastListen = new Date();
+    } catch(e) {}
+    return 'cancel_intent';
+  },
   conv: {
     close: 'start.control.goodbye',
   },
