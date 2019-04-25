@@ -81,7 +81,7 @@ const conversation = async (conv: IDFConv) => {
     if (a.close) {
       if (typeof a.close === 'string') {
         debug.core.log('a.close', a.close);
-        debug.core.log(arg);
+        //debug.core.log(arg);
         conv.close(sprintf(translate(a.close, conv), ...arg));
       } else {
         /* disable array map */
