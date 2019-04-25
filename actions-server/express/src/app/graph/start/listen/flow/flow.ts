@@ -31,7 +31,7 @@ export const getBook: Inode = {
        * redirect to play ref
        */
       conv.middleware.db.session.data.bookIndex = 0;
-      return 'listen.RefPlay';
+      return 'listen.refPlay';
     }
     /**
      * redirect to fallback
@@ -80,7 +80,7 @@ export const checkSelectBook: Inode = {
     const l = conv.middleware.db.session.api.search.length;
     if (c > 0 && c <= l) {
       conv.middleware.db.session.data.bookIndex = c - 1;
-      return 'listen.IsRefPlay';
+      return 'listen.isRefPlay';
     } else {
       // error wrong choice selectBook
       return 'listen.selectBook';
@@ -90,11 +90,11 @@ export const checkSelectBook: Inode = {
 
 export const isRefToPlay: Inode = {
   intent: false,
-  name: 'listen.IsRefPlay',
+  name: 'listen.isRefPlay',
   return: false,
   test: (conv: IDFConv): keyof InodeTable => {
     if (conv.middleware.db.session.data.refTellByUser) {
-      return 'listen.RefPlay';
+      return 'listen.refPlay';
     }
     return 'listen.checkAlreadyListen';
   }

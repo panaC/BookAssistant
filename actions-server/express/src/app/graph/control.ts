@@ -21,7 +21,6 @@ export const cancelIntent: Inode = {
     // saved user info
     try {
       debug.app.log('global cancel');
-      debug.app.log(conv.middleware.db.user.data);
       const rst = conv.middleware.db.session.data;
       if (!conv.middleware.db.user.data.bookAlreadyListen) {
         conv.middleware.db.user.data.bookAlreadyListen = {};

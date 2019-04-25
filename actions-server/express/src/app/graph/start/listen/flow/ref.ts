@@ -2,7 +2,7 @@ import { Inode } from './../../../../../core/middleware/graph';
 
 export const refPlay: Inode = {
   intent: false,
-  name: 'listen.RefPlay',
+  name: 'listen.refPlay',
   return: false,
   test: (conv) => {
     const re = conv.middleware.db.session.data.refTellByUser;
@@ -57,7 +57,7 @@ export const refResponsePlay: Inode = {
       return 'listen.refSetPlay';
     } else {
       // error wrong choice selectBook
-      return 'listen.RefPlay';
+      return 'listen.refPlay';
     }
   }
 };

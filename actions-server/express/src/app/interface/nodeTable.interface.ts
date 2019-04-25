@@ -11,8 +11,8 @@ export interface InodeTable {
   'listen.bookNotFound': Inode;
   'listen.selectBook': Inode;
   'listen.checkSelectBook': Inode;
-  'listen.IsRefPlay': Inode;
-  'listen.RefPlay': Inode;
+  'listen.isRefPlay': Inode;
+  'listen.refPlay': Inode;
   'listen.refAskPlay': Inode;
   'listen.refResponsePlay': Inode;
   'listen.refSetPlay': Inode;
