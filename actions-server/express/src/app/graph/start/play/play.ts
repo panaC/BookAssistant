@@ -1,3 +1,4 @@
+import { debug } from './../../../../core/utils/debug';
 import { MediaObjectOptions } from 'actions-on-google';
 import { Inode } from './../../../../core/middleware/graph';
 
@@ -11,6 +12,9 @@ export const play: Inode = {
   test: (conv) => {
     // trig the timer to save time elapsed
     conv.middleware.db.session.data.timer.time = new Date().getTime();
+    debug.app.log('play.play');
+    debug.app.log('trackindex', conv.middleware.db.session.data.trackIndex);
+    debug.app.log('timecode', conv.middleware.db.session.data.timecode);
     return 'play.play';
   },
   conv: {
