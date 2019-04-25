@@ -1,3 +1,4 @@
+import { debug } from './../../../../../core/utils/debug';
 import {Inode} from '../../..';
 
 export const nextChapterIntent: Inode = {
@@ -39,6 +40,9 @@ export const nextChapterIntent: Inode = {
       data.timecode = 0;
       ++data.trackIndex;
     }
+    debug.app.log('next chapter');
+    debug.app.log('trackindex', conv.middleware.db.session.data.trackIndex);
+    debug.app.log('timecode', conv.middleware.db.session.data.timecode);
     return 'play.play';
   }
 };
