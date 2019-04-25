@@ -13,6 +13,7 @@ export const getYesIntent: Inode = {
       // add check if param return is not corrupted
       return param.parameters.return as keyof InodeTable;
     }
+    conv.middleware.db.session.data._error = 'Yes-no context parameter not found';
     return "choice.control.error";
   }
 };
@@ -29,6 +30,7 @@ export const getNoIntent: Inode = {
       // add check if param return is not corrupted
       return param.parameters.return as keyof InodeTable;
     }
+    conv.middleware.db.session.data._error = 'Yes-no context parameter not found';
     return "choice.control.error";
   }
 };

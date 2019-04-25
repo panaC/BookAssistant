@@ -42,7 +42,8 @@ export const middlewareFactory: TmiddlewareFactory =
       context: {
         choice: 0,
         yes_no: false,
-      }
+      },
+      _error: '',
     }, {
       discovery: {} as Iopds,
       search: [] as Iwebpub[],

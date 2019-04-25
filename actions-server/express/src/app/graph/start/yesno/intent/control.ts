@@ -41,6 +41,7 @@ export const error: Inode = {
   name: 'yesno.control.error',
   return: true,
   conv: {
+    arg: (conv) => conv.middleware.db.session.data._error,
     close: [
       'error.global',
       'error.error',

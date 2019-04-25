@@ -54,6 +54,10 @@ export interface IsessionDataDb {
    * chapter num tell by user
    */
   chapterTellByUser: string;
+  /**
+   * error string to print in error node
+   */
+  _error: string;
 }
 
 export interface IsessionApiDb {

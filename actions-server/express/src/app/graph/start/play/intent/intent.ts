@@ -133,7 +133,7 @@ export const mediaStatusIntent: Inode = {
       data.timecode = 0;
       data.timer.time = 0;
       data.trackIndex++;
-      if (ro.length >= data.trackIndex) {
+      if (ro.length <= data.trackIndex) {
         // end of book
         return 'play.endOfBook';
       }
