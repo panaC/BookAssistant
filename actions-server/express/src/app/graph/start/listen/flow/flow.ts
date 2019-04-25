@@ -120,7 +120,7 @@ export const checkAlreadyListen: Inode = {
 export const alreadyListen: Inode = {
   intent: false,
   name: 'listen.alreadyListen',
-  return: false,
+  return: true,
   context: {
     name: 'yesno',
     return: 'listen.returnAlreadyListen'
