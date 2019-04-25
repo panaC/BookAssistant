@@ -131,8 +131,10 @@ const statistic = async (conv: IDFConv) => {
 };
 
 const save = async (conv: IDFConv) => {
-  await conv.middleware.db.user.save();
-  await conv.middleware.db.session.save();
+  const pr1 = conv.middleware.db.user.save();
+  const pr2 = conv.middleware.db.session.save();
+  await pr1;
+  await pr2;
   return conv;
 };
 
