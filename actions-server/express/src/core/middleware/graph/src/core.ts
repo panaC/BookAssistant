@@ -55,10 +55,12 @@ const context = async (conv: IDFConv) => {
 
 const conversation = async (conv: IDFConv) => {
   const a = conv.node.conv;
+  debug.core.log(a);
   let arg: string[] = [];
 
   if (a) {
     if (a.arg) {
+      debug.core.log(a.arg);
       try {
         const _arg = a.arg(conv);
         if (typeof _arg === 'string') {
@@ -71,10 +73,11 @@ const conversation = async (conv: IDFConv) => {
         debug.core.log(e);
       }
       debug.core.log('conv arg:', Object.keys(arg));
+      debug.core.log(...arg);
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
-        debug.core.log(a);
+        debug.core.log('ask');
         conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
         /* disable array map */
