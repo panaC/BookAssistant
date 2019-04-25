@@ -23,7 +23,7 @@ export const cancelIntent: Inode = {
       debug.app.log('global cancel');
       debug.app.log(conv.middleware.db.user.data);
       const rst = conv.middleware.db.session.data;
-      if (conv.middleware.db.user.data.bookAlreadyListen) {
+      if (!conv.middleware.db.user.data.bookAlreadyListen) {
         conv.middleware.db.user.data.bookAlreadyListen = {};
       }
       conv.middleware.db.user.data.bookAlreadyListen
