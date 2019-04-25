@@ -73,7 +73,7 @@ const conversation = async (conv: IDFConv) => {
         debug.core.log(e);
       }
       debug.core.log('conv arg:', Object.keys(arg));
-      debug.core.log(...arg);
+      debug.core.log(arg);
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
