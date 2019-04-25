@@ -32,6 +32,7 @@ export const cancelIntent: Inode = {
       debug.app.log('user data', conv.middleware.db.user.data.bookAlreadyListen);
     } catch(e) {
       debug.app.log('global cancel');
+      debug.app.log(conv.middleware.db.user.data.bookAlreadyListen);
       debug.app.log(e);
     }
     return 'cancel_intent';
