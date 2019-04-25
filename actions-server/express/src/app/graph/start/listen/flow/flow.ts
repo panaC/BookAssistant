@@ -31,7 +31,7 @@ export const getBook: Inode = {
        * redirect to play ref
        */
       conv.middleware.db.session.data.bookIndex = 0;
-      return 'listen.refPlay';
+      return 'listen.isRefPlay';
     }
     /**
      * redirect to fallback
