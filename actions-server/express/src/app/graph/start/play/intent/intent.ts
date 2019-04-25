@@ -166,12 +166,13 @@ export const stopPlayIntent: Inode = {
     // stop playing book and return
     const rst = conv.middleware.db.session.data;
     // saved timocode reference in user storage
-    const o = conv.middleware.db.user.data.bookAlreadyListen
+    conv.middleware.db.user.data.bookAlreadyListen
         [conv.middleware.db.session.api.search
-          [conv.middleware.db.session.data.bookIndex].metadata.identifier];
-    o.timecode = rst.timecode;
-    o.track = rst.trackIndex;
-    o.lastListen = new Date();
+          [conv.middleware.db.session.data.bookIndex].metadata.identifier] = {
+        timecode: rst.timecode,
+        track: rst.trackIndex,
+        lastListen: new Date(),
+      };
 
     // return to "what do you want to do ?"
     // reset all session storage

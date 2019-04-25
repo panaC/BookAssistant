@@ -20,12 +20,13 @@ export const cancelIntent: Inode = {
     // saved user info
     try {
       const rst = conv.middleware.db.session.data;
-      const o = conv.middleware.db.user.data.bookAlreadyListen
+      conv.middleware.db.user.data.bookAlreadyListen
         [conv.middleware.db.session.api.search
-          [conv.middleware.db.session.data.bookIndex].metadata.identifier];
-      o.timecode = rst.timecode;
-      o.track = rst.trackIndex;
-      o.lastListen = new Date();
+          [conv.middleware.db.session.data.bookIndex].metadata.identifier] = {
+        timecode: rst.timecode,
+        track: rst.trackIndex,
+        lastListen: new Date(),
+      };
     } catch(e) {}
     return 'cancel_intent';
   },
