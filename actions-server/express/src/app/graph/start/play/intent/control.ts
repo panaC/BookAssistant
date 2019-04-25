@@ -41,9 +41,6 @@ export const error: Inode = {
   return: true,
   conv: {
     arg: (conv) => conv.middleware.db.session.data._error,
-    close: [
-      'error.global',
-      'error.error',
-    ]
+    close: 'error.global',
   },
 };
