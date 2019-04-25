@@ -163,8 +163,12 @@ export const stopPlayIntent: Inode = {
   name: 'play.stopPlay_intent',
   return: false,
   test: (conv) => {
-    // stop playing book and return
     const rst = conv.middleware.db.session.data;
+    if (!rst.IsItInPause) {
+      rst.timecode =
+        (new Date().getTime() - rst.timer.time) / 1000 - 5;
+    }
+    // stop playing book and return
     // saved timocode reference in user storage
     if (conv.middleware.db.user.data.bookAlreadyListen) {
       conv.middleware.db.user.data.bookAlreadyListen = {};
