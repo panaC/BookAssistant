@@ -55,33 +55,23 @@ const context = async (conv: IDFConv) => {
 
 const conversation = async (conv: IDFConv) => {
   const a = conv.node.conv;
-  debug.core.log(a);
   let arg: string[] = [];
-  debug.core.log(arg);
 
   if (a) {
     if (a.arg) {
-      debug.core.log(a.arg);
       try {
         const _arg = a.arg(conv);
-        debug.core.log(typeof _arg, _arg);
         if (typeof _arg === 'string') {
           arg = [_arg];
-          debug.core.log(arg);
         } else {
           arg = _arg;
-          debug.core.log(arg);
         }
       } catch (e) {
         // log arg error
-        debug.core.log(e);
       }
-      debug.core.log('conv arg:', Object.keys(arg));
-      debug.core.log(arg);
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
-        debug.core.log('ask');
         conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
         /* disable array map */
@@ -94,7 +84,6 @@ const conversation = async (conv: IDFConv) => {
     }
     if (a.close) {
       if (typeof a.close === 'string') {
-        debug.core.log('a.close', a.close);
         conv.close(sprintf(translate(a.close, conv), ...arg));
       } else {
         /* disable array map */
@@ -156,7 +145,6 @@ const test = async (conv: IDFConv) => {
   if (a.test) {
     debug.core.log(conv.node.test);
     debug.core.log(a.test);
-    debug.core.log(typeof a.test);
     try {
       const r = await Promise.resolve(a.test(conv));
       conv.node = getNodeInNodeTable(

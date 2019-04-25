@@ -141,7 +141,8 @@ export const returnAlreadyListen: Inode = {
     if (conv.middleware.db.session.data.context.yes_no) {
       const data = conv.middleware.db.session.data;
       const o = conv.middleware.db.user.data.bookAlreadyListen
-          [conv.middleware.db.session.data.bookIndex];
+        [conv.middleware.db.session.api.search
+          [conv.middleware.db.session.data.bookIndex].metadata.identifier];
       data.trackIndex = o.track;
       data.timecode = o.timecode;
     }
