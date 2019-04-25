@@ -57,16 +57,20 @@ const conversation = async (conv: IDFConv) => {
   const a = conv.node.conv;
   debug.core.log(a);
   let arg: string[] = [];
+  debug.core.log(arg);
 
   if (a) {
     if (a.arg) {
       debug.core.log(a.arg);
       try {
         const _arg = a.arg(conv);
+        debug.core.log(_arg);
         if (typeof _arg === 'string') {
           arg = [_arg];
+          debug.core.log(arg);
         } else {
           arg = _arg;
+          debug.core.log(arg);
         }
       } catch (e) {
         // log arg error
