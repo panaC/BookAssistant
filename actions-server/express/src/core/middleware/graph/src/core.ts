@@ -59,11 +59,15 @@ const conversation = async (conv: IDFConv) => {
 
   if (a) {
     if (a.arg) {
-      const _arg = a.arg(conv);
-      if (typeof _arg === 'string') {
-        arg = [_arg];
-      } else {
-        arg = _arg;
+      try {
+        const _arg = a.arg(conv);
+        if (typeof _arg === 'string') {
+          arg = [_arg];
+        } else {
+          arg = _arg;
+        }
+      } catch (e) {
+        // log arg error
       }
     }
     if (a.ask) {
@@ -80,8 +84,7 @@ const conversation = async (conv: IDFConv) => {
     }
     if (a.close) {
       if (typeof a.close === 'string') {
-        debug.core.log('a.close', a.close);
-        //debug.core.log(arg);
+        debug.core.log('a.close', a.close, arg);
         conv.close(sprintf(translate(a.close, conv), ...arg));
       } else {
         /* disable array map */
