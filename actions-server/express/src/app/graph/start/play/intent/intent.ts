@@ -14,6 +14,7 @@ export const nextChapterIntent: Inode = {
       conv.middleware.db.session.data.timecode =
         (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
     const ref = conv.middleware.api.refGetRefWithTimecode(toc, href, time);
+    const data = conv.middleware.db.session.data;
     if (ref) {
       const nextRef = conv.middleware.api.refGetPrevNextRefWithRef(toc, ref, 1);
       if (nextRef) {
@@ -21,14 +22,23 @@ export const nextChapterIntent: Inode = {
         if (hrefFromRef) {
           try {
             // tslint:disable-next-line:ban
-            conv.middleware.db.session.data.timecode = parseInt(hrefFromRef.split('#t=')[1], 10);
+            data.timecode = parseInt(hrefFromRef.split('#t=')[1], 10);
           } catch(e) {}
-          conv.middleware.db.session.data.trackIndex =
+          data.trackIndex =
             conv.middleware.api.refGetTrackWithHref(ro, hrefFromRef.split('#t=')[0]);
+        } else {
+          return 'play.control.error';
         }
+      } else {
+        return 'play.endOfBook';
       }
+    } else {
+      if (data.trackIndex + 1 === ro.length) {
+        return 'play.endOfBook';
+      }
+      data.timecode = 0;
+      ++data.trackIndex;
     }
-
     return 'play.play';
   }
 };
@@ -47,6 +57,9 @@ export const prevChapterIntent: Inode = {
       conv.middleware.db.session.data.timecode =
         (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
     const ref = conv.middleware.api.refGetRefWithTimecode(toc, href, time);
+    const data = conv.middleware.db.session.data;
+    data.timecode = 0;
+    data.trackIndex = 0;
     if (ref) {
       const nextRef = conv.middleware.api.refGetPrevNextRefWithRef(toc, ref, -1);
       if (nextRef) {
@@ -54,14 +67,18 @@ export const prevChapterIntent: Inode = {
         if (hrefFromRef) {
           try {
             // tslint:disable-next-line:ban
-            conv.middleware.db.session.data.timecode = parseInt(hrefFromRef.split('#t=')[1], 10);
+            data.timecode = parseInt(hrefFromRef.split('#t=')[1], 10);
           } catch(e) {}
-          conv.middleware.db.session.data.trackIndex =
+          data.trackIndex =
             conv.middleware.api.refGetTrackWithHref(ro, hrefFromRef.split('#t=')[0]);
         }
+      } 
+    } else {
+      --data.trackIndex;
+      if (data.trackIndex < 0) {
+        data.trackIndex = 0;
       }
     }
-
     return 'play.play';
   }
 };
