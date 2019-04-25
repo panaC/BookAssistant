@@ -83,6 +83,9 @@ export const prevChapterIntent: Inode = {
         data.trackIndex = 0;
       }
     }
+    debug.app.log('previous chapter');
+    debug.app.log('trackindex', conv.middleware.db.session.data.trackIndex);
+    debug.app.log('timecode', conv.middleware.db.session.data.timecode);
     return 'play.play';
   }
 };
