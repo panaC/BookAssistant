@@ -57,14 +57,15 @@ export const prevChapterIntent: Inode = {
     const ro = conv.middleware.db.session.api.search
       [conv.middleware.db.session.data.bookIndex].readingOrder;
     const href = ro[conv.middleware.db.session.data.trackIndex].href;
+    const data = conv.middleware.db.session.data;
     const time = 
-      conv.middleware.db.session.data.timecode =
+      data.timecode =
         (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
     const ref = conv.middleware.api.refGetRefWithTimecode(toc, href, time);
-    const data = conv.middleware.db.session.data;
+  
     data.timecode = 0;
-    data.trackIndex = 0;
     if (ref) {
+      data.trackIndex = 0;
       const nextRef = conv.middleware.api.refGetPrevNextRefWithRef(toc, ref, -1);
       if (nextRef) {
         const hrefFromRef = conv.middleware.api.refGetHrefWithRef(toc, nextRef);
