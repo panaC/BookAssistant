@@ -64,7 +64,7 @@ const conversation = async (conv: IDFConv) => {
       debug.core.log(a.arg);
       try {
         const _arg = a.arg(conv);
-        debug.core.log(_arg);
+        debug.core.log(typeof _arg, _arg);
         if (typeof _arg === 'string') {
           arg = [_arg];
           debug.core.log(arg);
