@@ -55,7 +55,6 @@ const context = async (conv: IDFConv) => {
 
 const conversation = async (conv: IDFConv) => {
   const a = conv.node.conv;
-  debug.core.log(a);
   let arg: string[] = [];
 
   if (a) {
@@ -69,7 +68,6 @@ const conversation = async (conv: IDFConv) => {
     }
     if (a.ask) {
       if (typeof a.ask === 'string') {
-        debug.core.log(sprintf(translate(a.ask, conv), ...arg));
         conv.ask(sprintf(translate(a.ask, conv), ...arg));
       } else {
         /* disable array map */
@@ -82,7 +80,6 @@ const conversation = async (conv: IDFConv) => {
     }
     if (a.close) {
       if (typeof a.close === 'string') {
-        debug.core.log(sprintf(translate(a.close, conv), ...arg));
         conv.close(sprintf(translate(a.close, conv), ...arg));
       } else {
         /* disable array map */
@@ -107,7 +104,6 @@ const conversation = async (conv: IDFConv) => {
       conv.ask(new MediaObject(a.media(conv)));
     }
   }
-  debug.core.log(conv.responses);
   return conv;
 };
 
