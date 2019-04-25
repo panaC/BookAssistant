@@ -63,10 +63,13 @@ export const selectBook: Inode = {
     return: 'listen.checkSelectBook',
   },
   conv: {
-    arg: (conv: IDFConv): string[] =>
-      conv.middleware.db.session.api.search.map(
+    arg: (conv: IDFConv): string[] => {
+      const ret = conv.middleware.db.session.api.search.map(
         (webpub, index) =>
-          `numero ${index + 1} ${webpub.metadata.title} de ${webpub.metadata.author}`),
+          `numero ${index + 1} ${webpub.metadata.title} de ${webpub.metadata.author}`);
+      while (ret.length < 5) ret.push('');
+      return ret;
+    },
     ask: 'choice.select_book',
   },
 };
