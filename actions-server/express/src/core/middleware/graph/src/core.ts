@@ -164,7 +164,7 @@ const test = async (conv: IDFConv) => {
         r);
     } catch (e) {
       conv.node = {
-        return: true, conv: { arg: () => e, close: 'error.global' }
+        return: true, conv: { arg: () => e.toString(), close: 'error.global' }
       };
     }
   }
