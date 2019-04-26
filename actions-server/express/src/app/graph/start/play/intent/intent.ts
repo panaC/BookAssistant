@@ -100,7 +100,7 @@ export const pausePlayIntent: Inode = {
   },
   test: (conv) => {
     if (!conv.middleware.db.session.data.IsItInPause) {
-      conv.middleware.db.session.data.timecode =
+      conv.middleware.db.session.data.timecode +=
         (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
       conv.middleware.db.session.data.timer.time = 0;
     }
@@ -150,7 +150,7 @@ export const rePlayIntent: Inode = {
   return: false,
   test: (conv) => {
     if (!conv.middleware.db.session.data.IsItInPause) {
-      conv.middleware.db.session.data.timecode =
+      conv.middleware.db.session.data.timecode +=
         (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
       conv.middleware.db.session.data.timer.time = 0;
     }
@@ -165,7 +165,7 @@ export const stopPlayIntent: Inode = {
   test: (conv) => {
     const rst = conv.middleware.db.session.data;
     if (!rst.IsItInPause) {
-      rst.timecode =
+      rst.timecode +=
         (new Date().getTime() - rst.timer.time) / 1000 - 5;
     }
     // stop playing book and return
