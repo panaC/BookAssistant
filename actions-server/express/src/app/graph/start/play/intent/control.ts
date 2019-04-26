@@ -29,7 +29,14 @@ export const fallback: Inode = {
   intent: true,
   name: 'play.control.fallback_intent',
   return: false,
-  test: () => 'play.play',
+  test: (conv) => {
+    if (!conv.middleware.db.session.data.IsItInPause) {
+      conv.middleware.db.session.data.timecode =
+        (new Date().getTime() - conv.middleware.db.session.data.timer.time) / 1000 - 5;
+      conv.middleware.db.session.data.timer.time = 0;
+    }
+    return 'play.play';
+  },
   conv: {
     ask: 'play.control.fallback',
   },
