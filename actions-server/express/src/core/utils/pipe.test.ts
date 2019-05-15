@@ -20,8 +20,7 @@ it('pipe function', async () => {
       await sleep();
       return `fn3(${val})`;
     };
-    const pipeFunction = await pipe(fn1, fn2, fn3);
-    return await pipeFunction('inner');
+    return pipe(fn1, fn2, fn3)('inner');
   };
 
   expect(await testtest()).toEqual('fn3(fn2(fn1(inner)))');
