@@ -4,6 +4,7 @@
     "rootDir": ".",
     "outDir": "build",
     "target": "es2017",
+    "resolveJsonModule": true,
     "lib": [
       "es2018"
     ]
@@ -13,6 +14,7 @@
     "src/**/*.ts",
     "test/*.ts",
     "test/**/*.ts",
-    "typings/**/*.d.ts"
+    "typings/**/*.d.ts",
+    "src/**/*.json"
   ]
 }

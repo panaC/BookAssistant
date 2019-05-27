@@ -1,0 +1,30 @@
+{
+  "translation": {
+    "welcome": {
+      "new_user": {
+        "1": "Welcome to audiobook player",
+        "2": "What do you want ?",
+        "3": "You can explore or grab audiobooks"
+      },
+      "launch": {
+        "1": [
+          "welcome back",
+          "happy to see you again",
+          "glad you're back"
+        ],
+        "2": [
+          "the last time, you listened a book",
+          "I see you like listen a book",
+          "do you know that you can explore the catalog",
+          "you're lost, say: 'I'm lost'"
+        ],
+        "3": [
+          "makes a choice ?",
+          "what do you want ?",
+          "what do you want to do ?",
+          "tell me a choice ?"
+        ]
+      }
+    }
+  }
+}

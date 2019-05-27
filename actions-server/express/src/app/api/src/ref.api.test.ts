@@ -1,5 +1,5 @@
 import {Ilinks} from './../interface/links.interface';
-import {getRefWithTimecode, flattenToc, getNextRefWithRef} from './ref.api';
+import {getRefWithTimecode, flattenToc, getPrevNextRefWithRef} from './ref.api';
 
 it('test get a ref with timecode in href chapitre 3', () => {
   const data =
@@ -39,6 +39,6 @@ it('test get next chapter', () => {
       '[{"href":"https://edrlab.ml/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3#t=60","title":"partie 1","children":[{"href":"https://edrlab.ml/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3#t=500","title":"une citation","children":[{"href":"https://edrlab.ml/audiobook/mark-twain_tom-sawyer/TSawyer_01-02_twain_64kb.mp3#t=2000","title":"une citation plus intéressante","children":[]}]}]},{"href":"https://edrlab.ml/audiobook/mark-twain_tom-sawyer/TSawyer_03-04_twain_64kb.mp3#t=13","title":"chapitre 3","children":[{"href":"https://edrlab.ml/audiobook/mark-twain_tom-sawyer/TSawyer_03-04_twain_64kb.mp3#t=783","title":"chapitre 4","children":[]}]}]';
   const toc: Ilinks[] = JSON.parse(data);
 
-  const next = getNextRefWithRef(toc, 'chapitre 3');
+  const next = getPrevNextRefWithRef(toc, 'chapitre 3', 1);
   expect(next).toEqual('chapitre 4');
 });

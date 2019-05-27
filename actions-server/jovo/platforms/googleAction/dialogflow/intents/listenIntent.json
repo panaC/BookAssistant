@@ -1,0 +1,17 @@
+{
+	"name": "listenIntent",
+	"auto": true,
+	"webhookUsed": true,
+	"responses": [
+		{
+			"parameters": [
+				{
+					"isList": false,
+					"name": "title",
+					"value": "$title",
+					"dataType": "@sys.any"
+				}
+			]
+		}
+	]
+}

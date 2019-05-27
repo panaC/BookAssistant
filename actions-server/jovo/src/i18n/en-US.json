@@ -1,0 +1,63 @@
+{
+  "translation": {
+    "welcome": {
+      "new_user": {
+        "1": "Welcome to audiobook player",
+        "2": "What do you want ?",
+        "3": "You can explore or grab audiobooks"
+      },
+      "launch": {
+        "1": [
+          "welcome back",
+          "happy to see you again",
+          "glad you're back"
+        ],
+        "2": [
+          "the last time, you listened a book",
+          "I see you like listen a book",
+          "do you know that you can explore the catalog",
+          "you're lost, say: 'I'm lost'"
+        ],
+        "3": [
+          "makes a choice ?",
+          "what do you want ?",
+          "what do you want to do ?",
+          "tell me a choice ?"
+        ]
+      }
+    },
+    "listen": {
+      "help": {
+        "1": "you can say 'read me' followed by the title of the book"
+      },
+      "not_found": "the book {{title}} was not found",
+      "error": "an error was happened on listen",
+      "listBook": "{{title}} of {{author}}",
+      "play": {
+        "prev": "previous",
+        "next": "next",
+        "error": "oops, error during playback"
+      }
+    },
+    "control": {
+      "fallback": [
+        "I don't understand"
+      ],
+      "cancel": [
+        "come back soon"
+      ],
+      "end": [
+        "come back soon"
+      ],
+      "error": [
+        "an error was happened"
+      ],
+      "help": [
+        "you can listen or explore audiobook"
+      ]
+    },
+    "constant": {
+      "opds-server": "https://edrlab.tk/api?q={{query}}"
+    }
+  }
+}
