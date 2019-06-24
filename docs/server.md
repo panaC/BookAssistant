@@ -18,3 +18,8 @@ Warning, online doesn't have a firewall deny all route -> [go here](https://docu
 ## Todo
 
 > Make a configuration shell script
+
+
+# certbot
+
+sudo docker run -it --rm --name certbot -v "http_certbot:/etc/letsencrypt" -p 80:80 -p 443:443 certbot/certbot certonly
