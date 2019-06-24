@@ -61,11 +61,11 @@
     "home": "What do you want to hear?",
     "control": {
       "no_input": "Ask me to have her deliver listening",
-      "Cancel": "You didn't have time to read a book",
-      "Fallback": "What book are you interested in ?"
+      "cancel": "You didn't have time to read a book",
+      "fallback": "What book are you interested in ?"
     },
     "error": {
-      "Not_found": "The %s book is unknown in the database"
+      "not_found": "The %s book is unknown in the database"
     }
   },
   "tools": {
@@ -74,7 +74,7 @@
   "start": {
     "control": {
       "no_input": "Make a choice",
-      "Goodbye": "Come back soon!",
+      "goodbye": "Come back soon!",
       "fallback": "I don't think I'm following you"
     }
   },
