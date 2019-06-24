@@ -68,7 +68,7 @@
       "not_found": "The %s book is unknown in the database"
     }
   },
-  "tools": {
+  "utils": {
     "playing_is_compatible": "Sorry, this device does not support audio playback"
   },
   "start": {
