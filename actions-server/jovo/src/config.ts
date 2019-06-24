@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------
 
 const config = {
-    logging: false,
+    logging: true,
 
     intentMap: {
         'AMAZON.NextIntent': 'NextIntent',

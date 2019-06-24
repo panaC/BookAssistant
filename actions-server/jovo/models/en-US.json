@@ -1,5 +1,5 @@
 {
-  "invocation": "my podcast player",
+  "invocation": "book assistant",
   "intents": [
     {
       "name": "startIntent",
@@ -59,6 +59,14 @@
       ]
     },
     {
+      "name": "listenGetBookIntent",
+      "phrases": []
+    },
+    {
+      "name": "listenPlayIntent",
+      "phrases": []
+    },
+    {
       "name": "NextIntent",
       "alexa": {
         "name": "AMAZON.NextIntent",
@@ -104,34 +112,7 @@
       ]
     },
     {
-      "name": "LatestEpisodeIntent",
-      "phrases": [
-        "latest episode",
-        "new episode",
-        "the latest episode",
-        "the new episode",
-        "I want the latest episode",
-        "I want to listen to the latest episode",
-        "I would prefer the latest one",
-        "play the latest episode",
-        "play the new episode",
-        "I would like to listen to the latest episode",
-        "stream the latest episode",
-        "stream the new episode"
-      ]
-    },
-    {
-      "name": "FirstEpisodeIntent",
-      "phrases": [
-        "episode one",
-        "I want episode one",
-        "play episode one",
-        "start with episode one",
-        "I want to listen to the first episode"
-      ]
-    },
-    {
-      "name": "ChooseFromListIntent",
+      "name": "listenListbookListenchooseBookIntent",
       "phrases": [
         "{ordinal}",
         "{ordinal} one please",
@@ -159,24 +140,7 @@
       ]
     },
     {
-      "name": "ListIntent",
-      "phrases": [
-        "list episodes",
-        "list the episodes",
-        "I want the list",
-        "I want the list of episodes",
-        "episode list",
-        "Can I get the list of episodes",
-        "Can I have the episode list",
-        "choose from a list",
-        "choose from list",
-        "I choose the list",
-        "choose list",
-        "list of episodes"
-      ]
-    },
-    {
-      "name": "ResumeIntent",
+      "name": "listenResumeIntent",
       "alexa": {
         "name": "AMAZON.ResumeIntent",
         "samples": []

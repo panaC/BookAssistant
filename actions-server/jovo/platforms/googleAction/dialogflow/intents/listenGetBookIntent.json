@@ -1,5 +1,5 @@
 {
-	"name": "LatestEpisodeIntent",
+	"name": "listenGetBookIntent",
 	"auto": true,
 	"webhookUsed": true
 }

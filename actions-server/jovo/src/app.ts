@@ -1,6 +1,5 @@
 import {alexaHandler} from './alexa/handler';
 import {googleHandler} from './google/handler';
-import {Player} from './player';
 import {App} from 'jovo-framework';
 import {Alexa} from 'jovo-platform-alexa';
 import {JovoDebugger} from 'jovo-plugin-debugger';
@@ -31,6 +30,9 @@ app.use(
 
 app.setHandler({
     NEW_USER() {
+        if (!this.$user.$data.book) {
+            this.$user.$data.book = {};
+        }
         this.$speech.addT('welcome.new_user.1')
             .addBreak('300ms')
             .addT('welcome.new_user.2')
@@ -41,6 +43,9 @@ app.setHandler({
     },
 
     LAUNCH() {
+        if (!this.$user.$data.book) {
+            this.$user.$data.book = {};
+        }
         this.$speech.addT('welcome.launch.1')
             .addBreak('300ms')
             .addT('welcome.launch.2')
@@ -79,17 +84,18 @@ app.setHandler({
     },
 
     async listenIntent() {
+        console.log(this.$inputs.title);
         if (this.$inputs.title) {
                 this.$session.$data.title = this.$inputs.title.key;
                 this.followUpState('LISTEN');
-                await this.toIntent('listen.getBookIntent');
+                return this.toIntent('listenGetBookIntent');
         } else {
             this.ask(this.t('listen.help.1'));
         }
     },
 
     LISTEN: {
-        async 'listen.getBookIntent'() {
+        async 'listenGetBookIntent'() {
             try {
                 let search = (await axios
                     .get<Iwebpub[]>(this.t('constant.opds-server', {query: this.$session.$data.title}) as string)).data;
@@ -112,18 +118,19 @@ app.setHandler({
                             currentTrack: 0,
                         };
                     }
-                    await this.toIntent('listen.playIntent');
+                    return this.toIntent('listenPlayIntent');
                 } else {
-                    this.tell(this.t('listen.not_found', {title: this.$session.$data.title}));
+                    this.ask(this.t('listen.not_found', {title: this.$session.$data.title}));
                 }
             } catch(e) {
-                this.tell('listen.error');
+                console.error('listenGetBookIntent', e);
+                this.tell(this.t('listen.error'));
             }
         },
 
         
         'LISTEN.LISTBOOK': {
-            async 'listen.listbook.listenchooseBookIntent'() {
+            async 'listenListbookChooseBookIntent'() {
                 const ordinal = this.$inputs.ordinal;
                 const search = (await axios
                     .get<Iwebpub[]>(this.t('constant.opds-server', {query: this.$session.$data.title}) as string)).data;
@@ -139,24 +146,25 @@ app.setHandler({
                         };
                     }
                     this.followUpState('LISTEN');
-                    await this.toIntent('listen.playIntent');
+                    return this.toIntent('listenPlayIntent');
                 }
             },
         },
 
-        'listen.playIntent'() {
+        'listenPlayIntent'() {
             try {
-                const data = this.$user.$data.book[this.$session.$data.book] as IbookData;
+                const data = this.$user.$data.book[this.$session.$data.bookId] as IbookData;
                 const link: Ilinks = data.manifest.readingOrder[data.currentTrack];
 
+                this.followUpState('LISTEN');
                 this.$speech.addText(' ');
                 if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
                     this.$alexaSkill.$audioPlayer
                         .setOffsetInMilliseconds(0)
-                        .play(link.href, link.title)
+                        .play(link.href, link.title || link.rel)
                         .tell(this.$speech);
                 } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-                    this.$googleAction.$mediaResponse.play(link.href, link.title);
+                    this.$googleAction.$mediaResponse.play(link.href, link.title || link.rel);
                     this.$googleAction.showSuggestionChips([...this.t('listen.play.prev'), ...this.t('listen.play.next')]);
                     this.ask(this.$speech);
                 }
@@ -164,131 +172,32 @@ app.setHandler({
                 this.tell(this.t('listen.play.error'));
             }
         },
+
+        
     },
 
-    FirstEpisodeIntent() {
-        let episode = Player.getFirstEpisode();
-        let currentIndex = Player.getEpisodeIndex(episode);
-        this.$user.$data.currentIndex = currentIndex;
-        this.$speech.addText('Here is the first episode.');
+    'listenResumeIntent'() {
+        try {
+            const data = this.$user.$data.book[this.$session.$data.bookId] as IbookData;
+            const link = data.manifest.readingOrder[data.currentTrack];
 
-        if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-            this.$alexaSkill.$audioPlayer
-                .setOffsetInMilliseconds(0)
-                .play(episode.url, `${currentIndex}`)
-                .tell(this.$speech);
-        } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-            this.$googleAction.$mediaResponse.play(episode.url, episode.title);
-            this.$googleAction.showSuggestionChips(['pause', 'start over']);
-            this.ask(this.$speech);
+            this.followUpState('LISTEN');
+            this.$speech.addText(' ');
+            if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
+                const offset = data.currentOffset;
+                this.$alexaSkill.$audioPlayer
+                    .setOffsetInMilliseconds(offset)
+                    .play(link.href, link.title || link.rel)
+                    .tell(this.$speech);
+            } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
+                this.$googleAction.$mediaResponse.play(link.href, link.title || link.rel);
+                this.$googleAction.showSuggestionChips([...this.t('listen.play.prev'), ...this.t('listen.play.next')]);
+                this.ask(this.$speech);
+            }
+
+        } catch (e) {
+            this.tell(this.t('listen.play.error'));
         }
-    },
-
-    LatestEpisodeIntent() {
-        let episode = Player.getLatestEpisode();
-        let currentIndex = Player.getEpisodeIndex(episode);
-        this.$user.$data.currentIndex = currentIndex;
-        this.$speech.addText('Here is the latest episode.');
-
-        if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-            this.$alexaSkill.$audioPlayer
-                .setOffsetInMilliseconds(0)
-                .play(episode.url, `${currentIndex}`)
-                .tell(this.$speech);
-        } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-            this.$googleAction.$mediaResponse.play(episode.url, episode.title);
-            this.$googleAction.showSuggestionChips(['pause', 'start over']);
-            this.ask(this.$speech);
-        }
-    },
-
-    ListIntent() {
-        const indices = Player.getRandomIndices(4);
-        this.$session.$data.episodeIndices = indices;
-
-        this.$speech.addText('Here\'s a list of episodes: ');
-        for (let i = 0; i < indices.length; i++) {
-            let episode = Player.getEpisode(indices[i]);
-            this.$speech.addSayAsOrdinal(i + 1)
-                .addText(episode.title)
-                .addBreak('100ms');
-        }
-        this.$speech.addText('Which one would you like to listen to?');
-        this.ask(this.$speech);
-    },
-
-    ChooseFromListIntent() {
-        const ordinal = this.$inputs.ordinal;
-        let episodeIndices = this.$session.$data.episodeIndices;
-        let episodeIndex = episodeIndices[Number(ordinal.key) - 1];
-        this.$user.$data.currentIndex = episodeIndex;
-        let episode = Player.getEpisode(episodeIndex);
-        this.$speech.addText('Enjoy');
-
-        if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-            this.$alexaSkill.$audioPlayer
-                .setOffsetInMilliseconds(0)
-                .play(episode.url, `${episodeIndex}`)
-                .tell(this.$speech);
-        } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-            this.$googleAction.$mediaResponse.play(episode.url, episode.title);
-            this.$googleAction.showSuggestionChips(['pause', 'start over']);
-            this.ask(this.$speech);
-        }
-    },
-
-    ResumeIntent() {
-        let currentIndex = this.$user.$data.currentIndex;
-        let episode = Player.getEpisode(currentIndex);
-        this.$speech.addText('Resuming your episode.');
-
-        if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-            let offset = this.$user.$data.offset;
-            this.$alexaSkill.$audioPlayer
-                .setOffsetInMilliseconds(offset)
-                .play(episode.url, `${currentIndex}`)
-                .tell(this.$speech);
-        } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-            this.$googleAction.$mediaResponse.play(episode.url, episode.title);
-            this.$googleAction.showSuggestionChips(['pause', 'start over']);
-            this.ask(this.$speech);
-        }
-    },
-
-    NextIntent() {
-        let currentIndex = this.$user.$data.currentIndex;
-        let nextEpisode = Player.getNextEpisode(currentIndex);
-        if (!nextEpisode) {
-            return this.tell('That was the most recent episode. You have to wait until a new episode gets released.');
-        }
-        currentIndex = Player.getEpisodeIndex(nextEpisode);
-        this.$user.$data.currentIndex = currentIndex;
-        if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-            this.$alexaSkill.$audioPlayer.setOffsetInMilliseconds(0).play(nextEpisode.url, `${currentIndex}`);
-        } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-            this.$googleAction.$mediaResponse.play(nextEpisode.url, nextEpisode.title);
-            this.$googleAction.showSuggestionChips(['pause', 'start over']);
-            this.ask('Enjoy');
-        }
-        return;
-    },
-
-    PreviousIntent() {
-        let currentIndex = this.$user.$data.currentIndex;
-        let previousEpisode = Player.getPreviousEpisode(currentIndex);
-        if (!previousEpisode) {
-            return this.tell('You are already at the oldest episode.');
-        }
-        currentIndex = Player.getEpisodeIndex(previousEpisode);
-        this.$user.$data.currentIndex = currentIndex;
-        if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-            this.$alexaSkill.$audioPlayer.setOffsetInMilliseconds(0).play(previousEpisode.url, `${currentIndex}`);
-        } else if (this.$googleAction && this.$googleAction.$mediaResponse) {
-            this.$googleAction.$mediaResponse.play(previousEpisode.url, previousEpisode.title);
-            this.$googleAction.showSuggestionChips(['pause', 'start over']);
-            this.ask('Enjoy');
-        }
-        return;
     },
 
 });

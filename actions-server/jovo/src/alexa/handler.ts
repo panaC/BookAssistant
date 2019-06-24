@@ -1,5 +1,5 @@
+import { IbookData } from './../interface/book.interface';
 import {Handler} from 'jovo-core';
-import {Player} from '../player';
 
 export const alexaHandler: Handler =
     {
@@ -43,24 +43,45 @@ export const alexaHandler: Handler =
             },
 
             'AlexaSkill.PlaybackNearlyFinished'() {
-                let currentIndex = this.$user.$data.currentIndex;
-                let episode = Player.getNextEpisode(currentIndex);
-                let nextIndex = Player.getEpisodeIndex(episode);
-                if (episode && this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-                    this.$alexaSkill.$audioPlayer.setExpectedPreviousToken(`${currentIndex}`).enqueue(episode.url, `${nextIndex}`);
+                try {
+                    this.followUpState('LISTEN');
+                    const data = this.$user.$data.book[this.$session.$data.bookId] as IbookData;
+                    if (data && this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
+                        const link = data.manifest.readingOrder[data.currentTrack];
+                        this.$alexaSkill.$audioPlayer.setExpectedPreviousToken(link.title || link.rel);
+                        ++data.currentTrack;
+                        data.currentOffset = 0;
+                        this.$alexaSkill.$audioPlayer.enqueue(link.href, link.title);
+                    }
+
+                } catch (e) {
+                    this.tell(this.t('listen.play.error'));
                 }
             },
 
             'AlexaSkill.PlaybackFinished'() {
-                let currentIndex = this.$user.$data.currentIndex;
-                if (currentIndex > 0) {
-                    this.$user.$data.currentIndex = currentIndex - 1;
+                try {
+                    this.followUpState('LISTEN');
+                    const data = this.$user.$data.book[this.$session.$data.bookId] as IbookData;
+                    if (data.currentTrack < data.manifest.readingOrder.length) {
+                        ++data.currentTrack;
+                        data.currentOffset = 0;
+                    }
+                    
+                } catch (e) {
+                    this.tell(this.t('listen.play.error'));
                 }
             },
 
             'AlexaSkill.PlaybackStopped'() {
-                if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
-                    this.$user.$data.offset = this.$alexaSkill.$audioPlayer.getOffsetInMilliseconds();
+                try {
+                    const data = this.$user.$data.book[this.$session.$data.bookId] as IbookData;
+                    if (this.$alexaSkill && this.$alexaSkill.$audioPlayer) {
+                        data.currentOffset = this.$alexaSkill.$audioPlayer.getOffsetInMilliseconds();
+                    }
+                    
+                } catch (e) {
+                    this.tell(this.t('listen.play.error'));
                 }
             },
 

@@ -1,5 +1,5 @@
 {
-	"name": "ChooseFromListIntent",
+	"name": "listenListbookListenchooseBookIntent",
 	"auto": true,
 	"webhookUsed": true,
 	"responses": [
