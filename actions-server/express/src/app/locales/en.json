@@ -1,3 +1,91 @@
 {
-  "welcome": "What would you listen ?"
+  "welcome": {
+    "home": "What do you want to do?"
+  },
+  "help": {
+    "1": "You can... discover the new products... to listen to a book"
+  },
+  "instruction": {
+    "play_book": "Say: \"I want to listen\" followed by the title of the book.",
+    "want_listen": "I want to listen"
+  },
+  "discovery": {
+    "newBooks": {
+      "home": "Here are the new features"
+    }
+  },
+  "choice": {
+    "select_book_num": "number %s %s %s of %s",
+    "select_book": "Here is the list of books corresponding to your search, which one do you choose? %s %s %s %s %s %s %s",
+    "select_ref_num": "number %s %s %s",
+    "select_ref": "What does it refer to? %s %s %s %s %s %s %s",
+    "control": {
+      "no_input": "I don't hear a number, choose one",
+      "cancel": "You don't want to give me a number",
+      "fallback": "Be careful, you only have to give me a number"
+    }
+  },
+  "yesno": {
+    "already_listen": "In the audio book %s, you are at the chapter %s. Do you want to continue?",
+    "control": {
+      "no_input": "Answer yes or no",
+      "cancel": "You don't want to say yes or no to me",
+      "fallback": "That doesn't answer the question, say yes or no"
+    },
+    "suggestion": {
+      "yes": "Yes",
+      "no": "Name"
+    }
+  },
+  "play": {
+    "book": "This is the audiobook %s of %s %s %s",
+    "end_of_book": "Your book is finished",
+    "suggestion": {
+      "next": "Next chapter",
+      "prev": "Previous chapter",
+      "pause": "Resume reading"
+    },
+    "follow": " ",
+    "finish": "The book is finished",
+    "ref_empty": "You didn't say the name of the reference",
+    "numberOfChapter": "There are %s chapters in the book",
+    "chapter": "You listen to the %s chapter",
+    "author": "The author of this book is %s",
+    "control": {
+      "no_input": " ",
+      "cancel": "All right, I'm going back to reading",
+      "fallback": "I learn new orders every day"
+    }
+  },
+  "listen": {
+    "home": "What do you want to hear?",
+    "control": {
+      "no_input": "Ask me to have her deliver listening",
+      "Cancel": "You didn't have time to read a book",
+      "Fallback": "What book are you interested in ?"
+    },
+    "error": {
+      "Not_found": "The %s book is unknown in the database"
+    }
+  },
+  "tools": {
+    "playing_is_compatible": "Sorry, this device does not support audio playback"
+  },
+  "start": {
+    "control": {
+      "no_input": "Make a choice",
+      "Goodbye": "Come back soon!",
+      "fallback": "I don't think I'm following you"
+    }
+  },
+  "error": {
+    "global": "Oops. %s",
+    "error": "an internal error has occurred",
+    "audiobook": {
+      "network": "A network error has occurred",
+      "chapter": "The chapter is incorrect",
+      "not_found": "This book is unknown",
+      "ref": "This reference is unknown"
+    }
+  }
 }
