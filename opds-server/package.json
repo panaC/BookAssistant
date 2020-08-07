@@ -24,7 +24,7 @@
     "@nestjs/core": "^5.4.0",
     "@nestjs/mongoose": "^5.2.2",
     "@nestjs/swagger": "^2.5.1",
-    "class-transformer": "^0.2.0",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.9.1",
     "mongoose": "^5.4.9",
     "reflect-metadata": "^0.1.12",
