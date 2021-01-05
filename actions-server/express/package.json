@@ -22,7 +22,7 @@
   "homepage": "https://github.com/panaC/VoiceAssistant#readme",
   "dependencies": {
     "actions-on-google": "^2.5.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.18.3",
     "class-transformer": "^0.2.0",
     "debug": "^4.1.1",
