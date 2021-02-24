@@ -1,5 +1,14 @@
 # BookAssistant
 
+
+-----
+
+DEPRECATED : see https://github.com/panaC/audiobooks
+
+
+-----
+
+
 The aim project is an audiobook reader developpement at destination of an visually impaired association.
 Based on Google Assistant with [Google Actions](https://developers.google.com/actions/) and [Diagflow](https://dialogflow.com/)
 
